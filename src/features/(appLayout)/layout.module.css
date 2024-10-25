@@ -1,0 +1,42 @@
+
+.contentSection{
+    min-width: 50vw;
+    height: 90vh;
+}
+
+#navigation{
+    width: 100vw;
+    height: 10vh;
+    background: #2a5138;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0px;
+    padding: 0px;
+
+    & .navigationBlock{
+        display: flex;
+        height: 100%;
+        color: rgb(232, 247, 207);
+        margin: 0px 1rem;
+
+        & .navigationHomeButton{
+            display: block;
+        }
+
+        & :is(a, span){
+            font-weight: bold;
+            align-self: center;
+            padding: 0px .3rem;
+        }
+
+        &  a, a:hover, a:visited, a:active span{
+            color: rgb(232, 247, 207);
+        }
+
+        & .avatar{
+            align-self: center;
+            justify-self: center;
+        }
+    }
+}

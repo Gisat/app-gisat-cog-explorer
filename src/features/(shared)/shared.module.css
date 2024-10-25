@@ -1,0 +1,7 @@
+.pageLoader{
+    display: flex;
+    width: 100%;
+    min-height: 40rem;
+    align-items: center;
+    justify-content: center;
+}
