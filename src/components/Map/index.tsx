@@ -21,6 +21,7 @@ type LayerDefinition = {
   key: string;
   layerKey: string;
   name: string;
+  opacity: number;
   options: {
     colorScale?: string[];
     colorScaleValueRange?: number[];
@@ -177,6 +178,7 @@ function Map() {
       key: `CogBitmapLayer_${versionRef.current}`,
       layerKey: `CogBitmapLayer_${versionRef.current}`,
       name: 'CogBitmapLayer_',
+      opacity: 1,
       options: {
         // hoverable: true,
         // pickable: true,
