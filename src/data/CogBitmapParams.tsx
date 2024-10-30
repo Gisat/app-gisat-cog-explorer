@@ -29,11 +29,11 @@ const params: Array<BitmapDefinition> = [
   },
   {
     name: "alpha",
-    title: "Alpha",
+    title: "Opacity",
     description:
       "Visualise entire image with specified opacity (if useDataOpacity is false), values 0-100 (default 100)",
     defaultValue: 100,
-    type: "number",
+    type: "range",
   },
   {
     name: "useHeatMap",

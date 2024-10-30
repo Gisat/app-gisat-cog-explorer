@@ -21,8 +21,9 @@ export default function ({ title, name, defaultValue, children, validation }: { 
 		router.push('?' + createQueryStringCallback(name, val, Array.from(searchParams.entries())).toString(), { scroll: false })
 	}
 
-	return <label className="block">
-		<span className="block text-l font-medium text-slate-700">{title}</span>
-		<Input classes={classes} onChange={onChanged} value={urlVal} placeholder={defaultValue} />
+	return <label className="block mt-2">
+		<span className="block text-base font-medium text-slate-900 mb-1">{title}</span>
+		<Input className="appearance-none border rounded w-full py-2 px-3 text-slate-900 leading-tight focus:outline-none focus:shadow-outline"
+			onChange={onChanged} value={urlVal} placeholder={defaultValue} />
 	</label >
 }

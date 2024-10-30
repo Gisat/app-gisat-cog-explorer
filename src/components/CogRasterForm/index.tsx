@@ -11,6 +11,7 @@ import NumberOption from './options/NumberOption'
 import ColorOption from './options/ColorOption'
 import TextOption from './options/TextOption'
 import ArrayOption from './options/ArrayOption'
+import RangeOption from './options/RangeOption'
 
 const getValidator = (validatorType: string) => {
 
@@ -79,6 +80,12 @@ function CogRasterForm() {
                   {d.description}
                 </p>
               </BoolOption>
+            case 'range':
+              return <RangeOption title={d.title} name={d.name} key={d.name} min={0} max={100}>
+                <p className="text-sm text-slate-500">
+                  {d.description}
+                </p>
+              </RangeOption>
             case 'number':
               return <NumberOption title={d.title} name={d.name} key={d.name} defaultValue={d.defaultValue}>
                 <p className="text-sm text-slate-500">

@@ -34,6 +34,7 @@ type LayerDefinition = {
     type: string;
     hoverable?: boolean;
     pickable?: boolean;
+    cogBitmapOptions: any;
   };
   type: string;
 }
@@ -188,7 +189,9 @@ function Map() {
         // pickable: true,
         url: cogUrlRef.current,
         type: 'image',
-        ...params,
+        cogBitmapOptions: {
+          ...params,
+        }
       },
       type: 'cogBitmap',
     }
