@@ -2,6 +2,7 @@
 
 import { DeckGlMap } from "@gisatcz/ptr-maps";
 import { useRef, useState, useCallback } from 'react';
+import Parameters from '@/components/Parameters';
 
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import { createQueryString } from '../../utils/url'
@@ -278,26 +279,26 @@ function Map() {
     router.push('?' + p3.toString(), { scroll: false })
   }
 
-  return <DeckGlMap
-    view={{
-      ...viewState
-    }}
-    backgroundLayer={{
-      key: 'background-osm',
-      type: 'wmts',
-      options: {
-        url: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png'
-      }
-    }}
-    layers={[
-      ...(cogBitmapLayer && cogUrl ? [cogBitmapLayer] : [])
-    ]}
-    onViewChange={onViewChange}
-  // TODO use just ond events
-  // onZoomEnd={onViewChange}
-  // onPanEnd={onViewChange}
-  // Tooltip={CustomTooltip}
-  />
+  return (
+    <div className="h-screen">
+      <DeckGlMap
+        view={{ ...viewState }}
+        backgroundLayer={{
+          key: 'background-osm',
+          type: 'wmts',
+          options: {
+            url: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png'
+          }
+        }}
+        layers={[
+          ...(cogBitmapLayer && cogUrl ? [cogBitmapLayer] : [])
+        ]}
+        onViewChange={onViewChange}
+      />
+      <Parameters
+        params={getParams()} />
+    </div>
+  );
 }
 
 export default Map;
