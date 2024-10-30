@@ -116,6 +116,11 @@ function CogRasterForm() {
 
         })
       }
+      <div className='text-slate-400 mt-9 text-xs'>
+        <span>© <a className='font-bold' href='https://www.gisat.cz/'>Gisat</a> 2024</span>
+        <br />
+        <span>Developed by Gisat with support from the European Space Agency in the frame of the 3DFlus project (ESA/AO/1-10491/20/I-EF Activity No. 1000029762)</span>
+      </div>
     </div >
   )
 }
