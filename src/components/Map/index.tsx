@@ -24,8 +24,12 @@ type LayerDefinition = {
   opacity: number;
   options: {
     colorScale?: string[];
+    useHeatMap?: boolean;
     colorScaleValueRange?: number[];
     useChannel?: number | undefined;
+    clipLow?: number;
+    clipHigh?: number;
+    blurredTexture?: boolean;
     url: undefined | string;
     type: string;
     hoverable?: boolean;
