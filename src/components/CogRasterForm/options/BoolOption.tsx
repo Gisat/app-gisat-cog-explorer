@@ -15,9 +15,11 @@ export default function ({ title, name, defaultValue, children }: { name: string
 
 	}
 
-	return <label className="block">
-		<span className="block text-l font-medium text-slate-700 text-white">{title}</span>
-		<input className="border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 text-pink-500" onChange={onChanged} checked={searchParams.has(name) ? urlVal : defaultValue} type='checkbox' />
+	return <label className="block mt-2">
+		<div className='flex items-center w-full'>
+			<span className="block text-base font-medium text-slate-900">{title}</span>
+			<input className="ml-2" onChange={onChanged} checked={searchParams.has(name) ? urlVal : defaultValue} type='checkbox' />
+		</div>
 		{children}
 	</label>
 }

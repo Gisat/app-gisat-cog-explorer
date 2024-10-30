@@ -14,14 +14,14 @@ interface BitmapDefinition {
 const params: Array<BitmapDefinition> = [
   {
     name: "useAutoRange",
-    title: "useAutoRange",
+    title: "Auto range",
     description: "Set automatic range of color gradient (default false).",
     defaultValue: false,
     type: "bool",
   },
   {
     name: "useDataForOpacity",
-    title: "useDataForOpacity",
+    title: "Data for opacity",
     description:
       "Visualise data with opacity of each pixel according to its value (default false)",
     defaultValue: false,
@@ -29,7 +29,7 @@ const params: Array<BitmapDefinition> = [
   },
   {
     name: "alpha",
-    title: "alpha",
+    title: "Alpha",
     description:
       "Visualise entire image with specified opacity (if useDataOpacity is false), values 0-100 (default 100)",
     defaultValue: 100,
@@ -37,42 +37,42 @@ const params: Array<BitmapDefinition> = [
   },
   {
     name: "useHeatMap",
-    title: "useHeatMap",
+    title: "Heat map",
     description: "Generate data as a color heatmap (default true)",
     defaultValue: true,
     type: "bool",
   },
   {
     name: "useChannel",
-    title: "useChannel",
+    title: "Channel",
     description: "Specify a single channel to use (default null)",
     defaultValue: null,
     type: "number",
   },
   {
     name: "multiplier",
-    title: "multiplier",
+    title: "Multiplier",
     description: "Multiplies each value (default 1.00)",
     defaultValue: 1,
     type: "number",
   },
   {
     name: "clipLow",
-    title: "clipLow",
+    title: "Clip low",
     description: "Generate only data greater than this (default null)",
     defaultValue: null,
     type: "number",
   },
   {
     name: "clipHigh",
-    title: "clipHigh",
+    title: "Clip high",
     description: "Generate only data less than this (default null)",
     defaultValue: null,
     type: "number",
   },
   {
     name: "clippedColor",
-    title: "clippedColor",
+    title: "Clipped color",
     description:
       "Set color for clipped values when using clipLow or clipHigh, (default [0, 0, 0, 0])",
     defaultValue: [0, 0, 0, 0],
@@ -80,7 +80,7 @@ const params: Array<BitmapDefinition> = [
   },
   {
     name: "colorScale",
-    title: "colorScale",
+    title: "Color scale",
     description: (
       <>
         Array of colors, supports <a href={"https://vis4.net/labs/multihue/"} className={"text-white underline"} target="blank">chroma.js</a> color definition such as 'red',
@@ -93,7 +93,7 @@ const params: Array<BitmapDefinition> = [
   },
   {
     name: "colorScaleValueRange",
-    title: "colorScaleValueRange",
+    title: "Color scale value range",
     description:
       "Set min and max range values or set any array of values to set exact colors to values, if useAutoRange is false, (default [0,255])",
     defaultValue: [0, 255],
@@ -101,7 +101,7 @@ const params: Array<BitmapDefinition> = [
   },
   {
     name: "useColorsBasedOnValues",
-    title: "useColorsBasedOnValues",
+    title: "Colors based on values",
     description:
       "Assign pixels colors based on defined data values (default false)",
     defaultValue: false,
@@ -109,7 +109,7 @@ const params: Array<BitmapDefinition> = [
   },
   {
     name: "colorsBasedOnValues",
-    title: "colorsBasedOnValues",
+    title: "Colors based on values",
     description:
       "Array of value-color pairs, used if useColorsBasedOnValues is true, supports chroma.js color definition such as 'red', [255,0,0], '#FF0000', etc.",
     defaultValue: null,

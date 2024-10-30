@@ -12,7 +12,7 @@ export default function Home() {
     <AnalyticsProvider instance={analytics}>
       < main className="h-screen" >
         <div className="grid grid-cols-3 h-screen">
-          <div className="side-panel"><CogRasterForm /></div>
+          <div className="side-panel bg-slate-50 col-span-1"><CogRasterForm /></div>
           <div className="map col-span-2"><Map /></div>
         </div>
       </main >

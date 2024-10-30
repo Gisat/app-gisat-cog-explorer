@@ -22,7 +22,7 @@ export default function ({ title, name, defaultValue, children, validation }: { 
 	}
 
 	return <label className="block">
-		<span className="block text-l font-medium text-slate-700 text-white">{title}</span>
+		<span className="block text-l font-medium text-slate-700">{title}</span>
 		<Input classes={classes} onChange={onChanged} value={urlVal} placeholder={defaultValue} />
 	</label >
 }

@@ -1,15 +1,14 @@
-.map {
-	/* background-color: red; */
-}
+/*.map {
+	background-color: red;
+}*/
 
 .side-panel{
-	background-color: #2e55b4;
-	height: 100vh;
     overflow: scroll;
 	padding: 2rem;
-
-
-	
+	margin: 0;
+	overflow-x: hidden;
+	min-width: 350px;
+	z-index: 1;
 }
 
 .ptr-form p > a{

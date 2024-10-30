@@ -18,7 +18,7 @@ export default function ({ title, name, defaultValue, children }: { name: string
 	const classes = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 
 	return <label className="block">
-		<span className="block text-l font-medium text-slate-700 text-white">{title}</span>
+		<span className="block text-l font-medium text-slate-700">{title}</span>
 		<Input classes={classes} onChange={onChanged} value={urlVal} placeholder={defaultValue} type='number' step="any" />
 		{children}
 	</label>
