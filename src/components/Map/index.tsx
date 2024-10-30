@@ -21,7 +21,7 @@ type LayerDefinition = {
   key: string;
   layerKey: string;
   name: string;
-  opacity: number;
+  opacity?: number;
   options: {
     colorScale?: string[];
     useHeatMap?: boolean;
@@ -79,6 +79,23 @@ function Map() {
         const isTrue = paramsRef.current[p.name] === 'true';
         if (p.defaultValue !== isTrue) {
           values[p.name] = isTrue;
+        }
+      }
+    }
+
+    return values;
+  }
+
+  const getRangeValues = () => {
+
+    const values: params = {}
+
+    for (const p of CogBitmapParams) {
+      if (p.type === 'range') {
+        const parsed = Number.parseFloat(paramsRef.current[p.name]);
+
+        if (searchParams.has(p.name) && Number.isFinite(parsed) && parsed !== p.defaultValue) {
+          values[p.name] = parsed
         }
       }
     }
@@ -165,6 +182,7 @@ function Map() {
   const getParams = () => {
     const values = {
       ...getBoolValues(),
+      ...getRangeValues(),
       ...getNumberValues(),
       ...getTextValues(),
     }

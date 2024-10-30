@@ -81,7 +81,7 @@ function CogRasterForm() {
                 </p>
               </BoolOption>
             case 'range':
-              return <RangeOption title={d.title} name={d.name} key={d.name} min={0} max={100}>
+              return <RangeOption title={d.title} name={d.name} key={d.name} min={0} max={100} defaultValue={d.defaultValue}>
                 <p className="text-sm text-slate-500">
                   {d.description}
                 </p>

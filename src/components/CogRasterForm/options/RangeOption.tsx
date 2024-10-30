@@ -1,17 +1,20 @@
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import { createQueryString } from '../../../utils/url'
-import { ReactNode, useCallback } from 'react'
+import { ReactNode, useCallback, useState } from 'react'
 import Input from './input'
 
-export default function ({ title, name, min, max, children }: { name: string, title: string, children: ReactNode, min: number, max: number }) {
+export default function ({ title, name, min, max, defaultValue, children }: { name: string, title: string, children: ReactNode, min: number, max: number, defaultValue: any }) {
 	const router = useRouter();
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
 	const createQueryStringCallback = useCallback(createQueryString, [searchParams])
 	const urlVal = searchParams.get(name) !== null && searchParams.get(name) !== '' ? Number(searchParams.get(name)) : ''
 
+	const [rangeValue, setRangeValue] = useState(100);
+
 	const onChanged = (evt: any) => {
 		const val = evt.target.value;
+		setRangeValue(val)
 		router.push('?' + createQueryStringCallback(name, val, Array.from(searchParams.entries())).toString(), { scroll: false })
 	}
 
