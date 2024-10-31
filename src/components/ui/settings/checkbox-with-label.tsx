@@ -8,13 +8,13 @@ type Size = 'sm' | 'md' | 'lg';
 
 interface CheckboxWithLabelProps {
   label: string;
+  description?: string | JSX.Element; // Nested description with links
+  error?: boolean;
   name: string;
   variant?: Variant;
   size?: Size;
   isLoading?: boolean;
-  icon?: React.ReactNode;
   defaultValue?: boolean;
-  children?: React.ReactNode;
 }
 
 const variantStyles = {
@@ -32,13 +32,13 @@ const sizeStyles = {
 
 const CheckboxWithLabel: React.FC<CheckboxWithLabelProps> = ({
   label,
+  description,
+  error,
   name,
   variant = 'default',
   size = 'md',
   isLoading = false,
-  icon,
-  defaultValue = false,
-  children,
+  defaultValue = false
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -67,6 +67,9 @@ const CheckboxWithLabel: React.FC<CheckboxWithLabelProps> = ({
           <Checkbox
             checked={searchParams.has(name) ? urlVal : defaultValue}
             onChange={onChanged}
+            label={label}
+            description={description}
+            error={error}
             styles={{
               input: {
                 ...variantStyle,
@@ -74,10 +77,7 @@ const CheckboxWithLabel: React.FC<CheckboxWithLabelProps> = ({
             }}
           />
         )}
-        {icon && <span style={{ marginRight: '4px' }}>{icon}</span>}
-        <Text style={{ color: variantStyle.color }}>{label}</Text>
       </Group>
-      {children}
     </label>
   );
 };

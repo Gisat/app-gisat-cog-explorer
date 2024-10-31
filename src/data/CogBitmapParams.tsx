@@ -17,7 +17,7 @@ const params: Array<BitmapDefinition> = [
 		title: "Auto range",
 		description: "Set automatic range of color gradient (default false).",
 		defaultValue: false,
-		type: "bool",
+		type: "checkbox",
 	},
 	{
 		name: "useDataForOpacity",
@@ -25,7 +25,7 @@ const params: Array<BitmapDefinition> = [
 		description:
 			"Visualise data with opacity of each pixel according to its value (default false)",
 		defaultValue: false,
-		type: "bool",
+		type: "checkbox",
 	},
 	{
 		name: "alpha",
@@ -33,14 +33,14 @@ const params: Array<BitmapDefinition> = [
 		description:
 			"Visualise entire image with specified opacity (if useDataOpacity is false), values 0-100 (default 100)",
 		defaultValue: 100,
-		type: "range",
+		type: "slider",
 	},
 	{
 		name: "useHeatMap",
 		title: "Heat map",
 		description: "Generate data as a color heatmap (default true)",
 		defaultValue: true,
-		type: "bool",
+		type: "checkbox",
 	},
 	{
 		name: "useChannel",
@@ -105,7 +105,7 @@ const params: Array<BitmapDefinition> = [
 		description:
 			"Assign pixels colors based on defined data values (default false)",
 		defaultValue: false,
-		type: "bool",
+		type: "checkbox",
 	},
 	{
 		name: "colorsBasedOnValues",
@@ -135,7 +135,7 @@ const params: Array<BitmapDefinition> = [
 		title: "useSingleColor",
 		description: "Display data values only with single color (default false)",
 		defaultValue: false,
-		type: "bool",
+		type: "checkbox",
 	},
 	{
 		name: "color",
@@ -151,7 +151,7 @@ const params: Array<BitmapDefinition> = [
 		description:
 			"Define blurring behaviour for textures when zoomed in = magnification filter parameter (gl.TEXTURE_MAG_FILTER). Default is true for blurry textures (corresponds to GL.LINEAR), to not blur textures use false (corresponds to GL.NEAREST).",
 		defaultValue: false,
-		type: "bool",
+		type: "checkbox",
 	},
 ];
 

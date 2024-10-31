@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
 import CogBitmapParams from '@/data/CogBitmapParams'
 import CheckboxWithLabel from '@/components/ui/settings/checkbox-with-label';
+import Slider from '@/components/ui/settings/slider';
 
 // Styles
 // import classes from '@/styles/Dashboard.module.css';
@@ -31,12 +32,16 @@ const CogSettings = () => {
 				<input onChange={onUrlChange} value={stateCogUrl?.toString()} />
 			</label>
 
+			<p>Zoom to layer</p>
+
 			{CogBitmapParams.map(d => {
 				const type = typeof d.type === 'string' ? d.type : d.type.inputType;
 				const value = typeof d.type === 'object' ? d.type.value : null;
 				switch (type) {
-					case 'bool':
-						return <CheckboxWithLabel label={d.title} name={d.name} key={d.name} />;
+					case 'checkbox':
+						return <CheckboxWithLabel label={d.title} name={d.name} key={d.name} description={d.description} size='sm' />;
+					case 'slider':
+						return <Slider label={d.title} name={d.name} key={d.name} size='sm' />;
 					default:
 						return null;
 				}
