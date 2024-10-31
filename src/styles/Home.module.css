@@ -57,6 +57,10 @@
 	border-radius: 8px;
 	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
 	z-index: 2;
+
+	section {
+		height: 100% !important;
+	}
 }
 
 .handleSide {

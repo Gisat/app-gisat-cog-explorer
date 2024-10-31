@@ -6,13 +6,30 @@ import Map from '@/components/layouts/map'
 // Styles
 import classes from '@/styles/Home.module.css';
 import Dashboard from "@/components/layouts/dashboard";
-import Terminal from "@/components/layouts/terminal";
+import Editor from "@/components/layouts/editor";
 
 /**
  * Todo list:
  * 1. Implement Analytics (use-analytics)
  * 2. ...
  */
+
+const initialEditorText = `
+/************************************
+ *     Welcome to COG Explorer
+ ************************************/
+
+{
+    // Start changing settings
+    // to update the COG parameters
+
+    "useHeatMap": false,
+    "useSingleColor": true,
+    "useChannel": 1,
+    "clipLow": -7,
+    "color": "red"
+}
+`;
 
 export default function Home() {
   return (
@@ -28,8 +45,8 @@ export default function Home() {
               <Map />
             </Panel>
             <PanelResizeHandle className={classes.handleSide} />
-            <Panel className={classes.consolePanel} defaultSize={10} collapsible={true} minSize={20}>
-              <Terminal />
+            <Panel className={classes.consolePanel} defaultSize={20} collapsible={true} minSize={20} maxSize={70}>
+              <Editor initialContent={initialEditorText} />
             </Panel>
           </PanelGroup>
         </Panel>
