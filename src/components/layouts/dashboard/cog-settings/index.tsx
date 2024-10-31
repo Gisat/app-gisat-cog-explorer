@@ -6,6 +6,7 @@ import { useCallback, useState } from "react";
 import CogBitmapParams from '@/data/CogBitmapParams'
 import CheckboxWithLabel from '@/components/ui/settings/checkbox-with-label';
 import Slider from '@/components/ui/settings/slider';
+import Input from '@/components/ui/settings/input';
 
 // Styles
 // import classes from '@/styles/Dashboard.module.css';
@@ -42,6 +43,8 @@ const CogSettings = () => {
 						return <CheckboxWithLabel label={d.title} name={d.name} key={d.name} description={d.description} size='sm' />;
 					case 'slider':
 						return <Slider label={d.title} name={d.name} key={d.name} size='sm' />;
+					case 'text':
+						return <Input title='adsd' name={d.name} key={d.name} />;
 					default:
 						return null;
 				}
