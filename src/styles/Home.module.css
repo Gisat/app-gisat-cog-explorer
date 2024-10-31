@@ -1,0 +1,60 @@
+/* Example:
+
+.control {
+	background-color: var(--mantine-color-blue-1);
+	color: var(--mantine-color-blue-filled);
+	padding: var(--mantine-spacing-xl);
+	margin-left: rem(40px);
+  
+	@media (max-width: $mantine-breakpoint-sm) {
+	  margin-left: 0;
+	  margin-top: var(--mantine-spacing-md);
+	}
+  
+	@mixin hover {
+	  background-color: light-dark(
+		var(--mantine-color-blue-1),
+		var(--mantine-color-blue-9)
+	  );
+	}
+  }
+
+*/
+
+.main {
+	height: 100vh;
+	width: 100%;
+	padding: 5px;
+	background-color: var(--black);
+	color: var(--neutral-950);
+}
+
+.panelGroup {
+	height: 100vh;
+	width: 100%;
+	
+}
+
+.leftPanel {
+	background: var(--slate-800);
+	color: var(--stone-50);
+	border-radius: 6px;
+}
+
+.rightPanel {
+	background: var(--black);
+}
+
+.mapPanel {
+	background: var(--slate-900);
+	border-radius: 6px;
+}
+
+.consolePanel {
+	background: var(--slate-800);
+	border-radius: 6px;
+}
+
+.handleSide {
+	margin: 3px;
+}

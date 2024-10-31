@@ -3,11 +3,8 @@ import { ReactNode } from 'react';
 import { AppProvider } from '@/app/provider';
 
 // Mantine
-import { createTheme, MantineProvider, ColorSchemeScript } from '@mantine/core';
-
-const theme = createTheme({
-  /** Put your mantine theme override here */
-});
+import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+import { theme } from '@/styles/mantineTheme';
 
 // Styles
 import '@/styles/global.css'; // Global
@@ -29,7 +26,10 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
         />
         <ColorSchemeScript />
       </head>
-      <body>
+
+      {/** dark mode can be implemented by changing body's classname */}
+      <body className="ptr-light">
+        {/** Mantine theme is defined separately */}
         <MantineProvider theme={theme}>
           <AppProvider>
             {children}
