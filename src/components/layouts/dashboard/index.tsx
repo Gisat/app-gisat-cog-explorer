@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import Settings from './settings';
+import CogSettings from './cog-settings';
 
 // Styles
 import classes from '@/styles/Dashboard.module.css';
@@ -28,7 +28,7 @@ const Dashboard = () => {
 					</Link>
 				</div>
 				<div className={classes.settings}>
-					<Settings />
+					<CogSettings />
 				</div>
 				<div>
 					Footer
