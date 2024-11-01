@@ -1,10 +1,9 @@
 'use client'
 
-import CogSettings from './cog-settings';
-
 // Styles
 import classes from '@/styles/Dashboard.module.css';
 import { Logo } from '@/components/ui/logo';
+import CogSection from './cog-section';
 
 const Dashboard = () => {
 
@@ -24,7 +23,7 @@ const Dashboard = () => {
 					expandedText='COG Explorer'
 				/>
 				<div className={classes.settings}>
-					<CogSettings />
+					<CogSection />
 				</div>
 				<div>
 					Footer
