@@ -7,8 +7,11 @@ import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import { createQueryString } from '@/utils/url'
 import { transformToColor, transformToColorScale, transformToCommaSeparatedNumbers, transformToCommaSeparatedValueColorPairs } from '@/utils/dataTypes'
 
-import CogBitmapParams from '@/data/CogBitmapParams'
+import { cogSettings } from '@/config/cog/cog-tools-config'
 import chroma from "chroma-js";
+
+// Import types
+import { CogValueType } from '@/config/cog/cog-value-types'
 
 type LayerDefinition = {
 	key: string;
@@ -67,8 +70,8 @@ function Map() {
 
 		const values: params = {}
 
-		for (const p of CogBitmapParams) {
-			if (p.type === 'bool') {
+		for (const p of cogSettings) {
+			if (p.valueType === CogValueType.Boolean) {
 				const isTrue = paramsRef.current[p.name] === 'true';
 				if (p.defaultValue !== isTrue) {
 					values[p.name] = isTrue;
@@ -83,8 +86,8 @@ function Map() {
 
 		const values: params = {}
 
-		for (const p of CogBitmapParams) {
-			if (p.type === 'range') {
+		for (const p of cogSettings) {
+			if (p.valueType === CogValueType.Boolean) {
 				const parsed = Number.parseFloat(paramsRef.current[p.name]);
 
 				if (searchParams.has(p.name) && Number.isFinite(parsed) && parsed !== p.defaultValue) {
@@ -100,8 +103,8 @@ function Map() {
 
 		const values: params = {}
 
-		for (const p of CogBitmapParams) {
-			if (p.type === 'number') {
+		for (const p of cogSettings) {
+			if (p.valueType === CogValueType.Number) {
 				const parsed = Number.parseFloat(paramsRef.current[p.name]);
 
 				if (searchParams.has(p.name) && Number.isFinite(parsed) && parsed !== p.defaultValue) {
@@ -131,8 +134,8 @@ function Map() {
 
 		const values: params = {}
 
-		for (const p of CogBitmapParams) {
-			if (p.type === 'color') {
+		for (const p of cogSettings) {
+			if (p.valueType === CogValueType.Color) {
 				const asColor = transformToColor(paramsRef.current[p.name])
 				if (chroma.valid(asColor)) {
 					values[p.name] = asColor
@@ -143,41 +146,42 @@ function Map() {
 		return values;
 	}
 
-	const getTextValues = () => {
-
-		const values: params = {}
-
-		for (const p of CogBitmapParams) {
-			const type = typeof p.type === 'string' ? p.type : p.type.inputType
-			if (type === 'text') {
-				let textValue = null
-				const value = typeof p.type === 'string' ? null : p.type.value
-				if (value === 'color') {
-					textValue = transformToColor(paramsRef.current[p.name])
-				} else if (value === 'colorScale') {
-					textValue = transformToColorScale(paramsRef.current[p.name])
-				} else if (value === 'commaSeparatedNumbers') {
-					textValue = transformToCommaSeparatedNumbers(paramsRef.current[p.name])
-				} else if (value === 'commaSeparatedValueColorPairs') {
-					textValue = transformToCommaSeparatedValueColorPairs(paramsRef.current[p.name])
-				} else {
-					textValue = paramsRef.current[p.name]
-				}
-
-				if (textValue) {
-					values[p.name] = textValue
+	/*	const getTextValues = () => {
+	
+			const values: params = {}
+	
+			for (const p of cogSettings) {
+				const type = typeof p.type === 'string' ? p.type : p.type.inputType
+				if (type === 'text') {
+					let textValue = null
+					const value = typeof p.type === 'string' ? null : p.type.value
+					if (value === 'color') {
+						textValue = transformToColor(paramsRef.current[p.name])
+					} else if (value === 'colorScale') {
+						textValue = transformToColorScale(paramsRef.current[p.name])
+					} else if (value === 'commaSeparatedNumbers') {
+						textValue = transformToCommaSeparatedNumbers(paramsRef.current[p.name])
+					} else if (value === 'commaSeparatedValueColorPairs') {
+						textValue = transformToCommaSeparatedValueColorPairs(paramsRef.current[p.name])
+					} else {
+						textValue = paramsRef.current[p.name]
+					}
+	
+					if (textValue) {
+						values[p.name] = textValue
+					}
 				}
 			}
+			return values;
 		}
-		return values;
-	}
+	*/
 
 	const getParams = () => {
 		const values = {
 			...getBoolValues(),
 			...getRangeValues(),
 			...getNumberValues(),
-			...getTextValues(),
+			//	...getTextValues(),
 		}
 		return values;
 	}
@@ -218,7 +222,7 @@ function Map() {
 
 	const changeRef = useRef(false);
 
-	for (const p of CogBitmapParams) {
+	for (const p of cogSettings) {
 		if (searchParams.has(p.name)) {
 			if (paramsRef.current[p.name] !== searchParams.get(p.name)) {
 				changeRef.current = true

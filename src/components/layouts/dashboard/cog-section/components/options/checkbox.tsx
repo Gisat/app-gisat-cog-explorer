@@ -8,7 +8,7 @@ interface SwitchProps {
 	label?: string; // Optional label for the switch
 }
 
-const Switch: React.FC<SwitchProps> = ({ value, onChange, description, error, label }) => {
+const Checkbox: React.FC<SwitchProps> = ({ value, onChange, description, error, label }) => {
 	return (
 		<div style={{ marginBottom: '1rem' }}>
 			{label && <Text>{label}</Text>}
@@ -31,4 +31,4 @@ const Switch: React.FC<SwitchProps> = ({ value, onChange, description, error, la
 	);
 };
 
-export default Switch;
+export default Checkbox;
