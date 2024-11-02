@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import {
 	isValidColor,
@@ -31,7 +31,16 @@ const componentMap: Record<MantineInputType, React.ComponentType<any>> = {
 	[MantineInputType.Slider]: Slider
 };
 
+// Define tool values type based on CogSettingTool['name'] for keys
+type ToolValues = Record<CogSettingTool['name'], any>;
+
 const CogTools = () => {
+
+	// URL
+	const router = useRouter();
+	const pathname = usePathname();
+	const searchParams = useSearchParams();
+	const createQueryStringCallback = useCallback(createQueryString, [searchParams]);
 
 	// Getting default tool values from cog-tools-config
 	const initialToolValues = cogSettings.reduce((acc, tool) => {
@@ -39,13 +48,21 @@ const CogTools = () => {
 			...acc,
 			[tool.name]: {
 				defaultValue: tool.defaultValue,
-				valueRange: tool.valueRange || null,
+				// valueRange: tool.valueRange || null,
 			},
 		};
 	}, {});
 
-	const [toolValues, setToolValues] = useState(initialToolValues);
-	console.log('_ToolValues', toolValues);
+	const [toolValues, setToolValues] = useState<ToolValues>(initialToolValues);
+
+	// Define a centralized onChange function
+	const handleChange = (name: string, value: any) => {
+		// Update state
+		setToolValues(prevValues => ({ ...prevValues, [name]: value }));
+
+		// Update URL query
+		router.push('?' + createQueryStringCallback(name, value, Array.from(searchParams.entries())).toString(), { scroll: false });
+	};
 
 	// State to store validation errors
 	// const [errors, setErrors] = useState<Record<string, string | null>>({});
@@ -69,49 +86,41 @@ const CogTools = () => {
 		}
 	};
 
-	// URL
-	const router = useRouter();
-	const pathname = usePathname();
-	const searchParams = useSearchParams();
-
 	return (
-		<div>
+		<>
 			{cogSettings.map((tool: CogSettingTool) => {
 				const ToolComponent = componentMap[tool.type as MantineInputType];
 				if (!ToolComponent) return null;
 
-				// URL
-				const urlVal = searchParams.get(tool.name) !== null && searchParams.get(tool.name) !== '' ? Number(searchParams.get(tool.name)) : ''
+				// Current value for this tool
+				const value = toolValues[tool.name];
 
 				return (
-					<div key={tool.name} style={{ marginBottom: "1.5rem" }}>
-						<Input.Wrapper
-							size="sm"
-							label={tool.title}
-							description={tool.description}
-						// error={errorMsg}
-						// required
-						>
-							<ToolComponent
+					<Input.Wrapper
+						size="sm"
+						key={tool.name}
+						label={tool.title}
+						description={tool.description}
+					// error={errorMsg}
+					// required
+					>
+						<ToolComponent
 
+							// value={value}
+							// defaultValue={defaultValue}
+							onChange={(value: any) =>
+								handleChange(tool.name, value)
+							}
+							// defaultValue
 
-								value={urlVal}
-								// defaultValue=
-
-
-
-								{...(tool.valueRange && { min: tool.valueRange.min, max: tool.valueRange.max })}
-							// label='' todo: optional label if in wrapper specified
-							// error={errors[tool.name]}
-							/>
-						</Input.Wrapper>
-						{/*errors[tool.name] && (
-							<p style={{ color: "red", fontSize: "0.875rem" }}>{errors[tool.name]}</p>
-						)*/}
-					</div>
+							{...(tool.valueRange && { min: tool.valueRange.min, max: tool.valueRange.max })}
+						// label='' todo: optional label if in wrapper specified
+						// error={errors[tool.name]}
+						/>
+					</Input.Wrapper>
 				);
 			})}
-		</div>
+		</>
 	);
 };
 
