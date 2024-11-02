@@ -13,8 +13,7 @@ import { MantineInputType } from '@/config/cog/mantine-input-types';
 import { Range, CogSettingTool } from '@/config/cog/cog-tools-config';
 
 // Mantine-based components
-import Switch from './options/switch';
-import { Checkbox, ColorInput, ColorPicker, Input, JsonInput, NumberInput, Slider } from "@mantine/core";
+import { Switch, Checkbox, ColorInput, ColorPicker, Input, JsonInput, NumberInput, Slider, Text } from "@mantine/core";
 
 // Component mappings for each type
 const componentMap: Record<MantineInputType, React.ComponentType<any>> = {
@@ -75,14 +74,22 @@ const CogTools = () => {
 
 				return (
 					<div key={tool.name} style={{ marginBottom: "1.5rem" }}>
-						<label>{tool.title}</label>
-						<ToolComponent
-
-							onChange={(value: any) => handleChange(tool.name, value)}
-							{...(tool.valueRange && { min: tool.valueRange.min, max: tool.valueRange.max })}
+						<Input.Wrapper
+							size="sm"
+							label={tool.title}
 							description={tool.description}
-							error={errors[tool.name]}
-						/>
+						// error={errorMsg}
+						// required
+						>
+							<ToolComponent
+
+								onChange={(value: any) => handleChange(tool.name, value)}
+								{...(tool.valueRange && { min: tool.valueRange.min, max: tool.valueRange.max })}
+								description={tool.description}
+								// label='' todo: optional label if in wrapper specified
+								error={errors[tool.name]}
+							/>
+						</Input.Wrapper>
 						{errors[tool.name] && (
 							<p style={{ color: "red", fontSize: "0.875rem" }}>{errors[tool.name]}</p>
 						)}
