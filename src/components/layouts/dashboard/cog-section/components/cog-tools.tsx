@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { cogSettings } from "@/config/cog/cog-tools-config";
+
 import {
 	isValidColor,
 	isValidColorScale,
@@ -7,9 +7,13 @@ import {
 	isValidCommaSeparatedValueColorPairs,
 } from "@/utils/dataTypes";
 
+import { usePathname, useSearchParams, useRouter } from 'next/navigation'
+import { createQueryString } from '@/utils/url'
+
 // Import cog tools' data types
 import { CogValueType } from '@/config/cog/cog-value-types';
 import { MantineInputType } from '@/config/cog/mantine-input-types';
+import { cogSettings } from "@/config/cog/cog-tools-config";
 import { Range, CogSettingTool } from '@/config/cog/cog-tools-config';
 
 // Mantine-based components
@@ -29,23 +33,22 @@ const componentMap: Record<MantineInputType, React.ComponentType<any>> = {
 
 const CogTools = () => {
 
-	// Dynamic state for storing tool values and errors
-	const [toolValues, setToolValues] = useState(
-		cogSettings.reduce((acc, tool) => ({ ...acc, [tool.name]: tool.defaultValue }), {})
-	);
+	// Getting default tool values from cog-tools-config
+	const initialToolValues = cogSettings.reduce((acc, tool) => {
+		return {
+			...acc,
+			[tool.name]: {
+				defaultValue: tool.defaultValue,
+				valueRange: tool.valueRange || null,
+			},
+		};
+	}, {});
+
+	const [toolValues, setToolValues] = useState(initialToolValues);
+	console.log('_ToolValues', toolValues);
 
 	// State to store validation errors
-	const [errors, setErrors] = useState<Record<string, string | null>>({});
-
-	// Handle value change for each tool
-	const handleChange = (name: string, value: any) => {
-		// Update the value in state
-		setToolValues((prevValues) => ({ ...prevValues, [name]: value }));
-
-		// Validate value and update error state if needed
-		const error = validateValue(name, value);
-		setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
-	};
+	// const [errors, setErrors] = useState<Record<string, string | null>>({});
 
 	// Validation function for each tool based on its valueType
 	const validateValue = (name: string, value: any) => {
@@ -66,11 +69,19 @@ const CogTools = () => {
 		}
 	};
 
+	// URL
+	const router = useRouter();
+	const pathname = usePathname();
+	const searchParams = useSearchParams();
+
 	return (
 		<div>
 			{cogSettings.map((tool: CogSettingTool) => {
 				const ToolComponent = componentMap[tool.type as MantineInputType];
 				if (!ToolComponent) return null;
+
+				// URL
+				const urlVal = searchParams.get(tool.name) !== null && searchParams.get(tool.name) !== '' ? Number(searchParams.get(tool.name)) : ''
 
 				return (
 					<div key={tool.name} style={{ marginBottom: "1.5rem" }}>
@@ -83,16 +94,20 @@ const CogTools = () => {
 						>
 							<ToolComponent
 
-								onChange={(value: any) => handleChange(tool.name, value)}
+
+								value={urlVal}
+								// defaultValue=
+
+
+
 								{...(tool.valueRange && { min: tool.valueRange.min, max: tool.valueRange.max })}
-								description={tool.description}
-								// label='' todo: optional label if in wrapper specified
-								error={errors[tool.name]}
+							// label='' todo: optional label if in wrapper specified
+							// error={errors[tool.name]}
 							/>
 						</Input.Wrapper>
-						{errors[tool.name] && (
+						{/*errors[tool.name] && (
 							<p style={{ color: "red", fontSize: "0.875rem" }}>{errors[tool.name]}</p>
-						)}
+						)*/}
 					</div>
 				);
 			})}
