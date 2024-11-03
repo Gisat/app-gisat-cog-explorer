@@ -1,29 +1,16 @@
 import { cogSettings } from "@/config/cog/cog-tools-config";
 import { CogValueType } from "@/config/cog/cog-value-types";
-import { useSearchParams } from "next/navigation";
-import { useRef } from "react";
 import { transformToColor } from "./dataTypes";
 import chroma from "chroma-js";
 
-export const getCogParams = () => {
-  const searchParams = useSearchParams()!;
-
-  const versionRef = useRef(0);
-
-  // Parameters definition
-  type Params = {
-    [key: string]: any;
-  };
-  const defaultParams: Params = {};
-
-  const paramsRef = useRef(defaultParams);
-
+export const getCogParams = (searchParams: URLSearchParams) => {
   // Getting values by category
   const getBoolValues = () => {
-    const values: Params = {};
+    const values: Record<string, any> = {};
     for (const p of cogSettings) {
       if (p.valueType === CogValueType.Boolean) {
-        const isTrue = paramsRef.current[p.name] === "true";
+        const paramValue = searchParams.get(p.name);
+        const isTrue = paramValue === "true";
         if (p.defaultValue !== isTrue) {
           values[p.name] = isTrue;
         }
@@ -33,12 +20,13 @@ export const getCogParams = () => {
   };
 
   const getRangeValues = () => {
-    const values: Params = {};
+    const values: Record<string, any> = {};
     for (const p of cogSettings) {
       if (p.valueType === CogValueType.Range) {
-        const parsed = Number.parseFloat(paramsRef.current[p.name]);
+        const paramValue = searchParams.get(p.name);
+        const parsed = paramValue ? Number.parseFloat(paramValue) : NaN;
         if (
-          searchParams.has(p.name) &&
+          paramValue !== null &&
           Number.isFinite(parsed) &&
           parsed !== p.defaultValue
         ) {
@@ -50,12 +38,13 @@ export const getCogParams = () => {
   };
 
   const getNumberValues = () => {
-    const values: Params = {};
+    const values: Record<string, any> = {};
     for (const p of cogSettings) {
       if (p.valueType === CogValueType.Number) {
-        const parsed = Number.parseFloat(paramsRef.current[p.name]);
+        const paramValue = searchParams.get(p.name);
+        const parsed = paramValue ? Number.parseFloat(paramValue) : NaN;
         if (
-          searchParams.has(p.name) &&
+          paramValue !== null &&
           Number.isFinite(parsed) &&
           parsed !== p.defaultValue
         ) {
@@ -66,26 +55,13 @@ export const getCogParams = () => {
     return values;
   };
 
-  const getColorValues = () => {
-    const values: Params = {};
-    for (const p of cogSettings) {
-      if (p.valueType === CogValueType.Color) {
-        const asColor = transformToColor(paramsRef.current[p.name]);
-        if (chroma.valid(asColor)) {
-          values[p.name] = asColor;
-        }
-      }
-    }
-    return values;
-  };
-
   const getParams = () => {
-    return {
+    const values = {
       ...getBoolValues(),
       ...getRangeValues(),
       ...getNumberValues(),
-      ...getColorValues(),
     };
+    return values;
   };
 
   return getParams();

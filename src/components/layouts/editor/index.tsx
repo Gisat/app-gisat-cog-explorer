@@ -8,14 +8,12 @@ interface EditorProps {
 
 const Editor: React.FC<EditorProps> = () => {
 
-	const value = JSON.stringify(getCogParams());
-	const params = JSON.stringify(getCogParams());
-	console.log('!!!', params);
+	//const value = JSON.stringify(getCogParams());
 
 	return (
 		<MonacoEditor
 			language="jsonc"
-			value={value}
+			value='Hello world'
 			options={{ theme: 'vs-light' }}
 		/>
 	);
