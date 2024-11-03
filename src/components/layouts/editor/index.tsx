@@ -1,31 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import MonacoEditor from '@monaco-editor/react';
+import { getCogParams } from '@/utils/get-cog-params';
 
 interface EditorProps {
 	initialContent: string;
 }
 
-const Editor: React.FC<EditorProps> = ({ initialContent }) => {
-	const [content, setContent] = useState<string>(initialContent);
+const Editor: React.FC<EditorProps> = () => {
 
-	// Update content dynamically if initialContent prop changes
-	useEffect(() => {
-		setContent(initialContent);
-	}, [initialContent]);
-
-	// Explicitly typing the function for handling content changes
-	const handleEditorChange = (newValue: string | undefined) => {
-		if (typeof newValue === 'string') {
-			setContent(newValue);
-		}
-	};
+	const value = JSON.stringify(getCogParams());
+	const params = JSON.stringify(getCogParams());
+	console.log('!!!', params);
 
 	return (
 		<MonacoEditor
-			height="500px"
 			language="jsonc"
-			value={content}
-			onChange={handleEditorChange}
+			value={value}
 			options={{ theme: 'vs-light' }}
 		/>
 	);

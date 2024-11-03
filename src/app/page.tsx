@@ -14,23 +14,6 @@ import Editor from "@/components/layouts/editor";
  * 2. ...
  */
 
-const initialEditorText = `
-/************************************
- *     Welcome to COG Explorer
- ************************************/
-
-{
-    // Start changing settings
-    // to update the COG parameters
-
-    "useHeatMap": false,
-    "useSingleColor": true,
-    "useChannel": 1,
-    "clipLow": -7,
-    "color": "red"
-}
-`;
-
 export default function Home() {
   return (
     <main className={classes.main}>
@@ -46,7 +29,7 @@ export default function Home() {
             </Panel>
             <PanelResizeHandle className={classes.handleSide} />
             <Panel className={classes.consolePanel} defaultSize={20} collapsible={true} minSize={20} maxSize={70}>
-              <Editor initialContent={initialEditorText} />
+              <Editor />
             </Panel>
           </PanelGroup>
         </Panel>

@@ -42,7 +42,7 @@ export const cogSettings: CogSettingTool[] = [
   {
     name: "alpha",
     title: "Opacity",
-    description: "Adjust the opacity of the COG image (0-100, default 100).",
+    description: "Adjust the COG layer opacity",
     defaultValue: 100,
     valueRange: { min: 0, max: 100, step: 1 },
     valueType: CogValueType.Number,

@@ -94,6 +94,13 @@ const CogTools = () => {
 
 				// Current value for this tool
 				const value = toolValues[tool.name];
+				let defaultValue;
+
+				if (tool.name === 'alpha') {
+					defaultValue = searchParams.get(tool.name) !== null && searchParams.get(tool.name) !== '' ? Number(searchParams.get(tool.name)) : tool.defaultValue
+				} else {
+					defaultValue = undefined;
+				}
 
 				return (
 					<Input.Wrapper
@@ -107,10 +114,15 @@ const CogTools = () => {
 						<ToolComponent
 
 							// value={value}
-							// defaultValue={defaultValue}
-							onChange={(value: any) =>
-								handleChange(tool.name, value)
-							}
+							defaultValue={defaultValue}
+							onChange={(value: any) => {
+								const isValid = validateValue(tool.name, value);
+								if (isValid === null) {
+									handleChange(tool.name, value); // Only call handleChange if validation passes
+								} else {
+									console.warn(isValid);
+								}
+							}}
 							// defaultValue
 
 							{...(tool.valueRange && { min: tool.valueRange.min, max: tool.valueRange.max })}
