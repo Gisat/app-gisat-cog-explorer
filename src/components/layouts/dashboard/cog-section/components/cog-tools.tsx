@@ -117,6 +117,9 @@ const CogTools = () => {
 					if (tool.type === MantineInputType.Slider) {	// Value output
 						handleChange(tool.name, event)
 					}
+					if (tool.type === MantineInputType.NumberInput) {	// Value output
+						handleChange(tool.name, event)
+					}
 				};
 
 				return (

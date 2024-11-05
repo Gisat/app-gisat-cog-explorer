@@ -5,6 +5,7 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { createQueryString } from "@/utils/url";
 import { getCogParams } from "@/utils/get-cog-params";
+import isEqual from "lodash.isequal";
 
 type LayerDefinition = {
 	key: string;
@@ -51,6 +52,7 @@ function Map() {
 
 	// Dynamically update params from URL
 	const [params, setParams] = useState<Record<string, any>>({});
+	const prevParamsRef = useRef<Record<string, any>>({});
 
 	// Update params whenever searchParams change
 	useEffect(() => {
@@ -60,16 +62,20 @@ function Map() {
 
 	// Initialize or update layer whenever params change
 	useEffect(() => {
-		if (cogUrl) {
+		const paramsHaveChanged = !isEqual(prevParamsRef.current, params);
+
+		if (paramsHaveChanged) {
+			// If params have changed, initialize layer and update the previous params reference
 			initLayer();
+			prevParamsRef.current = params; // Update previous params to current params
 		}
 	}, [params, cogUrl]); // Depend on params and cogUrl
-	console.log(params)
+
 	const initLayer = () => {
-		//increaseLayerVersion();
+		increaseLayerVersion();
 
 		const layerDefinition: LayerDefinition = {
-			key: `CogBitmapLayer`,
+			key: `CogBitmapLayer_${versionRef.current}`,
 			layerKey: `CogBitmapLayer`,
 			name: "CogBitmapLayer_",
 			opacity: params.alpha * 0.01,

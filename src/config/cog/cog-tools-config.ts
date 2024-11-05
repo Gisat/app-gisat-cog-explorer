@@ -59,7 +59,7 @@ export const cogSettings: CogSettingTool[] = [
   {
     name: "useChannel",
     title: "Channel",
-    description: "Specify a single channel to use (default null)",
+    description: "Specify a single channel to use",
     defaultValue: null,
     valueType: CogValueType.Number,
     type: MantineInputType.NumberInput,
@@ -67,7 +67,7 @@ export const cogSettings: CogSettingTool[] = [
   {
     name: "multiplier",
     title: "Multiplier",
-    description: "Multiplies each value (default 1.00)",
+    description: "Multiplies each value",
     defaultValue: 1,
     valueType: CogValueType.Number,
     type: MantineInputType.NumberInput,
