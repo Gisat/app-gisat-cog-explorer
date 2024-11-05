@@ -16,6 +16,10 @@ import { MantineInputType } from '@/config/cog/mantine-input-types';
 import { cogSettings } from "@/config/cog/cog-tools-config";
 import { Range, CogSettingTool } from '@/config/cog/cog-tools-config';
 
+// Import color convert  operations
+import arrayToRgba from '@/utils/array-to-rgba';
+import rgbaToArray from "@/utils/rgba-to-array";
+
 // Mantine-based components
 import { Switch, Checkbox, ColorInput, ColorPicker, Input, JsonInput, NumberInput, Slider, Text } from "@mantine/core";
 
@@ -101,8 +105,8 @@ const CogTools = () => {
 
 				if (tool.name === 'alpha') {
 					defaultValue = searchParams.get(tool.name) !== null && searchParams.get(tool.name) !== '' ? Number(searchParams.get(tool.name)) : tool.defaultValue
-				} else if (tool.type === MantineInputType.Switch) {
-					// ...
+				} else if (tool.valueType === CogValueType.Color) {
+					defaultValue = arrayToRgba(tool.defaultValue);
 				} else {
 					defaultValue = undefined;
 				}
@@ -115,10 +119,15 @@ const CogTools = () => {
 						handleChange(tool.name, event.currentTarget.checked)
 					}
 					if (tool.type === MantineInputType.Slider) {	// Value output
-						handleChange(tool.name, event)
+						handleChange(tool.name, event);
 					}
 					if (tool.type === MantineInputType.NumberInput) {	// Value output
-						handleChange(tool.name, event)
+						handleChange(tool.name, event);
+					}
+
+					if (tool.valueType === CogValueType.Color) {
+						const value = rgbaToArray(event);
+						handleChange(tool.name, value);
 					}
 				};
 
@@ -138,11 +147,17 @@ const CogTools = () => {
 							checked={checked}
 							defaultValue={defaultValue}
 							onChange={(event: any) => onChange(event)}
+
+							// Sliders
 							{...(tool.valueRange && {
 								marks: [
 									{ value: tool.valueRange.min, label: `${tool.valueRange.min}%` },
 									{ value: tool.valueRange.max, label: `${tool.valueRange.max}%` }
 								]
+							})}
+							// Colors
+							{...(tool.valueType === CogValueType.Color && {
+								format: "rgba"
 							})}
 						// label='' todo: optional label if in wrapper specified
 						// error={errors[tool.name]}
