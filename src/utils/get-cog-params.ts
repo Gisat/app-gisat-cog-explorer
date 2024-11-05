@@ -19,35 +19,13 @@ export const getCogParams = (searchParams: URLSearchParams) => {
     return values;
   };
 
-  const getRangeValues = () => {
-    const values: Record<string, any> = {};
-    for (const p of cogSettings) {
-      if (p.valueType === CogValueType.Range) {
-        const paramValue = searchParams.get(p.name);
-        const parsed = paramValue ? Number.parseFloat(paramValue) : NaN;
-        if (
-          paramValue !== null &&
-          Number.isFinite(parsed) &&
-          parsed !== p.defaultValue
-        ) {
-          values[p.name] = parsed;
-        }
-      }
-    }
-    return values;
-  };
-
   const getNumberValues = () => {
     const values: Record<string, any> = {};
     for (const p of cogSettings) {
       if (p.valueType === CogValueType.Number) {
         const paramValue = searchParams.get(p.name);
         const parsed = paramValue ? Number.parseFloat(paramValue) : NaN;
-        if (
-          paramValue !== null &&
-          Number.isFinite(parsed) &&
-          parsed !== p.defaultValue
-        ) {
+        if (paramValue !== null && Number.isFinite(parsed)) {
           values[p.name] = parsed;
         }
       }
@@ -58,7 +36,6 @@ export const getCogParams = (searchParams: URLSearchParams) => {
   const getParams = () => {
     const values = {
       ...getBoolValues(),
-      ...getRangeValues(),
       ...getNumberValues(),
     };
     return values;

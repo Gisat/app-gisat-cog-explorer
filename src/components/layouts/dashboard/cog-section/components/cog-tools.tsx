@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
 
 import {
 	isValidColor,
@@ -68,7 +68,7 @@ const CogTools = () => {
 	// const [errors, setErrors] = useState<Record<string, string | null>>({});
 
 	// Validation function for each tool based on its valueType
-	const validateValue = (name: string, value: any) => {
+	/*const validateValue = (name: string, value: any) => {
 		const tool = cogSettings.find((tool) => tool.name === name);
 		if (!tool) return null;
 
@@ -84,7 +84,7 @@ const CogTools = () => {
 			default:
 				return null;
 		}
-	};
+	};*/
 
 	return (
 		<>
@@ -93,14 +93,31 @@ const CogTools = () => {
 				if (!ToolComponent) return null;
 
 				// Current value for this tool
-				const value = toolValues[tool.name];
+				// const value = toolValues[tool.name];
+
+
+
 				let defaultValue;
 
 				if (tool.name === 'alpha') {
 					defaultValue = searchParams.get(tool.name) !== null && searchParams.get(tool.name) !== '' ? Number(searchParams.get(tool.name)) : tool.defaultValue
+				} else if (tool.type === MantineInputType.Switch) {
+					// ...
 				} else {
 					defaultValue = undefined;
 				}
+
+				const [checked, setChecked] = useState(tool.defaultValue);
+
+				const onChange = (event: any) => {
+					if (tool.type === MantineInputType.Switch) {
+						setChecked(!checked);
+						handleChange(tool.name, event.currentTarget.checked)
+					}
+					if (tool.type === MantineInputType.Slider) {	// Value output
+						handleChange(tool.name, event)
+					}
+				};
 
 				return (
 					<Input.Wrapper
@@ -108,24 +125,22 @@ const CogTools = () => {
 						key={tool.name}
 						label={tool.title}
 						description={tool.description}
-					// error={errorMsg}
-					// required
+						// error={errorMsg}
+						// required
+
+						// Styles
+						{...(tool.type === MantineInputType.Slider ? { mb: "lg" } : {})}
 					>
 						<ToolComponent
-
-							// value={value}
+							checked={checked}
 							defaultValue={defaultValue}
-							onChange={(value: any) => {
-								const isValid = validateValue(tool.name, value);
-								if (isValid === null) {
-									handleChange(tool.name, value); // Only call handleChange if validation passes
-								} else {
-									console.warn(isValid);
-								}
-							}}
-							// defaultValue
-
-							{...(tool.valueRange && { min: tool.valueRange.min, max: tool.valueRange.max })}
+							onChange={(event: any) => onChange(event)}
+							{...(tool.valueRange && {
+								marks: [
+									{ value: tool.valueRange.min, label: `${tool.valueRange.min}%` },
+									{ value: tool.valueRange.max, label: `${tool.valueRange.max}%` }
+								]
+							})}
 						// label='' todo: optional label if in wrapper specified
 						// error={errors[tool.name]}
 						/>
