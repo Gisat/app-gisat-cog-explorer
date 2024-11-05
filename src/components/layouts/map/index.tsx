@@ -64,15 +64,15 @@ function Map() {
 			initLayer();
 		}
 	}, [params, cogUrl]); // Depend on params and cogUrl
-
+	console.log(params)
 	const initLayer = () => {
-		increaseLayerVersion();
+		//increaseLayerVersion();
 
 		const layerDefinition: LayerDefinition = {
-			key: `CogBitmapLayer_${versionRef.current}`,
-			layerKey: `CogBitmapLayer_${versionRef.current}`,
+			key: `CogBitmapLayer`,
+			layerKey: `CogBitmapLayer`,
 			name: "CogBitmapLayer_",
-			opacity: 1,
+			opacity: params.alpha * 0.01,
 			options: {
 				url: cogUrlRef.current,
 				type: "image",
@@ -109,19 +109,21 @@ function Map() {
 		boxRange: boxRange || 94088,
 	};
 
-	const viewRef = useRef(initView);
+	//const viewRef = useRef(initView);
 	const [viewState, setViewState] = useState(initView);
 
 	const onViewChange = (view: any) => {
-		viewRef.current = {
-			...viewRef.current, ...view
+		//		viewUpdate = {
+		//			...viewRef.current, ...view
+
+		const viewUpdate = {
+			...viewState, ...view
 		}
+		setViewState(viewUpdate)
 
-		setViewState(viewRef.current)
-
-		const p1 = createQueryStringCallback('lon', viewRef.current.center.lon, Array.from(searchParams.entries()))
-		const p2 = createQueryStringCallback('lat', viewRef.current.center.lat, Array.from(p1.entries()))
-		const p3 = createQueryStringCallback('boxRange', viewRef.current.boxRange, Array.from(p2.entries()))
+		const p1 = createQueryStringCallback('lon', viewUpdate.center.lon, Array.from(searchParams.entries()))
+		const p2 = createQueryStringCallback('lat', viewUpdate.center.lat, Array.from(p1.entries()))
+		const p3 = createQueryStringCallback('boxRange', viewUpdate.boxRange, Array.from(p2.entries()))
 
 		router.push('?' + p3.toString(), { scroll: false })
 	}
