@@ -4,6 +4,7 @@
 import classes from '@/styles/Dashboard.module.css';
 import { Logo } from '@/components/ui/logo';
 import CogSection from './cog-section';
+import DashboardFooter from './footer';
 
 const Dashboard = () => {
 
@@ -26,7 +27,7 @@ const Dashboard = () => {
 					<CogSection />
 				</div>
 				<div>
-					Footer
+					<DashboardFooter />
 				</div>
 			</div>
 		</aside>
