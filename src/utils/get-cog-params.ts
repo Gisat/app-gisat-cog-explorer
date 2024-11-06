@@ -1,42 +1,49 @@
 import { cogSettings } from "@/config/cog/cog-tools-config";
 import { CogValueType } from "@/config/cog/cog-value-types";
 import { transformToColor } from "./dataTypes";
-import chroma from "chroma-js";
 
 export const getCogParams = (searchParams: URLSearchParams) => {
-  // Getting values by category
-  const getBoolValues = () => {
+  const getValues = () => {
     const values: Record<string, any> = {};
-    for (const p of cogSettings) {
-      if (p.valueType === CogValueType.Boolean) {
-        const paramValue = searchParams.get(p.name);
-        const isTrue = paramValue === "true";
-        if (p.defaultValue !== isTrue) {
-          values[p.name] = isTrue;
-        }
-      }
-    }
-    return values;
-  };
 
-  const getNumberValues = () => {
-    const values: Record<string, any> = {};
-    for (const p of cogSettings) {
-      if (p.valueType === CogValueType.Number) {
-        const paramValue = searchParams.get(p.name);
-        const parsed = paramValue ? Number.parseFloat(paramValue) : NaN;
-        if (paramValue !== null && Number.isFinite(parsed)) {
-          values[p.name] = parsed;
+    for (const tool of cogSettings) {
+      const paramValueString = searchParams.get(tool.name);
+      let parsedValue: any;
+
+      // Parse the paramValueString based on the tool's expected valueType
+      if (paramValueString !== null) {
+        switch (tool.valueType) {
+          case CogValueType.Boolean:
+            parsedValue = paramValueString === "true";
+            break;
+          case CogValueType.Number:
+          case CogValueType.Range:
+            parsedValue = Number(paramValueString);
+            break;
+          case CogValueType.Color:
+          case CogValueType.ColorScale:
+            // Transform color-related values if necessary
+            parsedValue = transformToColor(paramValueString);
+            break;
+          // Add cases for additional types if needed
+          default:
+            parsedValue = paramValueString;
+            break;
         }
+      } else {
+        // If paramValueString is null, use the tool's defaultValue
+        parsedValue = tool.defaultValue;
       }
+
+      values[tool.name] = parsedValue;
     }
+
     return values;
   };
 
   const getParams = () => {
     const values = {
-      ...getBoolValues(),
-      ...getNumberValues(),
+      ...getValues(),
     };
     return values;
   };

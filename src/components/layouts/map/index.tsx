@@ -11,7 +11,7 @@ type LayerDefinition = {
 	key: string;
 	layerKey: string;
 	name: string;
-	opacity?: number;
+	opacity: number;
 	options: {
 		colorScale?: string[];
 		useHeatMap?: boolean;
@@ -30,46 +30,54 @@ type LayerDefinition = {
 };
 
 function Map() {
+	// General definitions
 	const router = useRouter();
-	const pathname = usePathname();
 	const searchParams = useSearchParams();
+	const cogUrl = searchParams.get("cogUrl");
 
+	// Handling map view (lat, lon)
 	const createQueryStringCallback = useCallback(createQueryString, [
 		searchParams,
 	]);
 
+	// Handling layer incremental indexing
 	const versionRef = useRef(0);
+	const increaseLayerVersion = () => {
+		versionRef.current += 1;
+	};
+
+	// Handling data source URL
 	const cogUrlRef = useRef<string | undefined>();
-	const cogUrl = searchParams.get("cogUrl");
+
+
+
+	// Handling COG parameters
+	const defaultParams = {
+		"alpha": 100
+	};
+	const [params, setParams] = useState(defaultParams);
+	useEffect(() => {
+		const gotParams = getCogParams(searchParams);
+
+		setParams((prevParams: any) => {
+			// Use deep comparison to check if params have changed
+			if (!isEqual(prevParams, gotParams)) {
+				return gotParams;
+			}
+			return prevParams;
+		});
+	}, [searchParams]);
+
+
+
+
 
 	const [cogBitmapLayer, setCogBitmapLayer] = useState<LayerDefinition | null>(
 		null
 	);
 
-	const increaseLayerVersion = () => {
-		versionRef.current += 1;
-	};
 
-	// Dynamically update params from URL
-	const [params, setParams] = useState<Record<string, any>>({});
-	const prevParamsRef = useRef<Record<string, any>>({});
 
-	// Update params whenever searchParams change
-	useEffect(() => {
-		const updatedParams = getCogParams(searchParams);
-		setParams(updatedParams);
-	}, [searchParams]);
-
-	// Initialize or update layer whenever params change
-	useEffect(() => {
-		const paramsHaveChanged = !isEqual(prevParamsRef.current, params);
-
-		if (paramsHaveChanged) {
-			// If params have changed, initialize layer and update the previous params reference
-			initLayer();
-			prevParamsRef.current = params; // Update previous params to current params
-		}
-	}, [params, cogUrl]); // Depend on params and cogUrl
 
 	const initLayer = () => {
 		increaseLayerVersion();
@@ -80,7 +88,7 @@ function Map() {
 			name: "CogBitmapLayer_",
 			opacity: params.alpha * 0.01,
 			options: {
-				url: cogUrlRef.current,
+				url: cogUrl || undefined,
 				type: "image",
 				cogBitmapOptions: {
 					...params,
@@ -92,14 +100,29 @@ function Map() {
 		setCogBitmapLayer(layerDefinition);
 	};
 
-	// Update cogUrlRef only when cogUrl changes in URL
-	useEffect(() => {
-		if (cogUrl && cogUrlRef.current !== cogUrl) {
-			cogUrlRef.current = cogUrl;
-		}
-	}, [cogUrl]);
 
-	// Map view state management
+
+
+	if (cogUrl && cogUrlRef.current !== cogUrl) {
+		cogUrlRef.current = cogUrl;
+		initLayer();
+	}
+
+	// Handling COG URL continue ...
+	useEffect(() => {
+		if (params) {
+			initLayer();
+		}
+	}, [params]);
+
+
+
+
+
+	/******************************
+	 *  MAP VIEW STATE MANAGEMENT
+	 ******************************/
+
 	const lon = searchParams.get("lon") || "";
 	const lat = searchParams.get("lat") || "";
 	const boxRange = searchParams.get("boxRange");
