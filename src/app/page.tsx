@@ -10,7 +10,6 @@ import { getCogParams } from '@/utils/get-cog-params';
 import classes from '@/styles/Home.module.css';
 import Dashboard from "@/components/layouts/dashboard";
 import Editor from "@/components/layouts/editor";
-import { getCogMetadata } from '@/utils/get-cog-metadata';
 
 /**
  * Todo list:
@@ -20,26 +19,9 @@ import { getCogMetadata } from '@/utils/get-cog-metadata';
 
 export default function Home() {
 
-  // Editor with metadata
-  const searchParams = useSearchParams();
-  const [metadata, setMetadata] = useState<string>(
-    "Welcome to COG Explorer! Enter your COG URL into the data source field to start exploring its metadata."
-  );
-
-  useEffect(() => {
-    async function fetchMetadata() {
-      const cogMetadata = await getCogMetadata(searchParams);
-      if (cogMetadata) {
-        setMetadata(JSON.stringify(cogMetadata, null, 2));
-      } else {
-        setMetadata("Failed to load metadata. Please check the COG URL.");
-      }
-    }
-
-    fetchMetadata();
-  }, [searchParams]);
-
   // Editor with params
+  const searchParams = useSearchParams();
+
   const [cogParams, setCogParams] = useState<string>();
   useEffect(() => {
     const updatedCogParams = JSON.stringify(getCogParams(searchParams), null, 2);
@@ -60,15 +42,9 @@ export default function Home() {
             </Panel>
             <PanelResizeHandle className={classes.handleSide} />
             <Panel className={classes.consolePanel} defaultSize={20} collapsible={true} minSize={20} maxSize={70}>
-              <PanelGroup direction="horizontal">
-                <Panel defaultSize={50}>
-                  <Editor content={metadata} />
-                </Panel>
-                <PanelResizeHandle className={classes.handleSide} />
-                <Panel defaultSize={50}>
-                  <Editor content={cogParams} />
-                </Panel>
-              </PanelGroup>
+              <Panel defaultSize={20} className={classes.consolePanel}>
+                <Editor content={cogParams} />
+              </Panel>
             </Panel>
           </PanelGroup>
         </Panel>
