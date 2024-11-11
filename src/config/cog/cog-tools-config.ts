@@ -103,19 +103,19 @@ export const cogSettings: CogSettingTool[] = [
     title: "Color Scale",
     description:
       "Array of colors, with options like chroma.js and Color Brewer",
-    defaultValue: null,
-    valueType: CogValueType.ColorScale,
-    type: MantineInputType.ColorPicker,
+    defaultValue: ["white", "black"],
+    valueType: CogValueType.CommaSeparatedNumbers,
+    type: MantineInputType.TagsInput,
   },
   {
     name: "colorScaleValueRange",
     title: "Color Scale Value Range",
     description:
       "Set min and max range values or exact color values if useAutoRange is false",
-    defaultValue: [0, 255],
-    valueRange: { min: 0, max: 255, step: 1 },
+    defaultValue: null,
+    // valueRange: { min: 0, max: 255, step: 1 },
     valueType: CogValueType.CommaSeparatedNumbers,
-    type: MantineInputType.Slider,
+    type: MantineInputType.Input,
   },
   {
     name: "useColorsBasedOnValues",

@@ -18,4 +18,5 @@ export enum MantineInputType {
   Switch = "Switch",
   //  Textarea = "Textarea",
   //  TextInput = "TextInput",
+  TagsInput = "TagsInput",
 }

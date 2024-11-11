@@ -1,12 +1,5 @@
 import { ReactNode, useCallback, useState } from "react";
 
-import {
-	isValidColor,
-	isValidColorScale,
-	isValidCommaSeparatedNumbers,
-	isValidCommaSeparatedValueColorPairs,
-} from "@/utils/dataTypes";
-
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import { createQueryString } from '@/utils/url'
 
@@ -21,7 +14,7 @@ import arrayToRgba from '@/utils/array-to-rgba';
 import rgbaToArray from "@/utils/rgba-to-array";
 
 // Mantine-based components
-import { Switch, Checkbox, ColorInput, ColorPicker, Input, JsonInput, NumberInput, Slider, Text } from "@mantine/core";
+import { Switch, Checkbox, ColorInput, ColorPicker, Input, JsonInput, NumberInput, Slider, TagsInput } from "@mantine/core";
 
 // Component mappings for each type
 const componentMap: Record<MantineInputType, React.ComponentType<any>> = {
@@ -32,7 +25,8 @@ const componentMap: Record<MantineInputType, React.ComponentType<any>> = {
 	[MantineInputType.Input]: Input,
 	[MantineInputType.JsonInput]: JsonInput,
 	[MantineInputType.NumberInput]: NumberInput,
-	[MantineInputType.Slider]: Slider
+	[MantineInputType.Slider]: Slider,
+	[MantineInputType.TagsInput]: TagsInput,
 };
 
 // Define tool values type based on CogSettingTool['name'] for keys
@@ -42,7 +36,7 @@ const CogTools = () => {
 
 	// URL
 	const router = useRouter();
-	const pathname = usePathname();
+	// const pathname = usePathname();
 	const searchParams = useSearchParams();
 	const createQueryStringCallback = useCallback(createQueryString, [searchParams]);
 
@@ -68,28 +62,6 @@ const CogTools = () => {
 		router.push('?' + createQueryStringCallback(name, value, Array.from(searchParams.entries())).toString(), { scroll: false });
 	};
 
-	// State to store validation errors
-	// const [errors, setErrors] = useState<Record<string, string | null>>({});
-
-	// Validation function for each tool based on its valueType
-	/*const validateValue = (name: string, value: any) => {
-		const tool = cogSettings.find((tool) => tool.name === name);
-		if (!tool) return null;
-
-		switch (tool.valueType) {
-			case CogValueType.Color:
-				return isValidColor(value) ? null : "Invalid color format";
-			case CogValueType.ColorScale:
-				return isValidColorScale(value) ? null : "Invalid color scale";
-			case CogValueType.CommaSeparatedNumbers:
-				return isValidCommaSeparatedNumbers(value) ? null : "Expected comma-separated numbers";
-			case CogValueType.CommaSeparatedValueColorPairs:
-				return isValidCommaSeparatedValueColorPairs(value) ? null : "Expected value-color pairs";
-			default:
-				return null;
-		}
-	};*/
-
 	return (
 		<>
 			{cogSettings.map((tool: CogSettingTool) => {
@@ -100,6 +72,7 @@ const CogTools = () => {
 				// const value = toolValues[tool.name];
 
 
+				// Handling default values
 
 				let defaultValue;
 
@@ -107,11 +80,17 @@ const CogTools = () => {
 					defaultValue = searchParams.get(tool.name) !== null && searchParams.get(tool.name) !== '' ? Number(searchParams.get(tool.name)) : tool.defaultValue
 				} else if (tool.valueType === CogValueType.Color) {
 					defaultValue = arrayToRgba(tool.defaultValue);
+				} else if (tool.type === MantineInputType.TagsInput) {
+					defaultValue = tool.defaultValue;
 				} else {
 					defaultValue = undefined;
 				}
 
+				// Handling useState
+
 				const [checked, setChecked] = useState(tool.defaultValue);
+
+
 
 				const onChange = (event: any) => {
 					if (tool.type === MantineInputType.Switch) {
@@ -128,6 +107,10 @@ const CogTools = () => {
 					if (tool.valueType === CogValueType.Color) {
 						const value = rgbaToArray(event);
 						handleChange(tool.name, value);
+					}
+
+					if (tool.type === MantineInputType.TagsInput) {
+						handleChange(tool.name, event);
 					}
 				};
 
@@ -159,6 +142,21 @@ const CogTools = () => {
 							{...(tool.valueType === CogValueType.Color && {
 								format: "rgba"
 							})}
+							// TagsInput
+							{...(tool.type === MantineInputType.TagsInput && {
+								placeholder: 'HEX colors or color names',
+								allowDuplicates: true,
+								clearable: true
+							})}
+
+							/**
+							 *  DISABLED Rules
+							 */
+
+							{...(toolValues.useAutoRange === true) && (tool.name === 'colorScaleValueRange') && {
+								disabled: true
+							}}
+
 						// label='' todo: optional label if in wrapper specified
 						// error={errors[tool.name]}
 						/>
