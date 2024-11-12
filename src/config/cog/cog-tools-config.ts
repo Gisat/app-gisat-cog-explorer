@@ -104,7 +104,7 @@ export const cogSettings: CogSettingTool[] = [
     description:
       "Array of colors, with options like chroma.js and Color Brewer",
     defaultValue: ["white", "black"],
-    valueType: CogValueType.CommaSeparatedNumbers,
+    valueType: CogValueType.CommaSeparatedColors,
     type: MantineInputType.TagsInput,
   },
   {

@@ -8,5 +8,6 @@ export enum CogValueType {
   Range = "range", // For min/max or numeric ranges, e.g., Slider
   JsonObject = "jsonObject", // For structured JSON-like data, e.g., JsonInput
   CommaSeparatedNumbers = "commaSeparatedNumbers", // For lists of numbers separated by commas
+  CommaSeparatedColors = "commaSeparatedColors", // For lists of numbers separated by commas
   CommaSeparatedValueColorPairs = "commaSeparatedValueColorPairs", // For arrays of value-color pairs
 }

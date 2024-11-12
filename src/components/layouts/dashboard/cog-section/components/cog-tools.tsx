@@ -12,9 +12,12 @@ import { Range, CogSettingTool } from '@/config/cog/cog-tools-config';
 // Import color convert  operations
 import arrayToRgba from '@/utils/array-to-rgba';
 import rgbaToArray from "@/utils/rgba-to-array";
+import convertStringToArrayFormat from '@/utils/string-to-array-format';
+import { validateColorScaleValueRange } from '@/utils/validate-input';
 
 // Mantine-based components
 import { Switch, Checkbox, ColorInput, ColorPicker, Input, JsonInput, NumberInput, Slider, TagsInput } from "@mantine/core";
+import stringToArrayFormat from "@/utils/string-to-array-format";
 
 // Component mappings for each type
 const componentMap: Record<MantineInputType, React.ComponentType<any>> = {
@@ -54,12 +57,31 @@ const CogTools = () => {
 	const [toolValues, setToolValues] = useState<ToolValues>(initialToolValues);
 
 	// Define a centralized onChange function
-	const handleChange = (name: string, value: any) => {
+	const handleChange = (name: string, value: string | boolean | object) => {
+		let processedValue;
+
+		if (typeof value === "string" && name === "colorScale") {
+			// Convert comma-separated colorScale string to an array of strings
+			processedValue = stringToArrayFormat(value);
+		} else {
+			processedValue = value;
+		}
+
+		// Ensure processedValue is a string or number for query string
+		const queryStringValue =
+			typeof processedValue === "string" || typeof processedValue === "number"
+				? processedValue
+				: JSON.stringify(processedValue);
+
 		// Update state
-		setToolValues(prevValues => ({ ...prevValues, [name]: value }));
+		setToolValues((prevValues) => ({ ...prevValues, [name]: processedValue }));
 
 		// Update URL query
-		router.push('?' + createQueryStringCallback(name, value, Array.from(searchParams.entries())).toString(), { scroll: false });
+		router.push(
+			"?" +
+			createQueryStringCallback(name, queryStringValue, Array.from(searchParams.entries())).toString(),
+			{ scroll: false }
+		);
 	};
 
 	return (
@@ -77,7 +99,7 @@ const CogTools = () => {
 				let defaultValue;
 
 				if (tool.name === 'alpha') {
-					defaultValue = searchParams.get(tool.name) !== null && searchParams.get(tool.name) !== '' ? Number(searchParams.get(tool.name)) : tool.defaultValue
+					defaultValue = searchParams.get(tool.name) !== null && searchParams.get(tool.name) !== '' ? Number(searchParams.get(tool.name)) : tool.defaultValue;
 				} else if (tool.valueType === CogValueType.Color) {
 					defaultValue = arrayToRgba(tool.defaultValue);
 				} else if (tool.type === MantineInputType.TagsInput) {
@@ -111,6 +133,12 @@ const CogTools = () => {
 
 					if (tool.type === MantineInputType.TagsInput) {
 						handleChange(tool.name, event);
+					}
+
+					if (tool.type === MantineInputType.Input) {
+						const value = String(event.target.value);
+						// console.log(value);
+						handleChange(tool.name, value);
 					}
 				};
 
@@ -148,12 +176,19 @@ const CogTools = () => {
 								allowDuplicates: true,
 								clearable: true
 							})}
+							{...(tool.type === MantineInputType.Input && {
+								placeholder: '0, 255',
+							})}
 
 							/**
 							 *  DISABLED Rules
 							 */
 
 							{...(toolValues.useAutoRange === true) && (tool.name === 'colorScaleValueRange') && {
+								disabled: true
+							}}
+
+							{...(toolValues.useColorsBasedOnValues === false) && (tool.name === 'colorsBasedOnValues') && {
 								disabled: true
 							}}
 

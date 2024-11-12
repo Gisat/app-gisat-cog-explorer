@@ -21,11 +21,22 @@ export const getCogParams = (searchParams: URLSearchParams) => {
             parsedValue = Number(paramValueString);
             break;
           case CogValueType.Color:
-          case CogValueType.ColorScale:
-            // Transform color-related values if necessary
             parsedValue = transformToColor(paramValueString);
             break;
-          // Add cases for additional types if needed
+          case CogValueType.CommaSeparatedColors:
+            // Split comma-separated values into an array
+            parsedValue = paramValueString.includes(",")
+              ? JSON.parse(paramValueString).map((color: string) =>
+                  color.trim()
+                )
+              : [paramValueString.trim()];
+            break;
+          case CogValueType.CommaSeparatedNumbers:
+            // Handle comma-separated values as an array of strings
+            parsedValue = paramValueString
+              .split(",")
+              .map((item) => item.trim());
+            break;
           default:
             parsedValue = paramValueString;
             break;
