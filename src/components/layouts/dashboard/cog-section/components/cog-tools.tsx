@@ -176,8 +176,11 @@ const CogTools = () => {
 								allowDuplicates: true,
 								clearable: true
 							})}
-							{...(tool.type === MantineInputType.Input && {
+							{...(tool.name === 'colorScaleValueRange' && {
 								placeholder: '0, 255',
+							})}
+							{...(tool.name === 'colorsBasedOnValues' && {
+								placeholder: '0, #FFFFFF (value, HEX color)',
 							})}
 
 							/**

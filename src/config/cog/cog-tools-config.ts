@@ -131,8 +131,8 @@ export const cogSettings: CogSettingTool[] = [
     description:
       "Array of value-color pairs, used if useColorsBasedOnValues is true",
     defaultValue: null,
-    valueType: CogValueType.CommaSeparatedValueColorPairs,
-    type: MantineInputType.JsonInput,
+    valueType: CogValueType.CommaSeparatedNumbers,
+    type: MantineInputType.Input,
   },
   {
     name: "unidentifiedColor",
