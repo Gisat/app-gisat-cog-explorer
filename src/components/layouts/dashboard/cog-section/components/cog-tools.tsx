@@ -180,7 +180,7 @@ const CogTools = () => {
 								placeholder: '0, 255',
 							})}
 							{...(tool.name === 'colorsBasedOnValues' && {
-								placeholder: '0, #FFFFFF (value, HEX color)',
+								placeholder: '[value, color], [...],',
 							})}
 
 							/**

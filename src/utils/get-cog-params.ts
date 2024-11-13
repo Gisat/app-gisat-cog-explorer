@@ -22,20 +22,65 @@ export const getCogParams = (searchParams: URLSearchParams) => {
             break;
           case CogValueType.Color:
             parsedValue = transformToColor(paramValueString);
+            if (parsedValue == "") {
+              parsedValue = tool.defaultValue;
+            }
             break;
           case CogValueType.CommaSeparatedColors:
             // Split comma-separated values into an array
-            parsedValue = paramValueString.includes(",")
-              ? JSON.parse(paramValueString).map((color: string) =>
-                  color.trim()
-                )
-              : [paramValueString.trim()];
+            if (
+              paramValueString &&
+              paramValueString.startsWith("[") &&
+              paramValueString.endsWith("]")
+            ) {
+              try {
+                parsedValue = JSON.parse(paramValueString).map(
+                  (color: string) => color.trim()
+                );
+              } catch (error) {
+                console.error(
+                  "Invalid JSON format in paramValueString:",
+                  paramValueString
+                );
+                parsedValue = null; // Set to null if parsing fails
+              }
+            } else {
+              console.warn(
+                "paramValueString is not in a valid array format:",
+                paramValueString
+              );
+              parsedValue = null; // Set to null if the format is incorrect
+            }
+
+            // Set parsedValue to null if it results in an empty array after parsing
+            if (Array.isArray(parsedValue) && parsedValue.length === 0) {
+              parsedValue = null;
+            }
             break;
           case CogValueType.CommaSeparatedNumbers:
             // Handle comma-separated values as an array of strings
             parsedValue = paramValueString
               .split(",")
               .map((item) => item.trim());
+            if (parsedValue == "") {
+              parsedValue = null;
+            }
+            break;
+          case CogValueType.ValueColorArray:
+            // Match patterns that look like ["1", "red"], [1, "red"], or [1, red]
+            const pairsRegex =
+              /\[["']?(\d+)["']?,\s*["']?([a-zA-Z#0-9]+)["']?\]/g;
+            parsedValue = [];
+            let match;
+
+            // Extract each [number, color] pair from the string
+            while ((match = pairsRegex.exec(paramValueString)) !== null) {
+              // Convert the first element to a number even if it's a string
+              const number = parseInt(match[1], 10); // Will parse "1" as 1
+              const color = match[2]; // Second element remains a string for the color
+              parsedValue.push([number, color]);
+            }
+
             break;
           default:
             parsedValue = paramValueString;

@@ -9,5 +9,6 @@ export enum CogValueType {
   JsonObject = "jsonObject", // For structured JSON-like data, e.g., JsonInput
   CommaSeparatedNumbers = "commaSeparatedNumbers", // For lists of numbers separated by commas
   CommaSeparatedColors = "commaSeparatedColors", // For lists of numbers separated by commas
-  CommaSeparatedValueColorPairs = "commaSeparatedValueColorPairs", // For arrays of value-color pairs
+  CommaSeparatedValueColorPairs = "commaSeparatedValueColorPairs",
+  ValueColorArray = "ValueColorArray",
 }

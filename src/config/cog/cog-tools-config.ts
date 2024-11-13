@@ -103,7 +103,7 @@ export const cogSettings: CogSettingTool[] = [
     title: "Color Scale",
     description:
       "Array of colors, with options like chroma.js and Color Brewer",
-    defaultValue: ["white", "black"],
+    defaultValue: undefined,
     valueType: CogValueType.CommaSeparatedColors,
     type: MantineInputType.TagsInput,
   },
@@ -131,7 +131,7 @@ export const cogSettings: CogSettingTool[] = [
     description:
       "Array of value-color pairs, used if useColorsBasedOnValues is true",
     defaultValue: null,
-    valueType: CogValueType.CommaSeparatedNumbers,
+    valueType: CogValueType.ValueColorArray,
     type: MantineInputType.Input,
   },
   {
