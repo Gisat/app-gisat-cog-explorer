@@ -44,6 +44,34 @@ export const getCogParams = (searchParams: URLSearchParams) => {
                 );
                 parsedValue = null; // Set to null if parsing fails
               }
+            } else if (paramValueString) {
+              const decodedParamValueString =
+                decodeURIComponent(paramValueString);
+
+              // Check if the decoded value starts and ends with a quote
+              if (
+                decodedParamValueString.startsWith('"') &&
+                decodedParamValueString.endsWith('"')
+              ) {
+                try {
+                  // Remove the starting and ending quotes and split by comma
+                  const colorArray = decodedParamValueString
+                    .slice(1, -1) // Remove starting and ending quotes
+                    .split('","') // Split by '","' to get individual colors
+                    .map((color: string) => color.trim()); // Trim spaces if any
+
+                  parsedValue = colorArray;
+                } catch (error) {
+                  console.error(
+                    "Error processing paramValueString:",
+                    decodedParamValueString
+                  );
+                  parsedValue = null; // Set to null if splitting fails
+                }
+              } else {
+                // Handle other types of values if necessary
+                parsedValue = null;
+              }
             } else {
               console.warn(
                 "paramValueString is not in a valid array format:",
