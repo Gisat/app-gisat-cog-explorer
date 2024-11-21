@@ -62,7 +62,7 @@ export const cogSettings: CogSettingTool[] = [
     description: "Specify a single channel to use",
     defaultValue: null,
     valueType: CogValueType.Number,
-    type: MantineInputType.NumberInput,
+    type: MantineInputType.Input,
   },
   {
     name: "multiplier",
@@ -70,7 +70,7 @@ export const cogSettings: CogSettingTool[] = [
     description: "Multiplies each value",
     defaultValue: 1,
     valueType: CogValueType.Number,
-    type: MantineInputType.NumberInput,
+    type: MantineInputType.Input,
   },
   {
     name: "clipLow",
@@ -78,7 +78,7 @@ export const cogSettings: CogSettingTool[] = [
     description: "Generate only data greater than this (default null)",
     defaultValue: null,
     valueType: CogValueType.Number,
-    type: MantineInputType.NumberInput,
+    type: MantineInputType.Input,
   },
   {
     name: "clipHigh",
@@ -87,7 +87,7 @@ export const cogSettings: CogSettingTool[] = [
       "Only display data values less than this threshold (default null).",
     defaultValue: null,
     valueType: CogValueType.Number,
-    type: MantineInputType.NumberInput,
+    type: MantineInputType.Input,
   },
   {
     name: "clippedColor",

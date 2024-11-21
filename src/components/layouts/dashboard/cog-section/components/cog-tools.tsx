@@ -21,7 +21,7 @@ import {
   ColorPicker,
   Input,
   JsonInput,
-  NumberInput,
+  //   NumberInput,
   Slider,
   TagsInput,
 } from "@mantine/core";
@@ -35,7 +35,7 @@ const componentMap: Record<MantineInputType, React.ComponentType<any>> = {
   [MantineInputType.ColorPicker]: ColorPicker,
   [MantineInputType.Input]: Input,
   [MantineInputType.JsonInput]: JsonInput,
-  [MantineInputType.NumberInput]: NumberInput,
+  //   [MantineInputType.NumberInput]: NumberInput,
   [MantineInputType.Slider]: Slider,
   [MantineInputType.TagsInput]: TagsInput,
 };
@@ -72,6 +72,8 @@ const CogTools = () => {
     if (typeof value === "string" && name === "colorScale") {
       // Convert comma-separated colorScale string to an array of strings
       processedValue = stringToArrayFormat(value);
+    } else if (value == "") {
+      processedValue = null;
     } else {
       processedValue = value;
     }
@@ -117,14 +119,16 @@ const CogTools = () => {
             searchParams.get(tool.name) !== ""
               ? Number(searchParams.get(tool.name))
               : tool.defaultValue;
-        } else if (tool.type === MantineInputType.NumberInput) {
-          // Channel
-          defaultValue =
-            searchParams.get(tool.name) !== null &&
-            searchParams.get(tool.name) !== ""
-              ? Number(searchParams.get(tool.name))
-              : tool.defaultValue;
-        } else if (tool.valueType === CogValueType.Color) {
+        }
+        // else if (tool.type === MantineInputType.NumberInput) {
+        //   // Channel
+        //   defaultValue =
+        //     searchParams.get(tool.name) !== null &&
+        //     searchParams.get(tool.name) !== ""
+        //       ? Number(searchParams.get(tool.name))
+        //       : ".";
+        // }
+        else if (tool.valueType === CogValueType.Color) {
           defaultValue = arrayToRgba(tool.defaultValue);
         } else if (
           tool.type === MantineInputType.TagsInput &&
@@ -143,11 +147,12 @@ const CogTools = () => {
 
           placeholderValue = valueTags !== null ? valueTags : undefined; // Set defaultValue based on valueTags
         } else if (tool.type === MantineInputType.Input) {
-          defaultValue =
-            searchParams.get(tool.name) !== null &&
-            searchParams.get(tool.name) !== ""
-              ? String(searchParams.get(tool.name))
-              : null;
+          let value: string | number | null = searchParams.get(tool.name);
+          if (value && value !== null && value !== "") {
+            defaultValue = value;
+          } else {
+            defaultValue = defaultValue;
+          }
         } else {
           defaultValue = undefined;
         }
@@ -165,10 +170,10 @@ const CogTools = () => {
             // Value output
             handleChange(tool.name, event);
           }
-          if (tool.type === MantineInputType.NumberInput) {
-            // Value output
-            handleChange(tool.name, event);
-          }
+          //   if (tool.type === MantineInputType.NumberInput) {
+          //     // Value output
+          //     handleChange(tool.name, event);
+          //   }
 
           if (tool.valueType === CogValueType.Color) {
             const value = rgbaToArray(event);
@@ -180,7 +185,10 @@ const CogTools = () => {
           }
 
           if (tool.type === MantineInputType.Input) {
-            const value = String(event.target.value);
+            const value: any =
+              event.target.value !== null && event.target.value !== ""
+                ? String(event.target.value)
+                : null;
             // console.log(value);
             handleChange(tool.name, value);
           }
@@ -214,6 +222,10 @@ const CogTools = () => {
                     label: `${tool.valueRange.max}%`,
                   },
                 ],
+              })}
+              // Input
+              {...(tool.type === MantineInputType.Input && {
+                placeholder: "null",
               })}
               // Colors
               {...(tool.valueType === CogValueType.Color && {

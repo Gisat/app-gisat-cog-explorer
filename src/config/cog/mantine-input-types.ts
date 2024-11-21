@@ -8,7 +8,7 @@ export enum MantineInputType {
   Input = "Input",
   JsonInput = "JsonInput",
   //  NativeSelect = "NativeSelect",
-  NumberInput = "NumberInput",
+  // NumberInput = "NumberInput",
   //  PasswordInput = "PasswordInput",
   //  PinInput = "PinInput",
   //  Radio = "Radio",
