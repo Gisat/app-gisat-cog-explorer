@@ -1,17 +1,18 @@
-import MonacoEditor from '@monaco-editor/react';
+import MonacoEditor from "@monaco-editor/react";
 
-interface EditorProps {
-	content: string | undefined;
-}
+// import { getParamsUrl } from "@/utils/getParamsUrl";
+import { useParamsUrl } from "@/utils/useParamsUrl";
 
-const Editor: React.FC<EditorProps> = ({ content }) => {
-	return (
-		<MonacoEditor
-			language="json"
-			value={content}
-			options={{ theme: 'vs-light' }}
-		/>
-	);
+const Editor = () => {
+  const urlParams = useParamsUrl();
+
+  return (
+    <MonacoEditor
+      language="json"
+      value={JSON.stringify(urlParams, null, 2)}
+      options={{ theme: "vs-light" }}
+    />
+  );
 };
 
 export default Editor;

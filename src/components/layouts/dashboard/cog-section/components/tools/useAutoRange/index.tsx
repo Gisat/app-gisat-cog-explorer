@@ -1,41 +1,43 @@
-import { useCallback, useState } from "react";
-
-import { useSearchParams, useRouter } from "next/navigation";
-import { createQueryString } from "@/utils/url";
-
-// Import cog tools' data types
-import { CogValueType } from "@/config/cog/cog-value-types";
-import { MantineInputType } from "@/config/cog/mantine-input-types";
+import { useState } from "react";
+// Mantine-based components
+import { Switch as MantineSwitch, Input as MantineInput } from "@mantine/core";
+// Import cog tools config
 import { cogSettings } from "@/config/cog/cog-tools-config";
-import { Range, CogSettingTool } from "@/config/cog/cog-tools-config";
+// Utils
+import { getParamsUrl } from "@/utils/getParamsUrl";
+import { urlParams } from "@/types/urlParams";
+import { useHandleParamChange } from "@/utils/useHandleParamChange";
 
-// Component
-import { Input, Switch } from "@mantine/core";
+const tool = cogSettings.find((t) => t.name === "useAutoRange");
+if (!tool) {
+  console.warn("Tool with name 'useAutoRange' not found.");
+}
 
-const useAutoRange = () => {
-  const router = useRouter();
-  // const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const createQueryStringCallback = useCallback(createQueryString, [
-    searchParams,
-  ]);
+const parcedParam = getParamsUrl(undefined, false) as Partial<urlParams>;
+const parcedValue = parcedParam.useAutoRange;
 
-  // Getting default tool values from cog-tools-config
-  const initialToolValues = cogSettings.reduce((acc, tool) => {
-    return {
-      ...acc,
-      [tool.name]: {
-        defaultValue: tool.defaultValue,
-        // valueRange: tool.valueRange || null,
-      },
-    };
-  }, {});
+const UseAutoRange = () => {
+  const [checked, setChecked] = useState(parcedValue);
+
+  const { handleParamChange } = useHandleParamChange();
+
+  const onChange = (event: any) => {
+    setChecked(!checked);
+    handleParamChange("useAutoRange", event.currentTarget.checked); // To fix (tool.name)
+  };
 
   return (
-    <Input.Wrapper size="sm">
-      <Switch />
-    </Input.Wrapper>
+    <>
+      <MantineInput.Wrapper
+        size="sm"
+        key={tool?.name}
+        label={tool?.title}
+        description={tool?.description}
+      >
+        <MantineSwitch mt="xs" checked={checked} onChange={onChange} />
+      </MantineInput.Wrapper>
+    </>
   );
 };
 
-export { useAutoRange };
+export { UseAutoRange };

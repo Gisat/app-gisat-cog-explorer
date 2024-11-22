@@ -1,6 +1,4 @@
 export enum CogValueType {
-  Boolean = "boolean", // For switchable values, e.g., Checkbox, Switch
-  Number = "number", // For numeric values, e.g., NumberInput, Slider
   Text = "text", // For plain text, e.g., TextInput, Textarea
   Color = "color", // For single color inputs, e.g., ColorInput
   ColorScale = "colorScale", // For color scales or gradients, e.g., ColorPicker
@@ -11,4 +9,9 @@ export enum CogValueType {
   CommaSeparatedColors = "commaSeparatedColors", // For lists of numbers separated by commas
   CommaSeparatedValueColorPairs = "commaSeparatedValueColorPairs",
   ValueColorArray = "ValueColorArray",
+
+  // New
+  Boolean = "boolean", // For switchable values, e.g., useAutoRange
+  Number = "number", // For numeric values, e.g. alpha (opacity)
+  NumberNull = "numberNull", // For numberic values that also include null values as default, e.g. useChanel
 }

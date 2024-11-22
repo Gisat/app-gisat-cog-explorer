@@ -61,7 +61,7 @@ export const cogSettings: CogSettingTool[] = [
     title: "Channel",
     description: "Specify a single channel to use",
     defaultValue: null,
-    valueType: CogValueType.Number,
+    valueType: CogValueType.NumberNull,
     type: MantineInputType.Input,
   },
   {
@@ -77,7 +77,7 @@ export const cogSettings: CogSettingTool[] = [
     title: "Clip Low",
     description: "Generate only data greater than this (default null)",
     defaultValue: null,
-    valueType: CogValueType.Number,
+    valueType: CogValueType.Color,
     type: MantineInputType.Input,
   },
   {
@@ -86,7 +86,7 @@ export const cogSettings: CogSettingTool[] = [
     description:
       "Only display data values less than this threshold (default null).",
     defaultValue: null,
-    valueType: CogValueType.Number,
+    valueType: CogValueType.Color,
     type: MantineInputType.Input,
   },
   {
