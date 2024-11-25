@@ -1,20 +1,19 @@
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 // Mantine-based components
 import { Switch as MantineSwitch, Input as MantineInput } from "@mantine/core";
 // Import cog tools config
 import { cogSettings } from "@/config/cog/cog-tools-config";
 // Utils
-import { getParamsUrl } from "@/utils/getParamsUrl";
+
 import { urlParams } from "@/types/urlParams";
-import { useHandleParamChange } from "@/utils/useHandleParamChange";
+import { useHandleParamChange } from "@/utils/url/useHandleParamChange";
+import { getParam } from "@/utils/url/getParam";
 
-const tool = cogSettings.find((t) => t.name === "useAutoRange");
-if (!tool) {
-  console.warn("Tool with name 'useAutoRange' not found.");
-}
+// const searchParams = useSearchParams();
+// const tool = getParam("useAutoRange", searchParams);
 
-const parcedParam = getParamsUrl(undefined, false) as Partial<urlParams>;
-const parcedValue = parcedParam.useAutoRange;
+const parcedValue = true;
 
 const UseAutoRange = () => {
   const [checked, setChecked] = useState(parcedValue);
@@ -30,9 +29,9 @@ const UseAutoRange = () => {
     <>
       <MantineInput.Wrapper
         size="sm"
-        key={tool?.name}
-        label={tool?.title}
-        description={tool?.description}
+        key="123"
+        label="{tool?.title}"
+        description="{tool?.description}"
       >
         <MantineSwitch mt="xs" checked={checked} onChange={onChange} />
       </MantineInput.Wrapper>

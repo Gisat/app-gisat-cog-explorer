@@ -1,6 +1,7 @@
-import { CogSettingTool } from "@/config/cog/cog-tools-config";
+"use client";
+
 import { useSearchParams, useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { CogSettingTool } from "@/config/cog/cog-tools-config";
 
 // Define a utility type to map tool names to their value types
 type CogSettingsValueType = {
@@ -11,22 +12,8 @@ type CogSettingsValueType = {
     : any; // Fallback for other types
 };
 
-const createQueryString = (
-  name: string,
-  value: string | number,
-  searchParams: string[][]
-) => {
-  const params = new URLSearchParams(searchParams);
-  params.set(name, value.toString());
-
-  // return params.toString();
-  return params;
-};
-
-export const useHandleParamChange = (
-  name: CogSettingTool["name"],
-  value: CogSettingsValueType[CogSettingTool["name"]]
-) => {
+// Custom hook definition
+export const useHandleParamChange = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -44,7 +31,7 @@ export const useHandleParamChange = (
       params.delete(name); // Remove the parameter
     }
 
-    // Update the URL
+    // Push updated query string to the router
     router.push(`?${params.toString()}`, { scroll: false });
   };
 

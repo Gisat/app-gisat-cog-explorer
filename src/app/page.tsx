@@ -1,10 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import Map from "@/components/layouts/map";
-import { getCogParams } from "@/utils/get-cog-params";
 
 // Styles
 import classes from "@/styles/Home.module.css";

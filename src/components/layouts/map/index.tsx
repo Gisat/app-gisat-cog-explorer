@@ -3,7 +3,7 @@
 import { DeckGlMap } from "@gisatcz/ptr-maps";
 import { useRef, useState, useCallback, useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { getCogParams } from "@/utils/get-cog-params";
+// import { getCogParams } from "@/utils/get-cog-params";
 import isEqual from "lodash.isequal";
 
 type LayerDefinition = {
@@ -49,13 +49,7 @@ function Map() {
   };
   const [params, setParams] = useState(defaultParams);
   useEffect(() => {
-    const gotParams = getCogParams(searchParams);
-
     setParams((prevParams: any) => {
-      // Use deep comparison to check if params have changed
-      if (!isEqual(prevParams, gotParams)) {
-        return gotParams;
-      }
       return prevParams;
     });
   }, [searchParams]);

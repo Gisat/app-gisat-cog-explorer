@@ -1,15 +1,18 @@
 import MonacoEditor from "@monaco-editor/react";
+import React, { useState, useEffect } from "react";
+// Params
+import { getParamsUrl } from "@/utils/url/getAllParams";
 
-// import { getParamsUrl } from "@/utils/getParamsUrl";
-import { useParamsUrl } from "@/utils/useParamsUrl";
+import { useSearchParams } from "next/navigation";
 
 const Editor = () => {
-  const urlParams = useParamsUrl();
+  const searchParams = useSearchParams();
+  const value = getParamsUrl(undefined, searchParams, true);
 
   return (
     <MonacoEditor
       language="json"
-      value={JSON.stringify(urlParams, null, 2)}
+      value={String(value)}
       options={{ theme: "vs-light" }}
     />
   );
