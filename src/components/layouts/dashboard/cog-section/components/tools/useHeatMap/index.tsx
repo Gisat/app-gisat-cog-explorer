@@ -7,17 +7,16 @@ import { useUpdateParam } from "@/hooks/url/useUpdateParam";
 import { getTool } from "@/utils/url/getTool";
 import { CogSettingTool } from "@/config/cog/cog-tools-config";
 
-const toolName: CogSettingTool["name"] = "useAutoRange";
+const toolName: CogSettingTool["name"] = "useHeatMap";
 
-const UseAutoRange = () => {
+const UseHeatMap = () => {
   // Hooks
   const updateParam = useUpdateParam();
-
   const tool: CogSettingTool = getTool(toolName);
   /**
    * TODO: What should be the fallback value if url has no param?
    */
-  const parsedValue = tool.value ? tool.value : false;
+  const parsedValue = tool.value ? tool.value : tool.defaultValue;
 
   const [checked, setChecked] = useState(parsedValue);
 
@@ -40,4 +39,4 @@ const UseAutoRange = () => {
   );
 };
 
-export { UseAutoRange };
+export { UseHeatMap };

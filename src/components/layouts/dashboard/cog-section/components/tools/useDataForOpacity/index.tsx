@@ -7,12 +7,11 @@ import { useUpdateParam } from "@/hooks/url/useUpdateParam";
 import { getTool } from "@/utils/url/getTool";
 import { CogSettingTool } from "@/config/cog/cog-tools-config";
 
-const toolName: CogSettingTool["name"] = "useAutoRange";
+const toolName: CogSettingTool["name"] = "useDataForOpacity";
 
-const UseAutoRange = () => {
+const UseDataForOpacity = () => {
   // Hooks
   const updateParam = useUpdateParam();
-
   const tool: CogSettingTool = getTool(toolName);
   /**
    * TODO: What should be the fallback value if url has no param?
@@ -40,4 +39,4 @@ const UseAutoRange = () => {
   );
 };
 
-export { UseAutoRange };
+export { UseDataForOpacity };

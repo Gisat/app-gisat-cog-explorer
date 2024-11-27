@@ -1,12 +1,10 @@
 // import chroma from "chroma-js";
 import { urlParams } from "@/types/urlParams";
 // Import helpers (parsers)
-import { parseBoolean, parseNumber } from "./parseValueTypes";
+import { parseBoolean, parseNumber, parseNumberNull } from "./parseValueTypes";
 // Import COG Settings
 import { cogSettings } from "@/config/cog/cog-tools-config";
 import { CogValueType } from "@/config/cog/cog-value-types";
-import { useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
 
 export const getParamsUrl = (
   url?: string,
@@ -59,6 +57,10 @@ export const getParamsUrl = (
         break;
 
       case CogValueType.NumberNull:
+        result[name as keyof urlParams] = parseNumberNull(
+          tool.name,
+          paramValue
+        ) as any;
         break;
       case CogValueType.Color:
         break;

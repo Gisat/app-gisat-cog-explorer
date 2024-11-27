@@ -1,5 +1,3 @@
-"use client";
-
 import { useSearchParams, useRouter } from "next/navigation";
 import { CogSettingTool } from "@/config/cog/cog-tools-config";
 
@@ -12,15 +10,19 @@ type CogSettingsValueType = {
     : any; // Fallback for other types
 };
 
-// Custom hook definition
-export const useHandleParamChange = () => {
-  const router = useRouter();
+/**
+ * Custom hook to update query parameters based on tool settings.
+ *
+ * @returns The `updateParam` function to update or remove query parameters.
+ */
+export const useUpdateParam = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
-  const handleParamChange = (
+  return (
     name: CogSettingTool["name"],
     value: CogSettingsValueType[CogSettingTool["name"]]
-  ) => {
+  ): void => {
     // Clone current query parameters
     const params = new URLSearchParams(searchParams.toString());
 
@@ -34,6 +36,4 @@ export const useHandleParamChange = () => {
     // Push updated query string to the router
     router.push(`?${params.toString()}`, { scroll: false });
   };
-
-  return { handleParamChange };
 };

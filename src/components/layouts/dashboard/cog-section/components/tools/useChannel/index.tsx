@@ -1,15 +1,18 @@
 import { useState } from "react";
 // Mantine-based components
-import { Switch as MantineSwitch, Input as MantineInput } from "@mantine/core";
+import {
+  NumberInput as MantineNumberInput,
+  Input as MantineInput,
+} from "@mantine/core";
 // Utils
 
 import { useUpdateParam } from "@/hooks/url/useUpdateParam";
 import { getTool } from "@/utils/url/getTool";
 import { CogSettingTool } from "@/config/cog/cog-tools-config";
 
-const toolName: CogSettingTool["name"] = "useAutoRange";
+const toolName: CogSettingTool["name"] = "useChannel";
 
-const UseAutoRange = () => {
+const UseChannel = () => {
   // Hooks
   const updateParam = useUpdateParam();
 
@@ -17,13 +20,13 @@ const UseAutoRange = () => {
   /**
    * TODO: What should be the fallback value if url has no param?
    */
-  const parsedValue = tool.value ? tool.value : false;
+  const parsedValue = tool.value ? tool.value : tool.defaultValue;
 
-  const [checked, setChecked] = useState(parsedValue);
+  const [value, setValue] = useState<string | number>("");
 
   const onChange = (event: any) => {
-    setChecked(!checked);
-    updateParam(toolName, event.currentTarget.checked);
+    setValue(event);
+    updateParam(toolName, event);
   };
 
   return (
@@ -34,10 +37,10 @@ const UseAutoRange = () => {
         label={tool?.title}
         description={tool?.description}
       >
-        <MantineSwitch mt="xs" checked={checked} onChange={onChange} />
+        <MantineNumberInput mt="xs" value={value} onChange={onChange} />
       </MantineInput.Wrapper>
     </>
   );
 };
 
-export { UseAutoRange };
+export { UseChannel };

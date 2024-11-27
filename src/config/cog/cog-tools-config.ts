@@ -18,6 +18,7 @@ export interface CogSettingTool {
   valueType: CogValueType; // Type of value for the setting, from cog-value-types
   valueRange?: Range; // Optional range for numeric input
   type: MantineInputType; // Mantine component to render, from mantine-input-types
+  value?: any;
 }
 
 // Array of COG setting tool configurations
