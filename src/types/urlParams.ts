@@ -36,7 +36,3 @@ export interface urlParams {
   // Data source (URL)
   url?: string | undefined;
 }
-
-type UrlParamTypes = {
-  [K in keyof urlParams]: Exclude<urlParams[K], undefined>;
-};

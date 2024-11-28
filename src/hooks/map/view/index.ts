@@ -1,0 +1,1 @@
+export { useInitView } from "./useInitView";

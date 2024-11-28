@@ -33,7 +33,6 @@ export const getParamsUrl = (
    *******************************/
 
   // URL to data source
-  result.url = searchParams.get("url") || undefined;
 
   // COG Params from URL
   cogSettings.forEach((tool) => {

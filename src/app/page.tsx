@@ -40,6 +40,7 @@ export default function Home() {
               minSize={20}
               maxSize={70}
             >
+              <PanelResizeHandle className={classes.handleSide} />
               <Panel defaultSize={20} className={classes.consolePanel}>
                 <Editor />
               </Panel>

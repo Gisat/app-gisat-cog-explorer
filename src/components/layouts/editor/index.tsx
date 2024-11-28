@@ -1,5 +1,4 @@
 import MonacoEditor from "@monaco-editor/react";
-import React, { useState, useEffect } from "react";
 // Params
 import { getParamsUrl } from "@/utils/url/getAllParams";
 

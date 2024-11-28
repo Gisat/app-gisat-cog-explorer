@@ -13,5 +13,6 @@ export enum CogValueType {
   // New
   Boolean = "boolean", // For switchable values, e.g., useAutoRange
   Number = "number", // For numeric values, e.g. alpha (opacity)
-  NumberNull = "numberNull", // For numberic values that also include null values as default, e.g. useChanel
+  NumberNull = "numberNull",
+  Url = "Url",
 }

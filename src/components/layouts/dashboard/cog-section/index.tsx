@@ -1,19 +1,18 @@
-'use client'
+"use client";
 
-import CogUrlInput from '@/components/layouts/dashboard/cog-section/components/cog-url-input';
-import CogTools from '@/components/layouts/dashboard/cog-section/components/cog-tools';
+import CogTools from "@/components/layouts/dashboard/cog-section/components/cog-tools";
+import { CogUrl } from "./components/cogUrl";
 
 // Styles
 // import classes from '@/styles/Dashboard.module.css';
 
 const CogSection = () => {
-
-	return (
-		<div>
-			<CogUrlInput />
-			<CogTools />
-		</div>
-	);
+  return (
+    <div>
+      <CogUrl />
+      <CogTools />
+    </div>
+  );
 };
 
 export default CogSection;
