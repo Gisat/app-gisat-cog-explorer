@@ -1,10 +1,8 @@
 import { useState } from "react";
 // Mantine-based components
 import {
-  Switch as MantineSwitch,
+  ColorInput as MantineColorInput,
   Input as MantineInput,
-  Button,
-  Flex,
 } from "@mantine/core";
 // Utils
 
@@ -12,22 +10,22 @@ import { useUpdateParam } from "@/hooks/url/useUpdateParam";
 import { getTool } from "@/utils/url/getTool";
 import { CogSettingTool } from "@/config/cog/cog-tools-config";
 
-const toolName: CogSettingTool["name"] = "useHeatMap";
+const toolName: CogSettingTool["name"] = "clippedColor";
 
-const UseHeatMap = () => {
+const ClippedColor = () => {
   // Hooks
   const updateParam = useUpdateParam();
+
   const tool: CogSettingTool = getTool(toolName);
-  /**
-   * TODO: What should be the fallback value if url has no param?
-   */
+
   const parsedValue = tool.value ? tool.value : tool.defaultValue;
 
-  const [checked, setChecked] = useState(parsedValue);
+  const [value, setValue] = useState("");
 
   const onChange = (event: any) => {
-    setChecked(!checked);
-    updateParam(toolName, event.currentTarget.checked);
+    setValue(event);
+    console.log("aa", event);
+    //updateParam(toolName, event);
   };
 
   return (
@@ -38,15 +36,16 @@ const UseHeatMap = () => {
         label={tool?.title}
         description={tool?.description}
       >
-        <Flex>
-          <MantineSwitch mt="xs" checked={checked} onChange={onChange} />
-          {/* <Button ml="lg" variant="outline" size="xs">
-            Reset
-          </Button> */}
-        </Flex>
+        <MantineColorInput
+          mt="xs"
+          format="rgba"
+          placeholder="Input placeholder"
+          value={value}
+          onChange={onChange}
+        />
       </MantineInput.Wrapper>
     </>
   );
 };
 
-export { UseHeatMap };
+export { ClippedColor };

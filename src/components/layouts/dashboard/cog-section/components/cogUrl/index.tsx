@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // Mantine-based components
 import { Input as MantineInput, Button } from "@mantine/core";
 // React icons
@@ -10,31 +10,29 @@ import { getSource, parseSource } from "@/utils/url/getSource";
 const CogUrl = () => {
   // Hooks
   const updateSource = useUpdateSource();
+  const { source } = getSource();
+  const url = source.parsedValue;
 
-  // Fetch the source
-  const source = getSource();
+  const [value, setValue] = useState(url);
+  const [validation, setValidation] = useState<{
+    parsedValue: string | undefined;
+    error: string | null;
+  }>({ parsedValue: undefined, error: null });
 
-  // States
-  const [value, setValue] = useState<string>();
-  const [tempValue, setTempValue] = useState<string>();
-  const [error, setError] = useState<string | null>();
+  const onChange = (event: any): void => {
+    setValue(event.currentTarget.value);
+    // Auto validation
+    const validationResult = parseSource(event.currentTarget.value);
+    setValidation(validationResult);
+  };
 
   /**
    * Validate and update the URL parameter.
    */
-  const handleButtonClick = () => {
-    const { parsedValue: validValue, error: validationError } =
-      parseSource(tempValue);
-
-    if (validationError) {
-      setError(validationError);
-      return;
+  const handleClick = () => {
+    if (!validation.error && value !== null && value !== undefined) {
+      updateSource(value);
     }
-
-    // Update state and source
-    setError(null);
-    setValue(validValue!);
-    updateSource("cogUrl");
   };
 
   return (
@@ -43,19 +41,19 @@ const CogUrl = () => {
       key="cogUrl"
       label="Data source"
       description="URL address to your .tif raster"
-      error={error}
       required
+      error={validation.error ? validation.error : null}
     >
       <div style={{ display: "flex", alignItems: "center" }}>
         <MantineInput
-          value={tempValue}
-          onChange={(e) => setTempValue(e.target.value)}
+          value={value}
+          onChange={onChange} // Allow free editing
           placeholder="https://example.com/COG_raster.tif"
           leftSection={<IconLink size={16} />}
           required
-          error={!!error}
+          // error={validation.error ? true : false}
         />
-        <Button onClick={handleButtonClick} ml="xs">
+        <Button onClick={handleClick} ml="xs">
           <IconPlayerPlayFilled size={12} />
         </Button>
       </div>

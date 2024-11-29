@@ -50,8 +50,6 @@ export const useCogBitmapLayer = () => {
   const initLayer = () => {
     increaseLayerVersion();
 
-    console.log("xxx", versionRef.current);
-
     const layerDefinition: CogBitmapLayerDefinition = {
       key: `CogBitmapLayer_${versionRef.current}`,
       layerKey: `CogBitmapLayer`,

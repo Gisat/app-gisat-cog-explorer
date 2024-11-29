@@ -53,7 +53,7 @@ export const cogSettings: CogSettingTool[] = [
     name: "useHeatMap",
     title: "Heat Map",
     description: "Generate data as a color heatmap",
-    defaultValue: true,
+    defaultValue: false, // fix
     valueType: CogValueType.Boolean,
     type: MantineInputType.Switch,
   },
