@@ -5,7 +5,7 @@ const parseBoolean = (
   const lowerValue = value?.toLowerCase();
   if (lowerValue === "true") return true;
   if (lowerValue === "false") return false;
-  return undefined; // Return null for invalid inputs
+  return undefined; // Return underfined for invalid inputs
 };
 
 export { parseBoolean };

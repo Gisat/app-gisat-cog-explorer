@@ -1,49 +1,85 @@
 import { useState, useRef, useEffect } from "react";
 import { LayerDefinition as CogBitmapLayerDefinition } from "@/types/layers/cogBitmapLayer";
 import { getSource } from "@/utils/url/getSource";
+import { useCogBitmapOptions } from "@/hooks/map/layers/getCogBitmapOptions";
+import isEqual from "lodash.isequal";
 
 export const useCogBitmapLayer = () => {
   const { source } = getSource();
-  const url: string | undefined = source.parsedValue ?? undefined;
+  const cogBitmapOptions = useCogBitmapOptions();
 
-  const [layer, setLayer] = useState<CogBitmapLayerDefinition | null>(null);
-  const prevUrlRef = useRef<string | undefined>(undefined); // Store the previous URL
+  const cogUrl = source.parsedValue;
+
+  // Handling layer incremental indexing
   const versionRef = useRef(0);
-
   const increaseLayerVersion = () => {
     versionRef.current += 1;
   };
 
+  const cogUrlRef = useRef<string | undefined>();
+
+  const url: string | undefined = source.parsedValue ?? undefined;
+
+  const [cogBitmapLayer, setCogBitmapLayer] =
+    useState<CogBitmapLayerDefinition | null>(null);
+
+  /**
+   * Handling parameters
+   */
+  const defaultOptions = {
+    alpha: 100,
+  };
+  const [options, setOptions] = useState(defaultOptions);
+
   useEffect(() => {
-    // Check if `url` exists and has changed
-    if (url && url !== prevUrlRef.current) {
-      // Update the previous URL reference
-      prevUrlRef.current = url;
+    const gotParams = cogBitmapOptions;
 
-      // Increment the version
-      increaseLayerVersion();
+    setOptions((prevParams: any) => {
+      // Use deep comparison to check if params have changed
+      if (!isEqual(prevParams, gotParams)) {
+        return gotParams;
+      }
+      return prevParams;
+    });
+  });
 
-      // Define the layer
-      const params = {}; // Add dynamic layer parameters here
-      const layerDefinition: CogBitmapLayerDefinition = {
-        key: `CogBitmapLayer_${versionRef.current}`,
-        layerKey: "CogBitmapLayer",
-        name: `CogBitmapLayer_${versionRef.current}`,
-        opacity: 1,
-        options: {
-          url,
-          type: "image",
-          cogBitmapOptions: {
-            ...params,
-          },
+  /**
+   * Layer initialization
+   */
+
+  const initLayer = () => {
+    increaseLayerVersion();
+
+    console.log("xxx", versionRef.current);
+
+    const layerDefinition: CogBitmapLayerDefinition = {
+      key: `CogBitmapLayer_${versionRef.current}`,
+      layerKey: `CogBitmapLayer`,
+      name: "CogBitmapLayer_",
+      opacity: options.alpha ? options.alpha * 0.01 : 1,
+      options: {
+        url: cogUrl || undefined,
+        type: "image",
+        cogBitmapOptions: {
+          ...options,
         },
-        type: "cogBitmap",
-      };
+      },
+      type: "cogBitmap",
+    };
 
-      // Set the layer state
-      setLayer(layerDefinition);
+    setCogBitmapLayer(layerDefinition);
+  };
+
+  if (cogUrl && cogUrlRef.current !== cogUrl) {
+    cogUrlRef.current = cogUrl;
+    initLayer();
+  }
+
+  useEffect(() => {
+    if (options) {
+      initLayer();
     }
-  }, [url]); // Re-run effect only if `url` changes
+  }, [options]);
 
-  return layer;
+  return cogBitmapLayer;
 };

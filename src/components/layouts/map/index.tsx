@@ -32,7 +32,6 @@ const Map = (): React.ReactElement => {
   const cogBitmapLayer = useCogBitmapLayer();
 
   const layers = cogBitmapLayer ? [cogBitmapLayer] : []; // TODO: TypeScript friendly layers
-  // console.log("Active Layers", layers);
 
   return (
     <DeckGlMap
@@ -46,6 +45,8 @@ const Map = (): React.ReactElement => {
       }}
       layers={layers}
       onViewChange={onViewChange}
+      onZoomEnd={{}}
+      onPanEnd={{}}
     />
   );
 };

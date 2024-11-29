@@ -13,7 +13,7 @@ type InitViewProps = {
 /**
  * Type definition for the output structure of `useInitView`.
  */
-type InitViewResult = {
+export type InitViewResult = {
   center: {
     lon: number; // Longitude as a number
     lat: number; // Latitude as a number

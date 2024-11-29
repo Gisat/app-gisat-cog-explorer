@@ -16,27 +16,25 @@ export interface LayerDefinition {
     hoverable?: boolean;
     pickable?: boolean;
     cogBitmapOptions: {
-      useAutoRange?: boolean | undefined;
-      useDataForOpacity?: boolean | undefined;
-      alpha?: number | undefined;
-      useHeatMap?: boolean | undefined;
-      multiplier?: number | undefined;
-      clipLow?: number | null | undefined;
-      clipHigh?: number | null | undefined;
-      clippedColor?: chroma.Color | undefined;
-      colorScale?: chroma.Color[] | undefined;
-      colorScaleValueRange?: number[] | undefined;
-      useColorsBasedOnValues?: boolean | undefined;
-      colorsBasedOnValues?: [number, chroma.Color][] | undefined;
-      useColorClasses?: boolean | undefined;
-      colorClasses?:
-        | [chroma.Color, [number, number], [boolean, boolean]?][]
-        | undefined;
-      unidentifiedColor?: chroma.Color | undefined;
-      nullColor?: chroma.Color | undefined;
-      useSingleColor?: boolean | undefined;
-      color?: chroma.Color | undefined;
-      blurredTexture?: boolean | undefined;
+      useAutoRange?: boolean;
+      useDataForOpacity?: boolean;
+      alpha?: number;
+      useHeatMap?: boolean;
+      multiplier?: number;
+      clipLow?: number | null;
+      clipHigh?: number | null;
+      clippedColor?: chroma.Color;
+      colorScale?: chroma.Color[];
+      colorScaleValueRange?: number[];
+      useColorsBasedOnValues?: boolean;
+      colorsBasedOnValues?: [number, chroma.Color][];
+      useColorClasses?: boolean;
+      colorClasses?: [chroma.Color, [number, number], [boolean, boolean]?][];
+      unidentifiedColor?: chroma.Color;
+      nullColor?: chroma.Color;
+      useSingleColor?: boolean;
+      color?: chroma.Color;
+      blurredTexture?: boolean;
     };
   };
   type: string;
