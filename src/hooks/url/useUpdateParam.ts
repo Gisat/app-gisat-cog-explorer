@@ -44,8 +44,6 @@ export const useUpdateParam = () => {
             params.delete(name);
           }
           break;
-        case CogValueType.Boolean:
-          return;
         default:
           params.set(name, value.toString()); // Update the parameter
       }
