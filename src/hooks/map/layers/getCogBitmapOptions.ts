@@ -1,5 +1,6 @@
 import {
   parseBoolean,
+  parseColor,
   parseNumber,
   parseNumberNull,
 } from "@/utils/url/parseValueTypes";
@@ -52,6 +53,10 @@ export const useCogBitmapOptions = (): Partial<CogBitmapOptions> => {
 
       // Other cases
       case CogValueType.Color:
+        rawOptions[name as keyof CogBitmapOptions] = parseColor(
+          tool.name,
+          paramValue
+        ) as any;
       case CogValueType.ColorArray:
       case CogValueType.CommaSeparatedColors:
       case CogValueType.CommaSeparatedNumbers:
