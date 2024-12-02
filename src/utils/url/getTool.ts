@@ -1,5 +1,10 @@
 import { CogValueType } from "@/config/cog/cog-value-types";
-import { parseBoolean, parseNumber, parseNumberNull } from "./parseValueTypes";
+import {
+  parseBoolean,
+  parseColor,
+  parseNumber,
+  parseNumberNull,
+} from "./parseValueTypes";
 import { cogSettings, CogSettingTool } from "@/config/cog/cog-tools-config";
 import { urlParams } from "@/types/urlParams";
 import { useSearchParams } from "next/navigation";
@@ -58,6 +63,8 @@ const parseValueByType = (
         return parseNumber(paramName, paramValue);
       case CogValueType.NumberNull:
         return parseNumberNull(paramName, paramValue);
+      case CogValueType.Color:
+        return parseColor(paramName, paramValue);
       case CogValueType.Text:
         return undefined; // Or add Text parsing logic if needed
       default:

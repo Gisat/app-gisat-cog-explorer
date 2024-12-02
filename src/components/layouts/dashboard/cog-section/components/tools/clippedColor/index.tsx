@@ -18,14 +18,41 @@ const ClippedColor = () => {
 
   const tool: CogSettingTool = getTool(toolName);
 
-  const parsedValue = tool.value ? tool.value : tool.defaultValue;
+  const parsedValue: string = tool.value ? tool.value : tool.defaultValue;
 
-  const [value, setValue] = useState("");
+  const mantineValue = (() => {
+    if (parsedValue === null || parsedValue === undefined) {
+      console.warn(
+        "Invalid input: parsedValue is null or undefined",
+        parsedValue
+      );
+      return undefined;
+    }
+
+    // Convert parsedValue to a string if it's not already
+    const stringValue = String(parsedValue);
+
+    // Split the value by commas and convert to numbers
+    const components = stringValue
+      .split(",")
+      .map((v) => parseInt(v.trim(), 10));
+
+    // Validate that there are exactly 4 components
+    if (components.length === 4) {
+      const [r, g, b, a] = components;
+      const alpha = a / 255; // Normalize alpha to 0-1
+      return `rgba(${r},${g},${b},${alpha})`;
+    }
+
+    console.warn("Invalid color format: expected 4 components", stringValue);
+    return undefined;
+  })();
+
+  const [value, setValue] = useState(mantineValue);
 
   const onChange = (event: any) => {
     setValue(event);
-    console.log("aa", event);
-    //updateParam(toolName, event);
+    updateParam(toolName, event);
   };
 
   return (
@@ -39,7 +66,7 @@ const ClippedColor = () => {
         <MantineColorInput
           mt="xs"
           format="rgba"
-          placeholder="Input placeholder"
+          placeholder="rgba(0, 0, 0, 0)"
           value={value}
           onChange={onChange}
         />

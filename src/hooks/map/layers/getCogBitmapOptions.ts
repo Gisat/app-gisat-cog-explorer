@@ -52,7 +52,7 @@ export const useCogBitmapOptions = (): Partial<CogBitmapOptions> => {
 
       // Other cases
       case CogValueType.Color:
-      case CogValueType.ColorScale:
+      case CogValueType.ColorArray:
       case CogValueType.CommaSeparatedColors:
       case CogValueType.CommaSeparatedNumbers:
       case CogValueType.CommaSeparatedValueColorPairs:

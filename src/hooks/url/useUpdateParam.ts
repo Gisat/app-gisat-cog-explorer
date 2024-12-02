@@ -1,13 +1,11 @@
 import { useSearchParams, useRouter } from "next/navigation";
-import { CogSettingTool } from "@/config/cog/cog-tools-config";
+import { cogSettings, CogSettingTool } from "@/config/cog/cog-tools-config";
+import { CogValueType } from "@/config/cog/cog-value-types";
+import { postColor } from "@/utils/url/postValueTypes/color";
 
 // Define a utility type to map tool names to their value types
 type CogSettingsValueType = {
-  [T in CogSettingTool["name"]]: T extends "alpha" | "multiplier"
-    ? number
-    : T extends "useAutoRange" | "useHeatMap"
-    ? boolean
-    : any; // Fallback for other types
+  [T in CogSettingTool["name"]]: CogSettingTool["value"];
 };
 
 /**
@@ -23,12 +21,34 @@ export const useUpdateParam = () => {
     name: CogSettingTool["name"],
     value: CogSettingsValueType[CogSettingTool["name"]]
   ): void => {
+    const tool = cogSettings.find((t) => t.name === name);
+
+    if (!tool) {
+      console.warn(`No tool found for name: ${name}`);
+      return;
+    }
+
+    const { valueType } = tool;
+
     // Clone current query parameters
     const params = new URLSearchParams(searchParams.toString());
 
     // Update or remove the parameter
     if (value !== undefined && value !== null) {
-      params.set(name, value.toString()); // Update the parameter
+      switch (valueType) {
+        case CogValueType.Color:
+          const result: string | undefined = postColor(name, value);
+          if (result !== undefined && result !== null) {
+            params.set(name, result);
+          } else {
+            params.delete(name);
+          }
+          break;
+        case CogValueType.Boolean:
+          return;
+        default:
+          params.set(name, value.toString()); // Update the parameter
+      }
     } else {
       params.delete(name); // Remove the parameter
     }

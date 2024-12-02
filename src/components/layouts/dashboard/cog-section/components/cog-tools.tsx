@@ -7,6 +7,7 @@ import { UseChannel } from "./tools/useChannel";
 import { UseDataForOpacity } from "./tools/useDataForOpacity";
 import { UseHeatMap } from "./tools/useHeatMap";
 import { ClippedColor } from "./tools/clippedColor";
+import { ColorScale } from "./tools/colorScale";
 
 const CogTools = () => {
   return (
@@ -19,6 +20,7 @@ const CogTools = () => {
       <Multiplier />
       <Clip />
       <ClippedColor />
+      {/* <ColorScale /> */}
     </>
   );
 };

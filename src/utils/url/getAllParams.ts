@@ -1,7 +1,12 @@
 // import chroma from "chroma-js";
 import { urlParams } from "@/types/urlParams";
 // Import helpers (parsers)
-import { parseBoolean, parseNumber, parseNumberNull } from "./parseValueTypes";
+import {
+  parseBoolean,
+  parseColor,
+  parseNumber,
+  parseNumberNull,
+} from "./parseValueTypes";
 // Import COG Settings
 import { cogSettings } from "@/config/cog/cog-tools-config";
 import { CogValueType } from "@/config/cog/cog-value-types";
@@ -33,6 +38,7 @@ export const getParamsUrl = (
    *******************************/
 
   // URL to data source
+  result.url = searchParams.get("url") || undefined;
 
   // COG Params from URL
   cogSettings.forEach((tool) => {
@@ -62,6 +68,12 @@ export const getParamsUrl = (
         ) as any;
         break;
       case CogValueType.Color:
+        result[name as keyof urlParams] = parseColor(
+          tool.name,
+          paramValue
+        ) as any;
+        break;
+      case CogValueType.ColorArray:
         break;
       case CogValueType.ColorScale:
         break;

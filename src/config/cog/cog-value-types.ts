@@ -1,6 +1,5 @@
 export enum CogValueType {
   Text = "text", // For plain text, e.g., TextInput, Textarea
-  Color = "color", // For single color inputs, e.g., ColorInput
   ColorScale = "colorScale", // For color scales or gradients, e.g., ColorPicker
   Selection = "selection", // For selectable values, e.g., NativeSelect, Radio
   Range = "range", // For min/max or numeric ranges, e.g., Slider
@@ -14,5 +13,7 @@ export enum CogValueType {
   Boolean = "boolean", // For switchable values, e.g., useAutoRange
   Number = "number", // For numeric values, e.g. alpha (opacity)
   NumberNull = "numberNull",
-  Url = "Url",
+  Url = "url",
+  Color = "color", // For single color inputs, e.g., ColorInput
+  ColorArray = "colorArray", // For single color inputs, e.g., ColorInput
 }

@@ -78,7 +78,7 @@ export const cogSettings: CogSettingTool[] = [
     title: "Clip Low",
     description: "Generate only data greater than this (default null)",
     defaultValue: null,
-    valueType: CogValueType.Color,
+    valueType: CogValueType.NumberNull,
     type: MantineInputType.Input,
   },
   {
@@ -87,7 +87,7 @@ export const cogSettings: CogSettingTool[] = [
     description:
       "Only display data values less than this threshold (default null).",
     defaultValue: null,
-    valueType: CogValueType.Color,
+    valueType: CogValueType.NumberNull,
     type: MantineInputType.Input,
   },
   {
@@ -105,7 +105,7 @@ export const cogSettings: CogSettingTool[] = [
     description:
       "Array of colors, with options like chroma.js and Color Brewer",
     defaultValue: undefined,
-    valueType: CogValueType.CommaSeparatedColors,
+    valueType: CogValueType.ColorArray,
     type: MantineInputType.TagsInput,
   },
   {
