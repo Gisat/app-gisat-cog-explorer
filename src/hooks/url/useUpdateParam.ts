@@ -35,28 +35,28 @@ export const useUpdateParam = () => {
     const params = new URLSearchParams(searchParams.toString());
 
     // Update or remove the parameter
-    if (value !== undefined && value !== null) {
+    if (value !== undefined && value !== null && value !== "") {
       switch (valueType) {
-        // case CogValueType.Color:
-        //   const color: string | undefined = postColor(name, value);
-        //   if (color !== undefined && color !== null) {
-        //     params.set(name, color);
-        //   } else {
-        //     params.delete(name);
-        //   }
-        //   break;
-        // case CogValueType.ColorArray:
-        //   const colorArray: string | undefined = postColorArray(name, value);
-        //   if (
-        //     colorArray !== undefined &&
-        //     colorArray !== null &&
-        //     colorArray !== ""
-        //   ) {
-        //     params.set(name, colorArray);
-        //   } else {
-        //     params.delete(name);
-        //   }
-        //   break;
+        case CogValueType.Color:
+          const color: string | undefined = postColor(name, value);
+          if (color !== undefined && color !== null && color !== "") {
+            params.set(name, color);
+          } else {
+            params.delete(name);
+          }
+          break;
+        case CogValueType.ColorArray:
+          const colorArray: string | undefined = postColorArray(name, value);
+          if (
+            colorArray !== undefined &&
+            colorArray !== null &&
+            colorArray !== ""
+          ) {
+            params.set(name, colorArray);
+          } else {
+            params.delete(name);
+          }
+          break;
         default:
           params.set(name, value.toString()); // Update the parameter
       }

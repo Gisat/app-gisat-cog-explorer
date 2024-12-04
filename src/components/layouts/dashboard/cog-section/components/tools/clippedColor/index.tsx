@@ -41,7 +41,7 @@ const ClippedColor = () => {
         <MantineColorInput
           mt="xs"
           format="hex"
-          placeholder="HEX color"
+          placeholder="Color"
           value={value}
           onChange={onChange}
         />

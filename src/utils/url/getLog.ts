@@ -54,10 +54,10 @@ export const getLog = (): string | null => {
         ) as any;
         break;
       case CogValueType.ColorArray:
-        // result[name as keyof urlParams] = parseColorArray(
-        //   tool.name,
-        //   paramValue
-        // ) as any;
+        result[name as keyof urlParams] = parseColorArray(
+          tool.name,
+          paramValue
+        ) as any;
         break;
       case CogValueType.ColorScale:
         break;
