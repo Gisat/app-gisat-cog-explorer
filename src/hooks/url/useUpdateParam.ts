@@ -3,6 +3,7 @@ import { cogSettings, CogSettingTool } from "@/config/cog/cog-tools-config";
 import { CogValueType } from "@/config/cog/cog-value-types";
 import { postColor } from "@/utils/url/postValueTypes/color";
 import { postColorArray } from "@/utils/url/postValueTypes/colorArray";
+import { postNumberArray } from "@/utils/url/postValueTypes/numberArray";
 
 // Define a utility type to map tool names to their value types
 type CogSettingsValueType = {
@@ -53,6 +54,18 @@ export const useUpdateParam = () => {
             colorArray !== ""
           ) {
             params.set(name, colorArray);
+          } else {
+            params.delete(name);
+          }
+          break;
+        case CogValueType.NumberArray:
+          const numberArray: string | undefined = postNumberArray(name, value);
+          if (
+            numberArray !== undefined &&
+            numberArray !== null &&
+            numberArray !== ""
+          ) {
+            params.set(name, numberArray);
           } else {
             params.delete(name);
           }

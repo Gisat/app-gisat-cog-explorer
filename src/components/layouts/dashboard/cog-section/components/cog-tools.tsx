@@ -8,6 +8,7 @@ import { UseDataForOpacity } from "./tools/useDataForOpacity";
 import { UseHeatMap } from "./tools/useHeatMap";
 import { ClippedColor } from "./tools/clippedColor";
 import { ColorScale } from "./tools/colorScale";
+import { ColorScaleValueRange } from "./tools/colorScaleValueRange";
 
 const CogTools = () => {
   return (
@@ -21,6 +22,7 @@ const CogTools = () => {
       <Clip />
       <ClippedColor />
       <ColorScale />
+      <ColorScaleValueRange />
     </>
   );
 };

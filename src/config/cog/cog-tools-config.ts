@@ -113,9 +113,9 @@ export const cogSettings: CogSettingTool[] = [
     title: "Color Scale Value Range",
     description:
       "Set min and max range values or exact color values if useAutoRange is false",
-    defaultValue: null,
+    defaultValue: undefined,
     // valueRange: { min: 0, max: 255, step: 1 },
-    valueType: CogValueType.CommaSeparatedNumbers,
+    valueType: CogValueType.NumberArray,
     type: MantineInputType.Input,
   },
   {

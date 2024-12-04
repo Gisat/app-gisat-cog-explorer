@@ -5,6 +5,7 @@ import {
   parseBoolean,
   parseColor,
   parseNumber,
+  parseNumberArray,
   parseNumberNull,
   parseColorArray,
 } from "./parseValueTypes";
@@ -59,11 +60,15 @@ export const getLog = (): string | null => {
           paramValue
         ) as any;
         break;
+      case CogValueType.NumberArray:
+        result[name as keyof urlParams] = parseNumberArray(
+          tool.name,
+          paramValue
+        ) as any;
+        break;
       case CogValueType.ColorScale:
         break;
       case CogValueType.CommaSeparatedColors:
-        break;
-      case CogValueType.CommaSeparatedNumbers:
         break;
       case CogValueType.CommaSeparatedValueColorPairs:
         break;

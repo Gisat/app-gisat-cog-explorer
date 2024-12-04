@@ -12,8 +12,9 @@ export enum CogValueType {
   // New
   Boolean = "boolean", // For switchable values, e.g., useAutoRange
   Number = "number", // For numeric values, e.g. alpha (opacity)
-  NumberNull = "numberNull",
+  NumberArray = "numberArray", // For lists of numbers
+  NumberNull = "numberNull", // TODO : REMOVE!
   Url = "url",
-  Color = "color", // For single color inputs, e.g., ColorInput
-  ColorArray = "colorArray", // For single color inputs, e.g., ColorInput
+  Color = "color", // For single color inputs
+  ColorArray = "colorArray", // For colors array
 }
