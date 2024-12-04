@@ -9,6 +9,8 @@ import { UseHeatMap } from "./tools/useHeatMap";
 import { ClippedColor } from "./tools/clippedColor";
 import { ColorScale } from "./tools/colorScale";
 import { ColorScaleValueRange } from "./tools/colorScaleValueRange";
+import { UseColorsBasedOnValues } from "./tools/useColorsBasedOnValues";
+import { ColorsBasedOnValues } from "./tools/colorsBasedOnValues";
 
 const CogTools = () => {
   return (
@@ -23,6 +25,8 @@ const CogTools = () => {
       <ClippedColor />
       <ColorScale />
       <ColorScaleValueRange />
+      <UseColorsBasedOnValues />
+      <ColorsBasedOnValues />
     </>
   );
 };

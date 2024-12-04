@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import chroma from "chroma-js";
 // Mantine-based components
 import { Input as MantineInput, CloseButton } from "@mantine/core";
 // Utils
@@ -7,9 +7,9 @@ import { useUpdateParam } from "@/hooks/url/useUpdateParam";
 import { getTool } from "@/utils/url/getTool";
 import { CogSettingTool } from "@/config/cog/cog-tools-config";
 
-const toolName: CogSettingTool["name"] = "colorScaleValueRange";
+const toolName: CogSettingTool["name"] = "colorsBasedOnValues";
 
-const ColorScaleValueRange = () => {
+const ColorsBasedOnValues = () => {
   // Hooks
   const updateParam = useUpdateParam();
 
@@ -17,10 +17,21 @@ const ColorScaleValueRange = () => {
 
   const parsedValue = tool.value ? tool.value : tool.defaultValue;
 
-  const defaultValue =
-    parsedValue !== "" && parsedValue !== undefined ? parsedValue : "";
+  const parsedKeyValueArray = parsedValue
+    ? parsedValue.map(
+        ([value, color]: [
+          number,
+          { _rgb: [number, number, number, number] }
+        ]) => {
+          const chromaColor = chroma(color._rgb).hex(); // Convert _rgb to a chroma.Color
+          return [value, chromaColor]; // Return the tuple [key, chroma.Color]
+        }
+      )
+    : "";
 
-  const [value, setValue] = useState(String(defaultValue));
+  // console.log("parsedKeyValueArray: ", String(parsedKeyValueArray));
+
+  const [value, setValue] = useState(String(parsedKeyValueArray));
 
   const onChange = (event: any) => {
     setValue(event.currentTarget.value);
@@ -36,7 +47,7 @@ const ColorScaleValueRange = () => {
         description={tool?.description}
       >
         <MantineInput
-          placeholder="number1, number2, number3, ..."
+          placeholder="[value1, color1], ..."
           value={value}
           onChange={onChange}
           rightSectionPointerEvents="all"
@@ -57,4 +68,4 @@ const ColorScaleValueRange = () => {
   );
 };
 
-export { ColorScaleValueRange };
+export { ColorsBasedOnValues };

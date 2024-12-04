@@ -8,6 +8,7 @@ import {
   parseNumberArray,
   parseNumberNull,
   parseColorArray,
+  parseValueColorArray,
 } from "./parseValueTypes";
 // Import COG Settings
 import { cogSettings } from "@/config/cog/cog-tools-config";
@@ -66,6 +67,12 @@ export const getLog = (): string | null => {
           paramValue
         ) as any;
         break;
+      case CogValueType.ValueColorArray:
+        result[name as keyof urlParams] = parseValueColorArray(
+          tool.name,
+          paramValue
+        ) as any;
+        break;
       case CogValueType.ColorScale:
         break;
       case CogValueType.CommaSeparatedColors:
@@ -79,8 +86,6 @@ export const getLog = (): string | null => {
       case CogValueType.Selection:
         break;
       case CogValueType.Text:
-        break;
-      case CogValueType.ValueColorArray:
         break;
 
       // Add other value types if necessary

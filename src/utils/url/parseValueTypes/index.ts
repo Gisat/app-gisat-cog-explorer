@@ -4,3 +4,4 @@ export { parseNumberArray } from "./numberArray";
 export { parseNumberNull } from "./numberNull";
 export { parseColor } from "./color";
 export { parseColorArray } from "./colorArray";
+export { parseValueColorArray } from "./valueColorArray";
