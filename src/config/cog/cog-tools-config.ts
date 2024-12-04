@@ -95,7 +95,7 @@ export const cogSettings: CogSettingTool[] = [
     title: "Clipped Color",
     description:
       "Set color for clipped values when using clipLow or clipHigh, (default [0, 0, 0, 0]).",
-    defaultValue: [0, 0, 0, 0],
+    defaultValue: undefined,
     valueType: CogValueType.Color,
     type: MantineInputType.ColorInput,
   },

@@ -1,12 +1,9 @@
 import MonacoEditor from "@monaco-editor/react";
 // Params
-import { getParamsUrl } from "@/utils/url/getAllParams";
-
-import { useSearchParams } from "next/navigation";
+import { getLog } from "@/utils/url/getLog";
 
 const Editor = () => {
-  const searchParams = useSearchParams();
-  const value = getParamsUrl(undefined, searchParams, true);
+  const value = getLog();
 
   return (
     <MonacoEditor

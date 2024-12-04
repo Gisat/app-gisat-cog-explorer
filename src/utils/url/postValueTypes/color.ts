@@ -6,43 +6,20 @@ const postColor = (
   tool: CogSettingTool["name"],
   value: string
 ): string | undefined => {
+  // Find the tool configuration
   const toolConfig = cogSettings.find((t: any) => t.name === tool);
 
+  // Ensure the tool supports a Color value type
   if (toolConfig?.valueType === CogValueType.Color) {
     try {
-      // Handle Mantine RGBA format "rgba(255, 255, 255, 1)"
-      if (value.startsWith("rgba")) {
-        const rgbaMatch = value
-          .replace(/rgba|\(|\)|\s/g, "") // Remove "rgba", parentheses, and spaces
-          .split(",")
-          .map(Number); // Convert to numbers
+      // Use chroma-js to validate and normalize the color
+      const color = chroma(value);
 
-        // Validate that the RGBA components are valid
-        if (
-          rgbaMatch.length === 4 &&
-          rgbaMatch.every(
-            (n, index) => (index < 3 ? n >= 0 && n <= 255 : n >= 0 && n <= 1) // RGB: 0-255, Alpha: 0-1
-          )
-        ) {
-          // Convert alpha to 0-255 range
-          const rgbaWithAlpha = [
-            rgbaMatch[0],
-            rgbaMatch[1],
-            rgbaMatch[2],
-            Math.round(rgbaMatch[3] * 255), // Scale alpha to 0-255
-          ];
-
-          return rgbaWithAlpha.join(","); // Return as "255,255,255,255"
-        } else {
-          console.warn(`Invalid RGBA format: ${value}`);
-          return undefined;
-        }
-      } else {
-        console.warn(`Unsupported color format: ${value}`);
-        return undefined;
-      }
-    } catch (error) {
-      console.error(`Failed to parse color: ${value}`, error);
+      // If valid, return the normalized hex string
+      return color.hex().toLowerCase(); // Normalize to lowercase hex
+    } catch (e) {
+      // If chroma-js throws an error, the input is not a valid color
+      console.warn(`Invalid color value: "${value}"`);
       return undefined;
     }
   } else {

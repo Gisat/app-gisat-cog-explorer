@@ -2,6 +2,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { cogSettings, CogSettingTool } from "@/config/cog/cog-tools-config";
 import { CogValueType } from "@/config/cog/cog-value-types";
 import { postColor } from "@/utils/url/postValueTypes/color";
+import { postColorArray } from "@/utils/url/postValueTypes/colorArray";
 
 // Define a utility type to map tool names to their value types
 type CogSettingsValueType = {
@@ -36,14 +37,26 @@ export const useUpdateParam = () => {
     // Update or remove the parameter
     if (value !== undefined && value !== null) {
       switch (valueType) {
-        case CogValueType.Color:
-          const result: string | undefined = postColor(name, value);
-          if (result !== undefined && result !== null) {
-            params.set(name, result);
-          } else {
-            params.delete(name);
-          }
-          break;
+        // case CogValueType.Color:
+        //   const color: string | undefined = postColor(name, value);
+        //   if (color !== undefined && color !== null) {
+        //     params.set(name, color);
+        //   } else {
+        //     params.delete(name);
+        //   }
+        //   break;
+        // case CogValueType.ColorArray:
+        //   const colorArray: string | undefined = postColorArray(name, value);
+        //   if (
+        //     colorArray !== undefined &&
+        //     colorArray !== null &&
+        //     colorArray !== ""
+        //   ) {
+        //     params.set(name, colorArray);
+        //   } else {
+        //     params.delete(name);
+        //   }
+        //   break;
         default:
           params.set(name, value.toString()); // Update the parameter
       }

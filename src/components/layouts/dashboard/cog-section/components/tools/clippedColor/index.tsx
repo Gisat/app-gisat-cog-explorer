@@ -1,3 +1,4 @@
+import chroma from "chroma-js";
 import { useState } from "react";
 // Mantine-based components
 import {
@@ -20,35 +21,9 @@ const ClippedColor = () => {
 
   const parsedValue: string = tool.value ? tool.value : tool.defaultValue;
 
-  const mantineValue = (() => {
-    if (parsedValue === null || parsedValue === undefined) {
-      console.warn(
-        "Invalid input: parsedValue is null or undefined",
-        parsedValue
-      );
-      return undefined;
-    }
+  const parsedColor = chroma(parsedValue).hex();
 
-    // Convert parsedValue to a string if it's not already
-    const stringValue = String(parsedValue);
-
-    // Split the value by commas and convert to numbers
-    const components = stringValue
-      .split(",")
-      .map((v) => parseInt(v.trim(), 10));
-
-    // Validate that there are exactly 4 components
-    if (components.length === 4) {
-      const [r, g, b, a] = components;
-      const alpha = a / 255; // Normalize alpha to 0-1
-      return `rgba(${r},${g},${b},${alpha})`;
-    }
-
-    console.warn("Invalid color format: expected 4 components", stringValue);
-    return undefined;
-  })();
-
-  const [value, setValue] = useState(mantineValue);
+  const [value, setValue] = useState();
 
   const onChange = (event: any) => {
     setValue(event);
@@ -65,8 +40,8 @@ const ClippedColor = () => {
       >
         <MantineColorInput
           mt="xs"
-          format="rgba"
-          placeholder="rgba(0, 0, 0, 0)"
+          format="hex"
+          placeholder="HEX color"
           value={value}
           onChange={onChange}
         />

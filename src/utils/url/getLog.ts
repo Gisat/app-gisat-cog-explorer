@@ -1,44 +1,24 @@
-// import chroma from "chroma-js";
 import { urlParams } from "@/types/urlParams";
+import { useSearchParams } from "next/navigation";
 // Import helpers (parsers)
 import {
   parseBoolean,
   parseColor,
   parseNumber,
   parseNumberNull,
+  parseColorArray,
 } from "./parseValueTypes";
 // Import COG Settings
 import { cogSettings } from "@/config/cog/cog-tools-config";
 import { CogValueType } from "@/config/cog/cog-value-types";
 
-export const getParamsUrl = (
-  url?: string,
-  searchParams?: URLSearchParams,
-  asJson: boolean = false // Add a flag to determine the output format
-): Partial<urlParams> | string => {
-  // Default to the current browser URL if no URL is provided
-  const currentUrl =
-    url || (typeof window !== "undefined" ? window.location.href : "");
-
-  // Error handling
-  if (!currentUrl) {
-    console.warn("No URL available to parse.");
-    return asJson ? "{}" : {};
-  }
-  if (!searchParams) {
-    console.warn("No search parameters provided.");
-    return asJson ? "{}" : {};
-  }
-
-  const params = new URLSearchParams(new URL(currentUrl).search);
-  const result: Partial<urlParams> = {};
+export const getLog = (): string | null => {
+  const searchParams = useSearchParams();
+  const result: Record<string, any> = {};
 
   /********************************
    *      Iterate params
    *******************************/
-
-  // URL to data source
-  result.url = searchParams.get("url") || undefined;
 
   // COG Params from URL
   cogSettings.forEach((tool) => {
@@ -74,6 +54,10 @@ export const getParamsUrl = (
         ) as any;
         break;
       case CogValueType.ColorArray:
+        // result[name as keyof urlParams] = parseColorArray(
+        //   tool.name,
+        //   paramValue
+        // ) as any;
         break;
       case CogValueType.ColorScale:
         break;
@@ -102,5 +86,5 @@ export const getParamsUrl = (
   });
 
   // Convert the result to JSON if requested
-  return asJson ? JSON.stringify(result, null, 2) : result;
+  return JSON.stringify(result, null, 2);
 };

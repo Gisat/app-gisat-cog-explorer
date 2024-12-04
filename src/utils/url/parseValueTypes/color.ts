@@ -1,19 +1,28 @@
+import chroma from "chroma-js";
+
 const parseColor = (
   tool: string,
   value: string | null | undefined
-): number[] | undefined => {
-  if (value === null || value === undefined) return undefined;
-
-  // Split the value by commas and convert to numbers
-  const parsed = value.split(",").map((v) => parseInt(v.trim(), 10));
-
-  // Validate that all components are valid numbers
-  if (parsed.some((v) => isNaN(v) || !isFinite(v))) {
-    console.warn(`Invalid color value: ${value}`);
+): chroma.Color | undefined => {
+  // Validate input
+  if (value === null || value === undefined) {
     return undefined;
   }
 
-  return parsed; // Return the parsed color array
+  // Trim the input to remove extra spaces
+  const trimmedValue = value.trim();
+
+  try {
+    // Parse the color using chroma-js
+    const color = chroma(trimmedValue);
+
+    // If no error is thrown, the input is valid
+    return color;
+  } catch (e) {
+    // Log the invalid input value
+    // console.log(` value: "${value}"`);
+    return undefined;
+  }
 };
 
 export { parseColor };

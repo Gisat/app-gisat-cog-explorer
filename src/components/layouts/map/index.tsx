@@ -31,7 +31,7 @@ const Map = (): React.ReactElement => {
    *****************/
   const cogBitmapLayer = useCogBitmapLayer();
 
-  const layers = cogBitmapLayer ? [cogBitmapLayer] : []; // TODO: TypeScript friendly layers
+  const layers = cogBitmapLayer?.options.url ? [cogBitmapLayer] : []; // TODO: TypeScript friendly layers
 
   return (
     <DeckGlMap

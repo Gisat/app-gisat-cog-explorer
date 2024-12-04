@@ -20,7 +20,6 @@ const CogTools = () => {
       <Multiplier />
       <Clip />
       <ClippedColor />
-      {/* <ColorScale /> */}
     </>
   );
 };

@@ -35,6 +35,7 @@ export interface LayerDefinition {
       useSingleColor?: boolean;
       color?: chroma.Color;
       blurredTexture?: boolean;
+      noDataValue?: number;
     };
   };
   type: string;

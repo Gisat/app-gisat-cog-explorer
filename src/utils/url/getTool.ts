@@ -2,6 +2,7 @@ import { CogValueType } from "@/config/cog/cog-value-types";
 import {
   parseBoolean,
   parseColor,
+  parseColorArray,
   parseNumber,
   parseNumberNull,
 } from "./parseValueTypes";
@@ -65,6 +66,8 @@ const parseValueByType = (
         return parseNumberNull(paramName, paramValue);
       case CogValueType.Color:
         return parseColor(paramName, paramValue);
+      // case CogValueType.ColorArray:
+      // // return parseColorArray(paramName, paramValue);
       case CogValueType.Text:
         return undefined; // Or add Text parsing logic if needed
       default:

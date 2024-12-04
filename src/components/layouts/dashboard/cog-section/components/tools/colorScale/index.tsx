@@ -1,14 +1,14 @@
 import { useState } from "react";
+import chroma from "chroma-js";
+
 // Mantine-based components
 import {
+  ColorInput as MantineColorInput,
   Input as MantineInput,
-  PillsInput,
-  Pill,
-  Combobox,
-  useCombobox,
-  Tabs,
+  CloseButton,
 } from "@mantine/core";
 // Utils
+
 import { useUpdateParam } from "@/hooks/url/useUpdateParam";
 import { getTool } from "@/utils/url/getTool";
 import { CogSettingTool } from "@/config/cog/cog-tools-config";
@@ -23,34 +23,11 @@ const ColorScale = () => {
 
   const parsedValue = tool.value ? tool.value : tool.defaultValue;
 
-  const [search, setSearch] = useState("");
-  const [value, setValue] = useState<string[]>(parsedValue || []);
+  const [value, setValue] = useState();
 
-  const handleValueSelect = (val: string) =>
-    setValue((current) =>
-      current.includes(val) ? current : [...current, val.trim()]
-    );
-
-  const handleValueRemove = (val: string) =>
-    setValue((current) => current.filter((v) => v !== val));
-
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
-    onDropdownOpen: () => combobox.updateSelectedOptionIndex("active"),
-  });
-
-  const values = value.map((item) => (
-    <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>
-      {item}
-    </Pill>
-  ));
-
-  const handleFreeFormSubmit = () => {
-    if (search.trim()) {
-      handleValueSelect(search.trim());
-      setSearch("");
-      combobox.closeDropdown();
-    }
+  const onChange = (event: any) => {
+    setValue(event.currentTarget.value);
+    updateParam(toolName, event.currentTarget.value);
   };
 
   return (
@@ -61,19 +38,23 @@ const ColorScale = () => {
         label={tool?.title}
         description={tool?.description}
       >
-        <Tabs defaultValue="manual" orientation="horizontal">
-          <Tabs.List>
-            <Tabs.Tab value="manual">Manual</Tabs.Tab>
-            <Tabs.Tab value="palette" disabled>
-              Color palettes
-            </Tabs.Tab>
-          </Tabs.List>
-
-          <Tabs.Panel value="manual">
-            <div>123123</div>
-          </Tabs.Panel>
-          <Tabs.Panel value="palette">Color palettes</Tabs.Panel>
-        </Tabs>
+        <MantineInput
+          placeholder="[color1, color2, color3, ...]"
+          value={value}
+          onChange={onChange}
+          rightSectionPointerEvents="all"
+          mt="xs"
+          rightSection={
+            <CloseButton
+              aria-label="Clear input"
+              onClick={() => {
+                // setValue("");
+                updateParam(toolName, "");
+              }}
+              style={{ display: value ? undefined : "none" }}
+            />
+          }
+        />
       </MantineInput.Wrapper>
     </>
   );
