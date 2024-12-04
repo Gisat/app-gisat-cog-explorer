@@ -21,9 +21,9 @@ const ClippedColor = () => {
 
   const parsedValue: string = tool.value ? tool.value : tool.defaultValue;
 
-  const parsedColor = chroma(parsedValue).hex();
+  const parsedColor = parsedValue ? chroma(parsedValue).hex() : undefined;
 
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(parsedColor);
 
   const onChange = (event: any) => {
     setValue(event);

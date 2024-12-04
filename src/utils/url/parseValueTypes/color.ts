@@ -5,7 +5,7 @@ const parseColor = (
   value: string | null | undefined
 ): chroma.Color | undefined => {
   // Validate input
-  if (value === null || value === undefined) {
+  if (value === null || value === undefined || value === "") {
     return undefined;
   }
 
