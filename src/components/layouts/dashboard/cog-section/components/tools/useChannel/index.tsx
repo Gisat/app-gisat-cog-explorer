@@ -1,9 +1,6 @@
 import { useState } from "react";
 // Mantine-based components
-import {
-  NumberInput as MantineNumberInput,
-  Input as MantineInput,
-} from "@mantine/core";
+import { NumberInput as MantineNumberInput } from "@mantine/core";
 // Utils
 
 import { useUpdateParam } from "@/hooks/url/useUpdateParam";
@@ -29,14 +26,13 @@ const UseChannel = () => {
 
   return (
     <>
-      <MantineInput.Wrapper
-        size="sm"
-        key={tool?.name}
-        label={tool?.title}
-        description={tool?.description}
-      >
-        <MantineNumberInput mt="xs" value={value} onChange={onChange} />
-      </MantineInput.Wrapper>
+      <MantineNumberInput
+        label={tool.title}
+        description={tool.description}
+        mt="lg"
+        value={value}
+        onChange={onChange}
+      />
     </>
   );
 };

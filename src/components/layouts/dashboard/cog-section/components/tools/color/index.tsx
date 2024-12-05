@@ -35,7 +35,8 @@ const Color = () => {
       <MantineInput.Wrapper
         size="sm"
         key={tool?.name}
-        label={tool?.title}
+        mt="sm"
+        // label={tool?.title}
         description={tool?.description}
       >
         <MantineColorInput

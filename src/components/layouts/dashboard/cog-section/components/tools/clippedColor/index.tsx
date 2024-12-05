@@ -1,10 +1,7 @@
 import chroma from "chroma-js";
 import { useState } from "react";
 // Mantine-based components
-import {
-  ColorInput as MantineColorInput,
-  Input as MantineInput,
-} from "@mantine/core";
+import { ColorInput as MantineColorInput } from "@mantine/core";
 // Utils
 
 import { useUpdateParam } from "@/hooks/url/useUpdateParam";
@@ -31,22 +28,15 @@ const ClippedColor = () => {
   };
 
   return (
-    <>
-      <MantineInput.Wrapper
-        size="sm"
-        key={tool?.name}
-        label={tool?.title}
-        description={tool?.description}
-      >
-        <MantineColorInput
-          mt="xs"
-          format="hex"
-          placeholder="Color"
-          value={value}
-          onChange={onChange}
-        />
-      </MantineInput.Wrapper>
-    </>
+    <MantineColorInput
+      mt="sm"
+      label={tool?.title}
+      description={tool?.description}
+      format="hex"
+      placeholder="Color"
+      value={value}
+      onChange={onChange}
+    />
   );
 };
 

@@ -28,14 +28,13 @@ const UseAutoRange = () => {
 
   return (
     <>
-      <MantineInput.Wrapper
-        size="sm"
-        key={tool?.name}
+      <MantineSwitch
+        mt="lg"
+        checked={checked}
+        onChange={onChange}
         label={tool?.title}
         description={tool?.description}
-      >
-        <MantineSwitch mt="xs" checked={checked} onChange={onChange} />
-      </MantineInput.Wrapper>
+      />
     </>
   );
 };

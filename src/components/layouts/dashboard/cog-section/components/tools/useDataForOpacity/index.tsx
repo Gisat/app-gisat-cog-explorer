@@ -1,6 +1,6 @@
 import { useState } from "react";
 // Mantine-based components
-import { Switch as MantineSwitch, Input as MantineInput } from "@mantine/core";
+import { Switch as MantineSwitch } from "@mantine/core";
 // Utils
 
 import { useUpdateParam } from "@/hooks/url/useUpdateParam";
@@ -13,9 +13,7 @@ const UseDataForOpacity = () => {
   // Hooks
   const updateParam = useUpdateParam();
   const tool: CogSettingTool = getTool(toolName);
-  /**
-   * TODO: What should be the fallback value if url has no param?
-   */
+
   const parsedValue = tool.value ? tool.value : false;
 
   const [checked, setChecked] = useState(parsedValue);
@@ -26,16 +24,13 @@ const UseDataForOpacity = () => {
   };
 
   return (
-    <>
-      <MantineInput.Wrapper
-        size="sm"
-        key={tool?.name}
-        label={tool?.title}
-        description={tool?.description}
-      >
-        <MantineSwitch mt="xs" checked={checked} onChange={onChange} />
-      </MantineInput.Wrapper>
-    </>
+    <MantineSwitch
+      mt="lg"
+      checked={checked}
+      onChange={onChange}
+      label={tool?.title}
+      description={tool?.description}
+    />
   );
 };
 

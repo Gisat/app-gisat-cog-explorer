@@ -28,18 +28,13 @@ const BlurredTexture = () => {
   };
 
   return (
-    <>
-      <MantineInput.Wrapper
-        size="sm"
-        key={tool?.name}
-        label={tool?.title}
-        description={tool?.description}
-      >
-        <Flex>
-          <MantineSwitch mt="xs" checked={checked} onChange={onChange} />
-        </Flex>
-      </MantineInput.Wrapper>
-    </>
+    <MantineSwitch
+      mt="lg"
+      label={tool.title}
+      description={tool.description}
+      checked={checked}
+      onChange={onChange}
+    />
   );
 };
 

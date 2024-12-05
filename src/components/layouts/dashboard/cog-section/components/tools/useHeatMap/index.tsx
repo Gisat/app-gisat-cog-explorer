@@ -18,9 +18,7 @@ const UseHeatMap = () => {
   // Hooks
   const updateParam = useUpdateParam();
   const tool: CogSettingTool = getTool(toolName);
-  /**
-   * TODO: What should be the fallback value if url has no param?
-   */
+
   const parsedValue = tool.value ? tool.value : tool.defaultValue;
 
   const [checked, setChecked] = useState(parsedValue);
@@ -32,19 +30,13 @@ const UseHeatMap = () => {
 
   return (
     <>
-      <MantineInput.Wrapper
-        size="sm"
-        key={tool?.name}
-        label={tool?.title}
-        description={tool?.description}
-      >
-        <Flex>
-          <MantineSwitch mt="xs" checked={checked} onChange={onChange} />
-          {/* <Button ml="lg" variant="outline" size="xs">
-            Reset
-          </Button> */}
-        </Flex>
-      </MantineInput.Wrapper>
+      <MantineSwitch
+        mt="lg"
+        checked={checked}
+        label={tool.title}
+        description={tool.description}
+        onChange={onChange}
+      />
     </>
   );
 };

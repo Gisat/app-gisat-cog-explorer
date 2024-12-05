@@ -1,6 +1,6 @@
 import { useState } from "react";
 // Mantine-based components
-import { Slider as MantineSlider, Input as MantineInput } from "@mantine/core";
+import { Slider as MantineSlider, Text } from "@mantine/core";
 // Utils
 
 import { useUpdateParam } from "@/hooks/url/useUpdateParam";
@@ -14,9 +14,7 @@ const Alpha = () => {
   const updateParam = useUpdateParam();
 
   const tool: CogSettingTool = getTool(toolName);
-  /**
-   * TODO: What should be the fallback value if url has no param?
-   */
+
   const parsedValue = tool.value ? tool.value : tool.defaultValue;
 
   const [value, setValue] = useState(parsedValue);
@@ -28,27 +26,23 @@ const Alpha = () => {
 
   return (
     <>
-      <MantineInput.Wrapper
-        size="sm"
-        key={tool?.name}
-        label={tool?.title}
-        description={tool?.description}
-      >
-        <MantineSlider
-          mt="xs"
-          mb="lg"
-          value={value}
-          defaultValue={tool.value}
-          step={tool.valueRange?.step}
-          min={tool.valueRange?.min}
-          max={tool.valueRange?.max}
-          onChange={onChange}
-          marks={[
-            { value: 0, label: "0%" },
-            { value: 100, label: "100%" },
-          ]}
-        />
-      </MantineInput.Wrapper>
+      <Text size="sm" mt="lg">
+        Layer {tool?.title}
+      </Text>
+      <MantineSlider
+        mt="xs"
+        mb="xl"
+        value={value}
+        defaultValue={tool.value}
+        step={tool.valueRange?.step}
+        min={tool.valueRange?.min}
+        max={tool.valueRange?.max}
+        onChange={onChange}
+        marks={[
+          { value: 0, label: "0%" },
+          { value: 100, label: "100%" },
+        ]}
+      />
     </>
   );
 };

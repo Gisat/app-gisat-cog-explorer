@@ -40,6 +40,7 @@ const ColorScale = () => {
     <>
       <MantineInput.Wrapper
         size="sm"
+        mt="sm"
         key={tool?.name}
         label={tool?.title}
         description={tool?.description}

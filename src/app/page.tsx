@@ -8,6 +8,7 @@ import Map from "@/components/layouts/map";
 import classes from "@/styles/Home.module.css";
 import Dashboard from "@/components/layouts/dashboard";
 import Editor from "@/components/layouts/editor";
+import Header from "@/components/layouts/header";
 
 /**
  * Todo list:
@@ -18,6 +19,7 @@ import Editor from "@/components/layouts/editor";
 export default function Home() {
   return (
     <main className={classes.main}>
+      <Header />
       <PanelGroup
         autoSaveId="app-main-panelgroup"
         direction="horizontal"

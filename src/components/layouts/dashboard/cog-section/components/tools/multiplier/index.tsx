@@ -1,9 +1,6 @@
 import { useState } from "react";
 // Mantine-based components
-import {
-  NumberInput as MantineNumberInput,
-  Input as MantineInput,
-} from "@mantine/core";
+import { NumberInput as MantineNumberInput } from "@mantine/core";
 // Utils
 
 import { useUpdateParam } from "@/hooks/url/useUpdateParam";
@@ -22,7 +19,7 @@ const Multiplier = () => {
    */
   const parsedValue = tool.value ? tool.value : tool.defaultValue;
 
-  const [value, setValue] = useState<string | number>("");
+  const [value, setValue] = useState<number>(parsedValue);
 
   const onChange = (event: any) => {
     setValue(event);
@@ -31,14 +28,13 @@ const Multiplier = () => {
 
   return (
     <>
-      <MantineInput.Wrapper
-        size="sm"
-        key={tool?.name}
-        label={tool?.title}
-        description={tool?.description}
-      >
-        <MantineNumberInput mt="xs" value={value} onChange={onChange} />
-      </MantineInput.Wrapper>
+      <MantineNumberInput
+        mt="sm"
+        label={tool.title}
+        description={tool.description}
+        value={value}
+        onChange={onChange}
+      />
     </>
   );
 };

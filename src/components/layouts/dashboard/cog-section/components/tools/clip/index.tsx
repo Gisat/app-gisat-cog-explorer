@@ -1,10 +1,6 @@
 import { useState } from "react";
 // Mantine-based components
-import {
-  NumberInput as MantineNumberInput,
-  Input as MantineInput,
-  Flex,
-} from "@mantine/core";
+import { NumberInput as MantineNumberInput, Flex, Text } from "@mantine/core";
 // Utils
 
 import { useUpdateParam } from "@/hooks/url/useUpdateParam";
@@ -20,14 +16,12 @@ const Clip = () => {
 
   const toolMin: CogSettingTool = getTool(toolNameMin);
   const toolMax: CogSettingTool = getTool(toolNameMax);
-  /**
-   * TODO: What should be the fallback value if url has no param?
-   */
+
   const parsedValueMin = toolMin.value ? toolMin.value : toolMin.defaultValue;
   const parsedValueMax = toolMax.value ? toolMax.value : toolMax.defaultValue;
 
-  const [valueMin, setValueMin] = useState<string | number>("");
-  const [valueMax, setValueMax] = useState<string | number>("");
+  const [valueMin, setValueMin] = useState<number>(toolMin.value);
+  const [valueMax, setValueMax] = useState<number>(toolMax.value);
 
   const onChangeMin = (event: any) => {
     setValueMin(event);
@@ -40,27 +34,28 @@ const Clip = () => {
 
   return (
     <>
-      <MantineInput.Wrapper
-        size="sm"
-        key="clip"
-        label="Clip values"
-        description="Set minimum and maximum values for clipping the input data. Leave blank to keep all values within the specified range."
-      >
-        <Flex>
-          <MantineNumberInput
-            mt="xs"
-            value={valueMin}
-            onChange={onChangeMin}
-            placeholder="Min"
-          />
-          <MantineNumberInput
-            mt="xs"
-            value={valueMax}
-            onChange={onChangeMax}
-            placeholder="Max"
-          />
-        </Flex>
-      </MantineInput.Wrapper>
+      <Flex direction="column">
+        <Text fz={14} fw="normal" mt="lg" component="label">
+          Clip values
+        </Text>
+        <Text fz={12} fw="normal" c="gray" mt={0} component="label">
+          Clip min and max raster values
+        </Text>
+      </Flex>
+      <Flex>
+        <MantineNumberInput
+          mt="xs"
+          value={valueMin}
+          onChange={onChangeMin}
+          placeholder="Min"
+        />
+        <MantineNumberInput
+          mt="xs"
+          value={valueMax}
+          onChange={onChangeMax}
+          placeholder="Max"
+        />
+      </Flex>
     </>
   );
 };

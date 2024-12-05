@@ -20,9 +20,9 @@ import { BlurredTexture } from "./tools/blurredTexture";
 const CogTools = () => {
   return (
     <>
+      <Alpha />
       <UseAutoRange />
       <UseDataForOpacity />
-      <Alpha />
       <UseHeatMap />
       <UseChannel />
       <Multiplier />

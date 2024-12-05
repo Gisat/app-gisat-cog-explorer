@@ -1,11 +1,6 @@
 import { useState } from "react";
 // Mantine-based components
-import {
-  Switch as MantineSwitch,
-  Input as MantineInput,
-  Button,
-  Flex,
-} from "@mantine/core";
+import { Switch as MantineSwitch, Flex } from "@mantine/core";
 // Utils
 
 import { useUpdateParam } from "@/hooks/url/useUpdateParam";
@@ -30,19 +25,13 @@ const UseColorsBasedOnValues = () => {
 
   return (
     <>
-      <MantineInput.Wrapper
-        size="sm"
-        key={tool?.name}
-        label={tool?.title}
-        description={tool?.description}
-      >
-        <Flex>
-          <MantineSwitch mt="xs" checked={checked} onChange={onChange} />
-          {/* <Button ml="lg" variant="outline" size="xs">
-            Reset
-          </Button> */}
-        </Flex>
-      </MantineInput.Wrapper>
+      <MantineSwitch
+        label={tool.title}
+        description={tool.description}
+        mt="lg"
+        checked={checked}
+        onChange={onChange}
+      />
     </>
   );
 };
