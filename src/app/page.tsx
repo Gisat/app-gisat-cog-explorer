@@ -1,15 +1,14 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { useSearchParams } from "next/navigation";
+import React, { useState, useEffect } from "react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import Map from '@/components/layouts/map'
-import { getCogParams } from '@/utils/get-cog-params';
+import Map from "@/components/layouts/map";
 
 // Styles
-import classes from '@/styles/Home.module.css';
+import classes from "@/styles/Home.module.css";
 import Dashboard from "@/components/layouts/dashboard";
 import Editor from "@/components/layouts/editor";
+import Header from "@/components/layouts/header";
 
 /**
  * Todo list:
@@ -18,19 +17,14 @@ import Editor from "@/components/layouts/editor";
  */
 
 export default function Home() {
-
-  // Editor with params
-  const searchParams = useSearchParams();
-
-  const [cogParams, setCogParams] = useState<string>();
-  useEffect(() => {
-    const updatedCogParams = JSON.stringify(getCogParams(searchParams), null, 2);
-    setCogParams(updatedCogParams);
-  }, [searchParams]);
-
   return (
     <main className={classes.main}>
-      <PanelGroup autoSaveId="app-main-panelgroup" direction="horizontal" className={classes.panelGroup}>
+      <Header />
+      <PanelGroup
+        autoSaveId="app-main-panelgroup"
+        direction="horizontal"
+        className={classes.panelGroup}
+      >
         <Panel defaultSize={25} minSize={25} className={classes.leftPanel}>
           <Dashboard />
         </Panel>
@@ -41,9 +35,16 @@ export default function Home() {
               <Map />
             </Panel>
             <PanelResizeHandle className={classes.handleSide} />
-            <Panel className={classes.consolePanel} defaultSize={20} collapsible={true} minSize={20} maxSize={70}>
+            <Panel
+              className={classes.consolePanel}
+              defaultSize={20}
+              collapsible={true}
+              minSize={20}
+              maxSize={70}
+            >
+              <PanelResizeHandle className={classes.handleSide} />
               <Panel defaultSize={20} className={classes.consolePanel}>
-                <Editor content={cogParams} />
+                <Editor />
               </Panel>
             </Panel>
           </PanelGroup>

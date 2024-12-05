@@ -1,8 +1,5 @@
 export enum CogValueType {
-  Boolean = "boolean", // For switchable values, e.g., Checkbox, Switch
-  Number = "number", // For numeric values, e.g., NumberInput, Slider
   Text = "text", // For plain text, e.g., TextInput, Textarea
-  Color = "color", // For single color inputs, e.g., ColorInput
   ColorScale = "colorScale", // For color scales or gradients, e.g., ColorPicker
   Selection = "selection", // For selectable values, e.g., NativeSelect, Radio
   Range = "range", // For min/max or numeric ranges, e.g., Slider
@@ -11,4 +8,13 @@ export enum CogValueType {
   CommaSeparatedColors = "commaSeparatedColors", // For lists of numbers separated by commas
   CommaSeparatedValueColorPairs = "commaSeparatedValueColorPairs",
   ValueColorArray = "ValueColorArray",
+
+  // New
+  Boolean = "boolean", // For switchable values, e.g., useAutoRange
+  Number = "number", // For numeric values, e.g. alpha (opacity)
+  NumberArray = "numberArray", // For lists of numbers
+  NumberNull = "numberNull", // TODO : REMOVE!
+  Url = "url",
+  Color = "color", // For single color inputs
+  ColorArray = "colorArray", // For colors array
 }

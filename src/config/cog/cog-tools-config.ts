@@ -18,6 +18,7 @@ export interface CogSettingTool {
   valueType: CogValueType; // Type of value for the setting, from cog-value-types
   valueRange?: Range; // Optional range for numeric input
   type: MantineInputType; // Mantine component to render, from mantine-input-types
+  value?: any;
 }
 
 // Array of COG setting tool configurations
@@ -52,7 +53,7 @@ export const cogSettings: CogSettingTool[] = [
     name: "useHeatMap",
     title: "Heat Map",
     description: "Generate data as a color heatmap",
-    defaultValue: true,
+    defaultValue: false, // fix
     valueType: CogValueType.Boolean,
     type: MantineInputType.Switch,
   },
@@ -61,7 +62,7 @@ export const cogSettings: CogSettingTool[] = [
     title: "Channel",
     description: "Specify a single channel to use",
     defaultValue: null,
-    valueType: CogValueType.Number,
+    valueType: CogValueType.NumberNull,
     type: MantineInputType.Input,
   },
   {
@@ -77,7 +78,7 @@ export const cogSettings: CogSettingTool[] = [
     title: "Clip Low",
     description: "Generate only data greater than this (default null)",
     defaultValue: null,
-    valueType: CogValueType.Number,
+    valueType: CogValueType.NumberNull,
     type: MantineInputType.Input,
   },
   {
@@ -86,7 +87,7 @@ export const cogSettings: CogSettingTool[] = [
     description:
       "Only display data values less than this threshold (default null).",
     defaultValue: null,
-    valueType: CogValueType.Number,
+    valueType: CogValueType.NumberNull,
     type: MantineInputType.Input,
   },
   {
@@ -94,7 +95,7 @@ export const cogSettings: CogSettingTool[] = [
     title: "Clipped Color",
     description:
       "Set color for clipped values when using clipLow or clipHigh, (default [0, 0, 0, 0]).",
-    defaultValue: [0, 0, 0, 0],
+    defaultValue: undefined,
     valueType: CogValueType.Color,
     type: MantineInputType.ColorInput,
   },
@@ -104,7 +105,7 @@ export const cogSettings: CogSettingTool[] = [
     description:
       "Array of colors, with options like chroma.js and Color Brewer",
     defaultValue: undefined,
-    valueType: CogValueType.CommaSeparatedColors,
+    valueType: CogValueType.ColorArray,
     type: MantineInputType.TagsInput,
   },
   {
@@ -112,9 +113,8 @@ export const cogSettings: CogSettingTool[] = [
     title: "Color Scale Value Range",
     description:
       "Set min and max range values or exact color values if useAutoRange is false",
-    defaultValue: null,
-    // valueRange: { min: 0, max: 255, step: 1 },
-    valueType: CogValueType.CommaSeparatedNumbers,
+    defaultValue: undefined,
+    valueType: CogValueType.NumberArray,
     type: MantineInputType.Input,
   },
   {
@@ -139,7 +139,7 @@ export const cogSettings: CogSettingTool[] = [
     title: "Unidentified Color",
     description:
       "Set color for unidentified values if useColorsBasedOnValues is true",
-    defaultValue: [0, 0, 0, 0],
+    defaultValue: undefined,
     valueType: CogValueType.Color,
     type: MantineInputType.ColorInput,
   },
@@ -147,7 +147,7 @@ export const cogSettings: CogSettingTool[] = [
     name: "nullColor",
     title: "Null Color",
     description: "Set color for noData values",
-    defaultValue: [0, 0, 0, 0],
+    defaultValue: undefined,
     valueType: CogValueType.Color,
     type: MantineInputType.ColorInput,
   },
@@ -163,7 +163,7 @@ export const cogSettings: CogSettingTool[] = [
     name: "color",
     title: "Color",
     description: "Set color if useSingleColor is true",
-    defaultValue: [255, 0, 255, 255],
+    defaultValue: undefined,
     valueType: CogValueType.Color,
     type: MantineInputType.ColorInput,
   },

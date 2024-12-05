@@ -1,41 +1,42 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
+// Mantine-based components
+import { Switch as MantineSwitch, Input as MantineInput } from "@mantine/core";
+// Utils
 
-import { useSearchParams, useRouter } from "next/navigation";
-import { createQueryString } from "@/utils/url";
+import { useUpdateParam } from "@/hooks/url/useUpdateParam";
+import { getTool } from "@/utils/url/getTool";
+import { CogSettingTool } from "@/config/cog/cog-tools-config";
 
-// Import cog tools' data types
-import { CogValueType } from "@/config/cog/cog-value-types";
-import { MantineInputType } from "@/config/cog/mantine-input-types";
-import { cogSettings } from "@/config/cog/cog-tools-config";
-import { Range, CogSettingTool } from "@/config/cog/cog-tools-config";
+const toolName: CogSettingTool["name"] = "useAutoRange";
 
-// Component
-import { Input, Switch } from "@mantine/core";
+const UseAutoRange = () => {
+  // Hooks
+  const updateParam = useUpdateParam();
 
-const useAutoRange = () => {
-  const router = useRouter();
-  // const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const createQueryStringCallback = useCallback(createQueryString, [
-    searchParams,
-  ]);
+  const tool: CogSettingTool = getTool(toolName);
+  /**
+   * TODO: What should be the fallback value if url has no param?
+   */
+  const parsedValue = tool.value ? tool.value : false;
 
-  // Getting default tool values from cog-tools-config
-  const initialToolValues = cogSettings.reduce((acc, tool) => {
-    return {
-      ...acc,
-      [tool.name]: {
-        defaultValue: tool.defaultValue,
-        // valueRange: tool.valueRange || null,
-      },
-    };
-  }, {});
+  const [checked, setChecked] = useState(parsedValue);
+
+  const onChange = (event: any) => {
+    setChecked(!checked);
+    updateParam(toolName, event.currentTarget.checked);
+  };
 
   return (
-    <Input.Wrapper size="sm">
-      <Switch />
-    </Input.Wrapper>
+    <>
+      <MantineSwitch
+        mt="lg"
+        checked={checked}
+        onChange={onChange}
+        label={tool?.title}
+        description={tool?.description}
+      />
+    </>
   );
 };
 
-export { useAutoRange };
+export { UseAutoRange };

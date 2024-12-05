@@ -4,13 +4,11 @@
 	overflow-y: scroll;
 	overflow-x: hidden;
 	height: 100%;
+
+	scrollbar-width: none
 }
 
 .content {
 	width: 100%;
 	color: var(--slate-950);
-}
-
-.settings {
-	margin-top: 20px;
 }
