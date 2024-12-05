@@ -31,7 +31,7 @@ const postValueColorArray = (
         // Replace single quotes with double quotes
         let sanitizedValue = value.replace(/'/g, '"');
 
-        // Convert unquoted color names to strings (e.g., black -> "black")
+        // Convert unquoted color names to strings (e.g., red -> "red")
         sanitizedValue = sanitizedValue.replace(
           /(\[|\s|,)([a-zA-Z]+)(?=[,\]])/g,
           '$1"$2"'
@@ -52,12 +52,12 @@ const postValueColorArray = (
           }
         });
       } else if (value.includes(",")) {
-        // Input is a flat comma-separated string (e.g., 21,black,22,white)
-        const items = value.split(",");
+        // Handle comma-separated flat string (e.g., 2000,red,2003,green)
+        const items = value.split(",").map((item) => item.trim());
         if (items.length % 2 !== 0) throw new Error("Invalid input format");
         for (let i = 0; i < items.length; i += 2) {
-          const key = parseInt(items[i].trim(), 10);
-          const color = items[i + 1].trim();
+          const key = parseInt(items[i], 10);
+          const color = items[i + 1];
           if (isNaN(key) || !isValidColor(color)) {
             throw new Error(`Invalid pair: ${items[i]}, ${items[i + 1]}`);
           }
@@ -73,6 +73,7 @@ const postValueColorArray = (
         .join(",");
       return result;
     } catch (error) {
+      console.error("Error parsing value color array:", error);
       return undefined;
     }
   }

@@ -6,8 +6,11 @@ const parseNumberArray = (
   if (!value) return undefined;
 
   try {
+    // Clean the input string by removing brackets and extra spaces
+    const cleanedValue = value.replace(/[\[\]]/g, "").trim();
+
     // Split the string by commas, trim spaces, and map each value to a number
-    const parsed = value
+    const parsed = cleanedValue
       .split(",")
       .map((item) => parseFloat(item.trim()))
       .filter((num) => !isNaN(num)); // Filter out any invalid numbers

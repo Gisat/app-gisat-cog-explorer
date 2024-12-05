@@ -6,64 +6,49 @@ const parseValueColorArray = (
   tool: string,
   value: string | null | undefined
 ): KeyValueArray | undefined => {
-  if (!value) return undefined; // Return undefined for null/undefined/empty input
+  if (!value) return undefined;
 
   try {
-    // Preprocess the input to make it valid JSON
-    const sanitizedValue = value
-      .trim()
-      .split(",") // Split by commas
-      .reduce<string[]>((acc, curr, index, arr) => {
-        // Pair numbers with colors
-        if (index % 2 === 0) {
-          const number = parseFloat(curr);
-          const color = arr[index + 1];
-          if (!isNaN(number) && color && /^#[a-fA-F0-9]{3,6}$/.test(color)) {
-            acc.push(`[${number}, "${color}"]`);
-          } else {
-            throw new Error(
-              `Invalid input format at index ${index}: ${curr}, ${color}`
-            );
-          }
-        }
-        return acc;
-      }, [])
-      .join(","); // Join pairs with commas
+    // Step 1: Clean and sanitize the input
+    let sanitizedValue = value
+      .replace(/\s/g, "") // Remove all whitespace
+      .replace(/'/g, '"') // Standardize single quotes to double quotes
+      .replace(/(\[|,)(#[0-9a-fA-F]{3,6})([\],])/g, '$1"$2"$3') // Quote hex colors properly
+      .replace(/,+/g, ",") // Remove duplicate commas
+      .replace(/[\[\]]+/g, ""); // Remove stray brackets
 
-    const jsonString = `[${sanitizedValue}]`; // Wrap in array brackets
+    // Step 2: Split the sanitized input into key-value entries
+    const entries = sanitizedValue.split(",");
 
-    console.debug(`Sanitized JSON string for tool "${tool}":`, jsonString);
-
-    // Parse the JSON string
-    const parsedArray = JSON.parse(jsonString);
-
-    // Ensure the parsed value is an array of key-value pairs
-    if (!Array.isArray(parsedArray)) {
-      console.warn(`Invalid format: Expected an array. Received:`, parsedArray);
+    if (entries.length % 2 !== 0) {
+      console.warn(`Invalid input format for tool "${tool}":`, value);
       return undefined;
     }
 
-    // Map the parsed array to the KeyValueArray type
-    const keyValueArray: KeyValueArray = parsedArray.map((pair) => {
-      if (
-        Array.isArray(pair) &&
-        pair.length === 2 &&
-        typeof pair[0] === "number" &&
-        typeof pair[1] === "string"
-      ) {
-        const key = pair[0];
-        const color = chroma(pair[1]);
-        return [key, color];
-      } else {
-        throw new Error(
-          `Invalid pair format: Expected [number, string]. Received: ${JSON.stringify(
-            pair
-          )}`
-        );
-      }
-    });
+    // Step 3: Parse and validate key-value pairs
+    const keyValuePairs: KeyValueArray = [];
+    for (let i = 0; i < entries.length; i += 2) {
+      const key = Number(entries[i]);
+      let color = entries[i + 1];
 
-    return keyValueArray.length > 0 ? keyValueArray : undefined; // Return undefined if the array is empty
+      // Fix any trailing or leading characters that may remain
+      color = color.replace(/^"|"$/g, ""); // Remove outer quotes
+      color = color.replace(/"]+$/, ""); // Remove trailing bracket artifacts
+
+      if (isNaN(key)) {
+        console.warn(`Invalid number at position ${i}:`, entries[i]);
+        return undefined;
+      }
+
+      if (!chroma.valid(color)) {
+        console.warn(`Invalid color at position ${i + 1}:`, color);
+        return undefined;
+      }
+
+      keyValuePairs.push([key, chroma(color)]);
+    }
+
+    return keyValuePairs.length > 0 ? keyValuePairs : undefined;
   } catch (error) {
     console.warn(`Failed to parse color array for tool "${tool}":`, error);
     return undefined;

@@ -11,6 +11,11 @@ import { ColorScale } from "./tools/colorScale";
 import { ColorScaleValueRange } from "./tools/colorScaleValueRange";
 import { UseColorsBasedOnValues } from "./tools/useColorsBasedOnValues";
 import { ColorsBasedOnValues } from "./tools/colorsBasedOnValues";
+import { UnidentifiedColor } from "./tools/unidentifiedColor";
+import { NullColor } from "./tools/nullColor";
+import { UseSingleColor } from "./tools/useSingleColor";
+import { Color } from "./tools/color";
+import { BlurredTexture } from "./tools/blurredTexture";
 
 const CogTools = () => {
   return (
@@ -27,6 +32,11 @@ const CogTools = () => {
       <ColorScaleValueRange />
       <UseColorsBasedOnValues />
       <ColorsBasedOnValues />
+      <UnidentifiedColor />
+      <NullColor />
+      <UseSingleColor />
+      <Color />
+      <BlurredTexture />
     </>
   );
 };

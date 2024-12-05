@@ -1,7 +1,8 @@
+import chroma from "chroma-js";
 import { useState } from "react";
 // Mantine-based components
 import {
-  NumberInput as MantineNumberInput,
+  ColorInput as MantineColorInput,
   Input as MantineInput,
 } from "@mantine/core";
 // Utils
@@ -10,17 +11,19 @@ import { useUpdateParam } from "@/hooks/url/useUpdateParam";
 import { getTool } from "@/utils/url/getTool";
 import { CogSettingTool } from "@/config/cog/cog-tools-config";
 
-const toolName: CogSettingTool["name"] = "useChannel";
+const toolName: CogSettingTool["name"] = "unidentifiedColor";
 
-const UseChannel = () => {
+const UnidentifiedColor = () => {
   // Hooks
   const updateParam = useUpdateParam();
 
   const tool: CogSettingTool = getTool(toolName);
 
-  const parsedValue: number = tool.value ? tool.value : tool.defaultValue;
+  const parsedValue: string = tool.value ? tool.value : tool.defaultValue;
 
-  const [value, setValue] = useState<number>(parsedValue);
+  const parsedColor = parsedValue ? chroma(parsedValue).hex() : undefined;
+
+  const [value, setValue] = useState(parsedColor);
 
   const onChange = (event: any) => {
     setValue(event);
@@ -35,10 +38,16 @@ const UseChannel = () => {
         label={tool?.title}
         description={tool?.description}
       >
-        <MantineNumberInput mt="xs" value={value} onChange={onChange} />
+        <MantineColorInput
+          mt="xs"
+          format="hex"
+          placeholder="Color"
+          value={value}
+          onChange={onChange}
+        />
       </MantineInput.Wrapper>
     </>
   );
 };
 
-export { UseChannel };
+export { UnidentifiedColor };
