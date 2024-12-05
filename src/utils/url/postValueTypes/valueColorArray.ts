@@ -1,3 +1,4 @@
+import chroma from "chroma-js";
 import { cogSettings, CogSettingTool } from "@/config/cog/cog-tools-config";
 import { CogValueType } from "@/config/cog/cog-value-types";
 
@@ -13,24 +14,51 @@ const postValueColorArray = (
       // Return undefined if the value is null or empty
       if (!value) return undefined;
 
+      // Normalize the input into an array of pairs
       let parsedArray: [number, string][] = [];
 
-      // Detect and handle different input formats
+      // Helper to validate colors
+      const isValidColor = (color: string) => {
+        try {
+          return chroma.valid(color); // chroma-js validation
+        } catch {
+          return false;
+        }
+      };
+
+      // Preprocess the input
       if (value.startsWith("[[")) {
-        // Handle nested arrays (e.g., [[11,#ffe875],[12,#d8ff92],...])
-        const sanitizedValue = value.replace(
-          /(\[|\s|,)([0-9]+)(,)(#[a-fA-F0-9]{6}|#[a-fA-F0-9]{3})/g,
-          '$1$2,"$4"'
-        ); // Wrap hex color codes in quotes
+        // Replace single quotes with double quotes
+        let sanitizedValue = value.replace(/'/g, '"');
+
+        // Convert unquoted color names to strings (e.g., black -> "black")
+        sanitizedValue = sanitizedValue.replace(
+          /(\[|\s|,)([a-zA-Z]+)(?=[,\]])/g,
+          '$1"$2"'
+        );
+
+        // Quote HEX colors if not already quoted
+        sanitizedValue = sanitizedValue.replace(
+          /(\[|\s|,)(#[a-fA-F0-9]{6}|#[a-fA-F0-9]{3})/g,
+          '$1"$2"'
+        );
+
         parsedArray = JSON.parse(sanitizedValue);
-      } else if (value.includes(",") && !value.startsWith("[")) {
-        // Handle flat comma-separated input (e.g., 11,#ffe875,12,#d8ff92,...)
+
+        // Validate each pair
+        parsedArray.forEach(([key, color]) => {
+          if (!Number.isInteger(Number(key)) || !isValidColor(color)) {
+            throw new Error(`Invalid pair: ${key}, ${color}`);
+          }
+        });
+      } else if (value.includes(",")) {
+        // Input is a flat comma-separated string (e.g., 21,black,22,white)
         const items = value.split(",");
         if (items.length % 2 !== 0) throw new Error("Invalid input format");
         for (let i = 0; i < items.length; i += 2) {
           const key = parseInt(items[i].trim(), 10);
           const color = items[i + 1].trim();
-          if (isNaN(key) || !/^#[a-fA-F0-9]{6}$/.test(color)) {
+          if (isNaN(key) || !isValidColor(color)) {
             throw new Error(`Invalid pair: ${items[i]}, ${items[i + 1]}`);
           }
           parsedArray.push([key, color]);
@@ -39,16 +67,12 @@ const postValueColorArray = (
         throw new Error("Unsupported input format");
       }
 
-      // Convert parsed array to the required output format
+      // Convert the array back to a consistent string format with HEX colors
       const result = parsedArray
-        .map(([key, color]) => `${key},${color}`)
+        .map(([key, color]) => `${key},${chroma(color).hex().toUpperCase()}`)
         .join(",");
       return result;
     } catch (error) {
-      console.error(
-        `Failed to process value color array for tool "${tool}":`,
-        error
-      );
       return undefined;
     }
   }

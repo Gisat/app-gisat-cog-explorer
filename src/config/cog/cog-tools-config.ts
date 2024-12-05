@@ -140,7 +140,7 @@ export const cogSettings: CogSettingTool[] = [
     title: "Unidentified Color",
     description:
       "Set color for unidentified values if useColorsBasedOnValues is true",
-    defaultValue: [0, 0, 0, 0],
+    defaultValue: undefined,
     valueType: CogValueType.Color,
     type: MantineInputType.ColorInput,
   },
