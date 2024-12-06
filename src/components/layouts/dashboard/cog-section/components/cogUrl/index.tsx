@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
 // Mantine-based components
-import { Input as MantineInput, Button } from "@mantine/core";
+import { Input as MantineInput, Button } from '@mantine/core';
 // React icons
-import { IconLink, IconPlayerPlayFilled } from "@tabler/icons-react";
+import { IconLink, IconPlayerPlayFilled } from '@tabler/icons-react';
+import { useState } from 'react';
+
 // Hooks
-import { useUpdateSource } from "@/hooks/url/useUpdateSource";
-import { getSource, parseSource } from "@/utils/url/getSource";
+import { useUpdateSource } from '@/hooks/url/useUpdateSource';
+import { getSource, parseSource } from '@/utils/url/getSource';
 
 const CogUrl = () => {
   // Hooks
@@ -44,7 +45,7 @@ const CogUrl = () => {
       required
       error={validation.error ? validation.error : null}
     >
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
         <MantineInput
           value={value}
           onChange={onChange} // Allow free editing

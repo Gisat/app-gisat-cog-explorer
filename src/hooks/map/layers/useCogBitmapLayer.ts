@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from "react";
-import { LayerDefinition as CogBitmapLayerDefinition } from "@/types/layers/cogBitmapLayer";
-import { getSource } from "@/utils/url/getSource";
-import { useCogBitmapOptions } from "@/hooks/map/layers/getCogBitmapOptions";
-import isEqual from "lodash.isequal";
+import isEqual from 'lodash.isequal';
+import { useState, useRef, useEffect } from 'react';
+
+import { useCogBitmapOptions } from '@/hooks/map/layers/getCogBitmapOptions';
+import { LayerDefinition as CogBitmapLayerDefinition } from '@/types/layers/cogBitmapLayer';
+import { getSource } from '@/utils/url/getSource';
 
 export const useCogBitmapLayer = () => {
   const { source } = getSource();
@@ -17,8 +18,6 @@ export const useCogBitmapLayer = () => {
   };
 
   const cogUrlRef = useRef<string | undefined>();
-
-  const url: string | undefined = source.parsedValue ?? undefined;
 
   const [cogBitmapLayer, setCogBitmapLayer] =
     useState<CogBitmapLayerDefinition | null>(null);
@@ -55,16 +54,16 @@ export const useCogBitmapLayer = () => {
     const layerDefinition: CogBitmapLayerDefinition = {
       key: `CogBitmapLayer_${versionRef.current}`,
       layerKey: `CogBitmapLayer`,
-      name: "CogBitmapLayer_",
+      name: 'CogBitmapLayer_',
       opacity: options.alpha ? options.alpha * 0.01 : 1,
       options: {
         url: cogUrl || undefined,
-        type: "image",
+        type: 'image',
         cogBitmapOptions: {
           ...options,
         },
       },
-      type: "cogBitmap",
+      type: 'cogBitmap',
     };
 
     setCogBitmapLayer(layerDefinition);

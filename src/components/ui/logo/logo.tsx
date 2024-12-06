@@ -1,6 +1,6 @@
-import Link from "next/link";
-import NextImage from "next/image";
-import { Image } from "@mantine/core";
+import { Image } from '@mantine/core';
+import NextImage from 'next/image';
+import Link from 'next/link';
 
 export type LogoProps = {
   className?: string;
@@ -15,7 +15,7 @@ export type LogoProps = {
 };
 
 // Path in public dir
-const defaultLogoPath = "/gisat.svg";
+const defaultLogoPath = '/gisat.svg';
 
 export const Logo = ({
   className,
@@ -24,17 +24,16 @@ export const Logo = ({
   href,
   ariaLabel,
   src = defaultLogoPath,
-  alt = "Logo",
+  alt = 'Logo',
   expanded,
   expandedText,
-  ...props
 }: LogoProps) => {
   return (
     <Link
       href={href}
       aria-label={ariaLabel}
       className={className}
-      style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+      style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
     >
       <Image
         component={NextImage}
@@ -49,19 +48,19 @@ export const Logo = ({
         <>
           <span
             style={{
-              margin: "0 15px",
-              fontWeight: "bold",
-              color: "var(--accent-old)",
+              margin: '0 15px',
+              fontWeight: 'bold',
+              color: 'var(--accent-old)',
             }}
           >
-            {" "}
-            |{" "}
+            {' '}
+            |{' '}
           </span>
           <h1
             style={{
-              fontSize: "15px",
-              color: "var(--accent-old)",
-              margin: "0",
+              fontSize: '15px',
+              color: 'var(--accent-old)',
+              margin: '0',
             }}
           >
             {expandedText}

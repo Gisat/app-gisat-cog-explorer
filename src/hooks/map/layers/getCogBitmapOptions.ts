@@ -1,3 +1,8 @@
+import { useSearchParams } from 'next/navigation';
+
+import { cogSettings } from '@/config/cog/cogToolsConfig';
+import { CogValueType } from '@/config/cog/cogValueTypes';
+import { LayerDefinition } from '@/types/layers/cogBitmapLayer';
 import {
   parseBoolean,
   parseColor,
@@ -6,13 +11,9 @@ import {
   parseNumberArray,
   parseNumberNull,
   parseValueColorArray,
-} from "@/utils/url/parseValueTypes";
-import { cogSettings } from "@/config/cog/cog-tools-config";
-import { CogValueType } from "@/config/cog/cog-value-types";
-import { LayerDefinition } from "@/types/layers/cogBitmapLayer";
-import { useSearchParams } from "next/navigation";
+} from '@/utils/url/parseValueTypes';
 
-type CogBitmapOptions = LayerDefinition["options"]["cogBitmapOptions"];
+type CogBitmapOptions = LayerDefinition['options']['cogBitmapOptions'];
 
 /**
  * Custom hook to compute CogBitmapOptions from URL parameters.
@@ -38,19 +39,19 @@ export const useCogBitmapOptions = (): Partial<CogBitmapOptions> => {
       case CogValueType.Boolean:
         rawOptions[name as keyof CogBitmapOptions] = parseBoolean(
           tool.name,
-          paramValue
+          paramValue,
         ) as any;
         break;
       case CogValueType.Number:
         rawOptions[name as keyof CogBitmapOptions] = parseNumber(
           tool.name,
-          paramValue
+          paramValue,
         ) as any;
         break;
       case CogValueType.NumberNull:
         rawOptions[name as keyof CogBitmapOptions] = parseNumberNull(
           tool.name,
-          paramValue
+          paramValue,
         ) as any;
         break;
 
@@ -58,25 +59,25 @@ export const useCogBitmapOptions = (): Partial<CogBitmapOptions> => {
       case CogValueType.Color:
         rawOptions[name as keyof CogBitmapOptions] = parseColor(
           tool.name,
-          paramValue
+          paramValue,
         ) as any;
         break;
       case CogValueType.ColorArray:
         rawOptions[name as keyof CogBitmapOptions] = parseColorArray(
           tool.name,
-          paramValue
+          paramValue,
         ) as any;
         break;
       case CogValueType.NumberArray:
         rawOptions[name as keyof CogBitmapOptions] = parseNumberArray(
           tool.name,
-          paramValue
+          paramValue,
         ) as any;
         break;
       case CogValueType.ValueColorArray:
         rawOptions[name as keyof CogBitmapOptions] = parseValueColorArray(
           tool.name,
-          paramValue
+          paramValue,
         ) as any;
         break;
 
@@ -88,7 +89,7 @@ export const useCogBitmapOptions = (): Partial<CogBitmapOptions> => {
 
   // Filter out `undefined` values
   const options: Partial<CogBitmapOptions> = Object.fromEntries(
-    Object.entries(rawOptions).filter(([_, value]) => value !== undefined)
+    Object.entries(rawOptions).filter(([_, value]) => value !== undefined), // eslint-disable-line
   ) as Partial<CogBitmapOptions>;
 
   return options;

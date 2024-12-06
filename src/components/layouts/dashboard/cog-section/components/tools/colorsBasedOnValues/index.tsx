@@ -1,13 +1,14 @@
-import { useState } from "react";
-import chroma from "chroma-js";
+import { Input as MantineInput, CloseButton } from '@mantine/core';
+import chroma from 'chroma-js';
+import { useState } from 'react';
 // Mantine-based components
-import { Input as MantineInput, CloseButton } from "@mantine/core";
-// Utils
-import { useUpdateParam } from "@/hooks/url/useUpdateParam";
-import { getTool } from "@/utils/url/getTool";
-import { CogSettingTool } from "@/config/cog/cog-tools-config";
 
-const toolName: CogSettingTool["name"] = "colorsBasedOnValues";
+// Utils
+import { CogSettingTool } from '@/config/cog/cogToolsConfig';
+import { useUpdateParam } from '@/hooks/url/useUpdateParam';
+import { getTool } from '@/utils/url/getTool';
+
+const toolName: CogSettingTool['name'] = 'colorsBasedOnValues';
 
 const ColorsBasedOnValues = () => {
   // Hooks
@@ -21,13 +22,13 @@ const ColorsBasedOnValues = () => {
     ? parsedValue.map(
         ([value, color]: [
           number,
-          { _rgb: [number, number, number, number] }
+          { _rgb: [number, number, number, number] },
         ]) => {
           const chromaColor = chroma(color._rgb).hex(); // Convert _rgb to a chroma.Color
           return [value, chromaColor]; // Return the tuple [key, chroma.Color]
-        }
+        },
       )
-    : "";
+    : '';
 
   // console.log("parsedKeyValueArray: ", String(parsedKeyValueArray));
 
@@ -57,10 +58,10 @@ const ColorsBasedOnValues = () => {
             <CloseButton
               aria-label="Clear input"
               onClick={() => {
-                setValue("");
-                updateParam(toolName, "");
+                setValue('');
+                updateParam(toolName, '');
               }}
-              style={{ display: value ? undefined : "none" }}
+              style={{ display: value ? undefined : 'none' }}
             />
           }
         />

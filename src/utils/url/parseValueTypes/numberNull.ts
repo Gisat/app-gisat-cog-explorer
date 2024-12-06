@@ -1,11 +1,11 @@
-import { cogSettings } from "@/config/cog/cog-tools-config";
+import { cogSettings } from '@/config/cog/cogToolsConfig';
 
 const parseNumberNull = (
   tool: string,
-  value: string | null | undefined
+  value: string | null | undefined,
 ): number | null | undefined => {
   if (value === null || value === undefined) return undefined;
-  if (value === "") return null;
+  if (value === '') return null;
   const parsed = parseFloat(value);
   if (isNaN(parsed) || !isFinite(parsed)) return undefined;
 

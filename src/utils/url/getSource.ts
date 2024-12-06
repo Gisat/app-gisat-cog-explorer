@@ -1,4 +1,5 @@
-import { useSearchParams } from "next/navigation";
+/* eslint-disable */
+import { useSearchParams } from 'next/navigation';
 
 type GetSourceResult = {
   source: {
@@ -12,7 +13,7 @@ type GetSourceResult = {
  */
 export const getSource = (): GetSourceResult => {
   const searchParams = useSearchParams();
-  const paramValue = searchParams.get("cogUrl");
+  const paramValue = searchParams.get('cogUrl');
   const source = parseSource(paramValue);
   return { source };
 };
@@ -24,10 +25,10 @@ export const getSource = (): GetSourceResult => {
  * @returns The trimmed and validated URL string, or an error message if invalid.
  */
 export const parseSource = (
-  value: string | null | undefined
+  value: string | null | undefined,
 ): { parsedValue: string | undefined; error: string | null } => {
-  if (value === null || value === undefined || value.trim() === "") {
-    return { parsedValue: undefined, error: "URL cannot be empty" };
+  if (value === null || value === undefined || value.trim() === '') {
+    return { parsedValue: undefined, error: 'URL cannot be empty' };
   }
 
   const trimmedValue = value.trim();
@@ -37,7 +38,7 @@ export const parseSource = (
   if (!urlPattern.test(trimmedValue)) {
     return {
       parsedValue: undefined,
-      error: "URL must start with https:// and end with .tif",
+      error: 'URL must start with https:// and end with .tif',
     };
   }
 

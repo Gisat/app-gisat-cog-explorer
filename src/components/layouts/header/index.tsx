@@ -1,6 +1,7 @@
-import { Logo } from "@/components/ui/logo";
-import { Container } from "@mantine/core";
-import styles from "@/styles/Header.module.css";
+import { Container } from '@mantine/core';
+
+import { Logo } from '@/components/ui/logo';
+import styles from '@/styles/Header.module.css';
 
 const Header = () => {
   return (

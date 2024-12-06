@@ -1,10 +1,12 @@
-import { cogSettings, CogSettingTool } from "@/config/cog/cog-tools-config";
-import { CogValueType } from "@/config/cog/cog-value-types";
-import chroma from "chroma-js";
+/* eslint-disable */
+import chroma from 'chroma-js';
+
+import { cogSettings, CogSettingTool } from '@/config/cog/cogToolsConfig';
+import { CogValueType } from '@/config/cog/cogValueTypes';
 
 const postColor = (
-  tool: CogSettingTool["name"],
-  value: string
+  tool: CogSettingTool['name'],
+  value: string,
 ): string | undefined => {
   // Find the tool configuration
   const toolConfig = cogSettings.find((t: any) => t.name === tool);

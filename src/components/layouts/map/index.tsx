@@ -1,12 +1,13 @@
-import { DeckGlMap } from "@gisatcz/ptr-maps";
+import { DeckGlMap } from '@gisatcz/ptr-maps';
 // React hooks
-import { useState } from "react";
+import { useState } from 'react';
+
 // Map configuration
-import { InitViewResult, useInitView } from "@/hooks/map/view/useInitView";
-import { useUpdateMapView } from "@/hooks/url/useUpdateMapView";
-import { getMapView } from "@/utils/url/getMapView";
+import { useCogBitmapLayer } from '@/hooks/map/layers/useCogBitmapLayer';
+import { InitViewResult, useInitView } from '@/hooks/map/view/useInitView';
+import { useUpdateMapView } from '@/hooks/url/useUpdateMapView';
+import { getMapView } from '@/utils/url/getMapView';
 // Import Layers (Hooks)
-import { useCogBitmapLayer } from "@/hooks/map/layers/useCogBitmapLayer";
 
 const Map = (): React.ReactElement => {
   // Import Hooks
@@ -37,10 +38,10 @@ const Map = (): React.ReactElement => {
     <DeckGlMap
       view={{ ...viewState }}
       backgroundLayer={{
-        key: "background-osm",
-        type: "wmts",
+        key: 'background-osm',
+        type: 'wmts',
         options: {
-          url: "https://{s}.tile.osm.org/{z}/{x}/{y}.png",
+          url: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
         },
       }}
       layers={layers}

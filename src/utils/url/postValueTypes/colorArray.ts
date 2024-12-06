@@ -1,25 +1,25 @@
-import { cogSettings, CogSettingTool } from "@/config/cog/cog-tools-config";
-import { CogValueType } from "@/config/cog/cog-value-types";
-import chroma from "chroma-js";
+/* eslint-disable */
+import chroma from 'chroma-js';
+
+import { cogSettings, CogSettingTool } from '@/config/cog/cogToolsConfig';
+import { CogValueType } from '@/config/cog/cogValueTypes';
 
 const postColorArray = (
-  tool: CogSettingTool["name"],
-  value: string | null | undefined // Accept possible null or undefined
+  tool: CogSettingTool['name'],
+  value: string | null | undefined, // Accept possible null or undefined
 ): string | undefined => {
   const toolConfig = cogSettings.find((t) => t.name === tool);
 
   if (toolConfig?.valueType === CogValueType.ColorArray) {
     try {
       // Ensure value is a string or return undefined for invalid types
-      if (typeof value !== "string") {
+      if (typeof value !== 'string') {
         // console.warn(`Invalid value type for tool "${tool}":`, value);
         return undefined;
       }
 
       // Remove brackets, quotes, and extra spaces
-      const sanitizedValue = value
-        .replace(/[\[\]'"]/g, "") // Remove [ ] ' "
-        .trim();
+      const sanitizedValue = value.replace(/[\[\]'"]/g, '').trim();
 
       // Split by commas or spaces into an array
       const components = sanitizedValue.split(/,\s*|\s+/);
@@ -42,7 +42,7 @@ const postColorArray = (
         return undefined;
       }
 
-      return hexColors.join(",");
+      return hexColors.join(',');
     } catch (error) {
       console.error(`Failed to process color array for tool "${tool}":`, error);
       return undefined;

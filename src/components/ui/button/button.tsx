@@ -1,33 +1,22 @@
 import * as React from 'react';
+
 import { Spinner } from '../spinner';
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-	asChild?: boolean;
-	isLoading?: boolean;
-	icon?: React.ReactNode;
+  asChild?: boolean;
+  isLoading?: boolean;
+  icon?: React.ReactNode;
 };
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-	(
-		{
-			className,
-			children,
-			isLoading,
-			...props
-		},
-		ref,
-	) => {
-		return (
-			<button
-				className={className}
-				ref={ref}
-				{...props}
-			>
-				{isLoading && <Spinner />}
-				<span>{children}</span>
-			</button>
-		);
-	},
+  ({ className, children, isLoading, ...props }, ref) => {
+    return (
+      <button className={className} ref={ref} {...props}>
+        {isLoading && <Spinner />}
+        <span>{children}</span>
+      </button>
+    );
+  },
 );
 Button.displayName = 'Button';
 

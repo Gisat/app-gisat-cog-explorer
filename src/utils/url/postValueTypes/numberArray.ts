@@ -1,9 +1,9 @@
-import { cogSettings, CogSettingTool } from "@/config/cog/cog-tools-config";
-import { CogValueType } from "@/config/cog/cog-value-types";
+import { cogSettings, CogSettingTool } from '@/config/cog/cogToolsConfig';
+import { CogValueType } from '@/config/cog/cogValueTypes';
 
 const postNumberArray = (
-  tool: CogSettingTool["name"],
-  value: string | number | (string | number)[] | null | undefined
+  tool: CogSettingTool['name'],
+  value: string | number | (string | number)[] | null | undefined,
 ): string | undefined => {
   const toolConfig = cogSettings.find((t) => t.name === tool);
 
@@ -17,18 +17,18 @@ const postNumberArray = (
         // Handle array input
         normalizedArray = value
           .map((item) => {
-            const num = typeof item === "number" ? item : parseFloat(item);
+            const num = typeof item === 'number' ? item : parseFloat(item);
             return !isNaN(num) ? num : null; // Return null for invalid numbers
           })
           .filter((num): num is number => num !== null); // Filter out null values
-      } else if (typeof value === "string") {
+      } else if (typeof value === 'string') {
         // Handle various string formats
         normalizedArray = value
-          .replace(/[[\]"']/g, "") // Remove brackets and quotes
-          .split(",") // Split by commas
+          .replace(/[[\]"']/g, '') // Remove brackets and quotes
+          .split(',') // Split by commas
           .map((item) => parseFloat(item.trim())) // Trim and parse numbers
           .filter((num) => !isNaN(num)); // Filter valid numbers
-      } else if (typeof value === "number") {
+      } else if (typeof value === 'number') {
         // Handle single number input
         normalizedArray = [value];
       } else {
@@ -37,13 +37,13 @@ const postNumberArray = (
       }
 
       // Ensure the result is a properly formatted string
-      const result = normalizedArray.join(",");
-      console.log("Processed Result:", result); // Debugging log
+      const result = normalizedArray.join(',');
+      console.log('Processed Result:', result); // Debugging log
       return result;
     } catch (error) {
       console.error(
         `Failed to process number array for tool "${tool}":`,
-        error
+        error,
       );
       return undefined;
     }

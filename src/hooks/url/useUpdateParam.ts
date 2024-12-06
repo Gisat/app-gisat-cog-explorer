@@ -1,14 +1,16 @@
-import { useSearchParams, useRouter } from "next/navigation";
-import { cogSettings, CogSettingTool } from "@/config/cog/cog-tools-config";
-import { CogValueType } from "@/config/cog/cog-value-types";
-import { postColor } from "@/utils/url/postValueTypes/color";
-import { postColorArray } from "@/utils/url/postValueTypes/colorArray";
-import { postNumberArray } from "@/utils/url/postValueTypes/numberArray";
-import { postValueColorArray } from "@/utils/url/postValueTypes/valueColorArray";
+/* eslint-disable */
+import { useSearchParams, useRouter } from 'next/navigation';
+
+import { cogSettings, CogSettingTool } from '@/config/cog/cogToolsConfig';
+import { CogValueType } from '@/config/cog/cogValueTypes';
+import { postColor } from '@/utils/url/postValueTypes/color';
+import { postColorArray } from '@/utils/url/postValueTypes/colorArray';
+import { postNumberArray } from '@/utils/url/postValueTypes/numberArray';
+import { postValueColorArray } from '@/utils/url/postValueTypes/valueColorArray';
 
 // Define a utility type to map tool names to their value types
 type CogSettingsValueType = {
-  [T in CogSettingTool["name"]]: CogSettingTool["value"];
+  [T in CogSettingTool['name']]: CogSettingTool['value'];
 };
 
 /**
@@ -21,8 +23,8 @@ export const useUpdateParam = () => {
   const router = useRouter();
 
   return (
-    name: CogSettingTool["name"],
-    value: CogSettingsValueType[CogSettingTool["name"]]
+    name: CogSettingTool['name'],
+    value: CogSettingsValueType[CogSettingTool['name']],
   ): void => {
     const tool = cogSettings.find((t) => t.name === name);
 
@@ -37,11 +39,11 @@ export const useUpdateParam = () => {
     const params = new URLSearchParams(searchParams.toString());
 
     // Update or remove the parameter
-    if (value !== undefined && value !== null && value !== "") {
+    if (value !== undefined && value !== null && value !== '') {
       switch (valueType) {
         case CogValueType.Color:
           const color: string | undefined = postColor(name, value);
-          if (color !== undefined && color !== null && color !== "") {
+          if (color !== undefined && color !== null && color !== '') {
             params.set(name, color);
           } else {
             params.delete(name);
@@ -52,7 +54,7 @@ export const useUpdateParam = () => {
           if (
             colorArray !== undefined &&
             colorArray !== null &&
-            colorArray !== ""
+            colorArray !== ''
           ) {
             params.set(name, colorArray);
           } else {
@@ -64,7 +66,7 @@ export const useUpdateParam = () => {
           if (
             numberArray !== undefined &&
             numberArray !== null &&
-            numberArray !== ""
+            numberArray !== ''
           ) {
             params.set(name, numberArray);
           } else {
@@ -74,12 +76,12 @@ export const useUpdateParam = () => {
         case CogValueType.ValueColorArray:
           const valueColorArray: string | undefined = postValueColorArray(
             name,
-            value
+            value,
           );
           if (
             valueColorArray !== undefined &&
             valueColorArray !== null &&
-            valueColorArray !== ""
+            valueColorArray !== ''
           ) {
             params.set(name, valueColorArray);
           } else {

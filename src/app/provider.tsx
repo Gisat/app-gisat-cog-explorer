@@ -1,11 +1,12 @@
-"use client";
+'use client';
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import React from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import React from 'react';
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
-import { MainErrorFallback } from "@/components/errors/main";
+import { MainErrorFallback } from '@/components/errors/main';
 // Todo:
 // import { Notifications } from '@/components/ui/notifications';
 // import { queryConfig } from '@/lib/react-query';
@@ -19,7 +20,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     () =>
       new QueryClient({
         // defaultOptions: queryConfig,
-      })
+      }),
   );
 
   return (
@@ -27,7 +28,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       <QueryClientProvider client={queryClient}>
         {process.env.DEV && <ReactQueryDevtools />}
         {/*<Notifications /> */}
-        {children}
+        <Suspense>{children}</Suspense>
       </QueryClientProvider>
     </ErrorBoundary>
   );

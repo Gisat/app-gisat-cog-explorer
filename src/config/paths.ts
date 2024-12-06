@@ -1,5 +1,5 @@
 export const paths = {
   home: {
-    getHref: () => "/",
+    getHref: () => '/',
   },
 } as const;

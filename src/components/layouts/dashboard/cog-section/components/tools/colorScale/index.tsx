@@ -1,19 +1,15 @@
-import { useState } from "react";
-import chroma from "chroma-js";
+import { Input as MantineInput, CloseButton } from '@mantine/core';
+import chroma from 'chroma-js';
+import { useState } from 'react';
 
 // Mantine-based components
-import {
-  ColorInput as MantineColorInput,
-  Input as MantineInput,
-  CloseButton,
-} from "@mantine/core";
 // Utils
 
-import { useUpdateParam } from "@/hooks/url/useUpdateParam";
-import { getTool } from "@/utils/url/getTool";
-import { CogSettingTool } from "@/config/cog/cog-tools-config";
+import { CogSettingTool } from '@/config/cog/cogToolsConfig';
+import { useUpdateParam } from '@/hooks/url/useUpdateParam';
+import { getTool } from '@/utils/url/getTool';
 
-const toolName: CogSettingTool["name"] = "colorScale";
+const toolName: CogSettingTool['name'] = 'colorScale';
 
 const ColorScale = () => {
   // Hooks
@@ -25,9 +21,9 @@ const ColorScale = () => {
 
   const parsedColors = parsedValue
     ? parsedValue.map((color: { _rgb: string | number | chroma.Color }) =>
-        chroma(color._rgb).hex()
+        chroma(color._rgb).hex(),
       )
-    : "";
+    : '';
 
   const [value, setValue] = useState(String(parsedColors));
 
@@ -55,10 +51,10 @@ const ColorScale = () => {
             <CloseButton
               aria-label="Clear input"
               onClick={() => {
-                setValue("");
-                updateParam(toolName, "");
+                setValue('');
+                updateParam(toolName, '');
               }}
-              style={{ display: value ? undefined : "none" }}
+              style={{ display: value ? undefined : 'none' }}
             />
           }
         />

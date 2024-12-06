@@ -1,17 +1,17 @@
-import chroma from "chroma-js";
-import { useState } from "react";
-// Mantine-based components
 import {
   ColorInput as MantineColorInput,
   Input as MantineInput,
-} from "@mantine/core";
+} from '@mantine/core';
+import chroma from 'chroma-js';
+import { useState } from 'react';
+// Mantine-based components
 // Utils
 
-import { useUpdateParam } from "@/hooks/url/useUpdateParam";
-import { getTool } from "@/utils/url/getTool";
-import { CogSettingTool } from "@/config/cog/cog-tools-config";
+import { CogSettingTool } from '@/config/cog/cogToolsConfig';
+import { useUpdateParam } from '@/hooks/url/useUpdateParam';
+import { getTool } from '@/utils/url/getTool';
 
-const toolName: CogSettingTool["name"] = "color";
+const toolName: CogSettingTool['name'] = 'color';
 
 const Color = () => {
   // Hooks

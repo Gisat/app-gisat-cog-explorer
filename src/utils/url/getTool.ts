@@ -1,4 +1,10 @@
-import { CogValueType } from "@/config/cog/cog-value-types";
+/* eslint-disable */
+import { useSearchParams } from 'next/navigation';
+
+import { cogSettings, CogSettingTool } from '@/config/cog/cogToolsConfig';
+import { CogValueType } from '@/config/cog/cogValueTypes';
+import { urlParams } from '@/types/urlParams';
+
 import {
   parseBoolean,
   parseColor,
@@ -7,10 +13,7 @@ import {
   parseNumberArray,
   parseNumberNull,
   parseValueColorArray,
-} from "./parseValueTypes";
-import { cogSettings, CogSettingTool } from "@/config/cog/cog-tools-config";
-import { urlParams } from "@/types/urlParams";
-import { useSearchParams } from "next/navigation";
+} from './parseValueTypes';
 
 /**
  * Utility function to retrieve a single parameter from the URL or search parameters.
@@ -18,13 +21,13 @@ import { useSearchParams } from "next/navigation";
  * @param toolName - The name of the tool from CogSettingsTool.
  * @returns The tool object with the parsed value, or tool with `undefined` value in case value has not parsed.
  */
-export const getTool = (toolName: CogSettingTool["name"]): CogSettingTool => {
+export const getTool = (toolName: CogSettingTool['name']): CogSettingTool => {
   // Find the corresponding tool configuration
   const tool = cogSettings.find((tool) => tool.name === toolName);
 
   if (!tool) {
     throw new Error(
-      `No settings found for tool name: "${toolName}" in COG Settings.`
+      `No settings found for tool name: "${toolName}" in COG Settings.`,
     );
   }
 
@@ -53,10 +56,10 @@ export const getTool = (toolName: CogSettingTool["name"]): CogSettingTool => {
  */
 const parseValueByType = (
   valueType: CogValueType,
-  paramName: CogSettingTool["name"],
-  paramValue: string | null | undefined // String because taken form URL
+  paramName: CogSettingTool['name'],
+  paramValue: string | null | undefined, // String because taken form URL
 ): urlParams[keyof urlParams] | undefined => {
-  if (paramValue === undefined || paramValue === "" || paramValue === null) {
+  if (paramValue === undefined || paramValue === '' || paramValue === null) {
     return undefined;
   } else {
     switch (valueType) {
@@ -78,7 +81,7 @@ const parseValueByType = (
         return undefined; // Or add Text parsing logic if needed
       default:
         console.warn(
-          `Unsupported value type: "${valueType}" for parameter: "${paramName}".`
+          `Unsupported value type: "${valueType}" for parameter: "${paramName}".`,
         );
         return undefined;
     }

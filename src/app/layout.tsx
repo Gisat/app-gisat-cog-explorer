@@ -1,13 +1,11 @@
-import type { Metadata } from "next";
-import { ReactNode } from 'react';
-import { AppProvider } from '@/app/provider';
-
-// Mantine
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+import type { Metadata } from 'next';
+import { ReactNode } from 'react';
+
+import { AppProvider } from '@/app/provider';
 import { theme } from '@/styles/mantineTheme';
 
-// Styles
-import '@/styles/global.css'; // Global
+import '@/styles/global.css'; // Global styles
 import '@mantine/core/styles.css'; // Mantine styles
 
 export const metadata: Metadata = {
@@ -20,10 +18,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     <html lang="en">
       <head>
         <meta charSet="UTF-8" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <ColorSchemeScript />
       </head>
 
@@ -31,9 +26,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
       <body className="ptr-light">
         {/** Mantine theme is defined separately */}
         <MantineProvider theme={theme}>
-          <AppProvider>
-            {children}
-          </AppProvider>
+          <AppProvider>{children}</AppProvider>
         </MantineProvider>
       </body>
     </html>

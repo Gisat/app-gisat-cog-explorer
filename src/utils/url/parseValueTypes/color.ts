@@ -1,11 +1,12 @@
-import chroma from "chroma-js";
+/* eslint-disable */
+import chroma from 'chroma-js';
 
 const parseColor = (
   tool: string,
-  value: string | null | undefined
+  value: string | null | undefined,
 ): chroma.Color | undefined => {
   // Validate input
-  if (value === null || value === undefined || value === "") {
+  if (value === null || value === undefined || value === '') {
     return undefined;
   }
 

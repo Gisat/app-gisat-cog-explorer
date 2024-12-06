@@ -1,14 +1,13 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import Map from "@/components/layouts/map";
+import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 
 // Styles
-import classes from "@/styles/Home.module.css";
-import Dashboard from "@/components/layouts/dashboard";
-import Editor from "@/components/layouts/editor";
-import Header from "@/components/layouts/header";
+import Dashboard from '@/components/layouts/dashboard';
+import Editor from '@/components/layouts/editor';
+import Header from '@/components/layouts/header';
+import Map from '@/components/layouts/map';
+import classes from '@/styles/Home.module.css';
 
 /**
  * Todo list:

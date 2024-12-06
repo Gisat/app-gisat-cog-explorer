@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
 // Styles
-import classes from "@/styles/Dashboard.module.css";
-import { Logo } from "@/components/ui/logo";
-import CogSection from "./cog-section";
-import DashboardFooter from "./footer";
+import classes from '@/styles/Dashboard.module.css';
+
+import CogSection from './cog-section';
+import DashboardFooter from './footer';
 
 const Dashboard = () => {
   // code here

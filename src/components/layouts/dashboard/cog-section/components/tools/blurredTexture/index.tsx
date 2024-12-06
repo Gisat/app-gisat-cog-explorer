@@ -1,17 +1,13 @@
-import { useState } from "react";
+import { Switch as MantineSwitch } from '@mantine/core';
+import { useState } from 'react';
 // Mantine-based components
-import {
-  Switch as MantineSwitch,
-  Input as MantineInput,
-  Flex,
-} from "@mantine/core";
 // Utils
 
-import { useUpdateParam } from "@/hooks/url/useUpdateParam";
-import { getTool } from "@/utils/url/getTool";
-import { CogSettingTool } from "@/config/cog/cog-tools-config";
+import { CogSettingTool } from '@/config/cog/cogToolsConfig';
+import { useUpdateParam } from '@/hooks/url/useUpdateParam';
+import { getTool } from '@/utils/url/getTool';
 
-const toolName: CogSettingTool["name"] = "blurredTexture";
+const toolName: CogSettingTool['name'] = 'blurredTexture';
 
 const BlurredTexture = () => {
   // Hooks

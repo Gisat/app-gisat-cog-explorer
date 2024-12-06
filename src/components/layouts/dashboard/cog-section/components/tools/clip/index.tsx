@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { NumberInput as MantineNumberInput, Flex, Text } from '@mantine/core';
+import { useState } from 'react';
 // Mantine-based components
-import { NumberInput as MantineNumberInput, Flex, Text } from "@mantine/core";
 // Utils
 
-import { useUpdateParam } from "@/hooks/url/useUpdateParam";
-import { getTool } from "@/utils/url/getTool";
-import { CogSettingTool } from "@/config/cog/cog-tools-config";
+import { CogSettingTool } from '@/config/cog/cogToolsConfig';
+import { useUpdateParam } from '@/hooks/url/useUpdateParam';
+import { getTool } from '@/utils/url/getTool';
 
-const toolNameMin: CogSettingTool["name"] = "clipLow";
-const toolNameMax: CogSettingTool["name"] = "clipHigh";
+const toolNameMin: CogSettingTool['name'] = 'clipLow';
+const toolNameMax: CogSettingTool['name'] = 'clipHigh';
 
 const Clip = () => {
   // Hooks
@@ -16,9 +16,6 @@ const Clip = () => {
 
   const toolMin: CogSettingTool = getTool(toolNameMin);
   const toolMax: CogSettingTool = getTool(toolNameMax);
-
-  const parsedValueMin = toolMin.value ? toolMin.value : toolMin.defaultValue;
-  const parsedValueMax = toolMax.value ? toolMax.value : toolMax.defaultValue;
 
   const [valueMin, setValueMin] = useState<number>(toolMin.value);
   const [valueMax, setValueMax] = useState<number>(toolMax.value);

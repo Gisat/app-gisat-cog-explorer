@@ -1,6 +1,7 @@
-import MonacoEditor from "@monaco-editor/react";
+import MonacoEditor from '@monaco-editor/react';
+
 // Params
-import { getLog } from "@/utils/url/getLog";
+import { getLog } from '@/utils/url/getLog';
 
 const Editor = () => {
   const value = getLog();
@@ -9,7 +10,7 @@ const Editor = () => {
     <MonacoEditor
       language="json"
       value={String(value)}
-      options={{ theme: "vs-light" }}
+      options={{ theme: 'vs-light' }}
     />
   );
 };

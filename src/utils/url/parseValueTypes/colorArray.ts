@@ -1,15 +1,16 @@
-import chroma from "chroma-js";
+/* eslint-disable */
+import chroma from 'chroma-js';
 
 const parseColorArray = (
   tool: string,
-  value: string | null | undefined
+  value: string | null | undefined,
 ): chroma.Color[] | undefined => {
   if (value === null || value === undefined) return undefined;
 
   try {
     // Sanitize the input by removing brackets, quotes, and extra whitespace
     const sanitizedValue = value
-      .replace(/[\[\]'"]/g, "") // Remove [ ] ' "
+      .replace(/[\[\]'"]/g, '') // Remove [ ] ' "
       .trim();
 
     // Split the sanitized string into individual components based on commas or spaces

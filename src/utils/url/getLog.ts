@@ -1,6 +1,12 @@
-import { urlParams } from "@/types/urlParams";
-import { useSearchParams } from "next/navigation";
+/* eslint-disable */
+import { useSearchParams } from 'next/navigation';
+
 // Import helpers (parsers)
+// Import COG Settings
+import { cogSettings } from '@/config/cog/cogToolsConfig';
+import { CogValueType } from '@/config/cog/cogValueTypes';
+import { urlParams } from '@/types/urlParams';
+
 import {
   parseBoolean,
   parseColor,
@@ -9,10 +15,7 @@ import {
   parseNumberNull,
   parseColorArray,
   parseValueColorArray,
-} from "./parseValueTypes";
-// Import COG Settings
-import { cogSettings } from "@/config/cog/cog-tools-config";
-import { CogValueType } from "@/config/cog/cog-value-types";
+} from './parseValueTypes';
 
 export const getLog = (): string | null => {
   const searchParams = useSearchParams();
@@ -32,45 +35,45 @@ export const getLog = (): string | null => {
       case CogValueType.Boolean:
         result[name as keyof urlParams] = parseBoolean(
           tool.name,
-          paramValue
+          paramValue,
         ) as any;
         break;
       case CogValueType.Number:
         // Cast `name` to `keyof urlParams` for type safety
         result[name as keyof urlParams] = parseNumber(
           tool.name,
-          paramValue
+          paramValue,
         ) as any;
         break;
 
       case CogValueType.NumberNull:
         result[name as keyof urlParams] = parseNumberNull(
           tool.name,
-          paramValue
+          paramValue,
         ) as any;
         break;
       case CogValueType.Color:
         result[name as keyof urlParams] = parseColor(
           tool.name,
-          paramValue
+          paramValue,
         ) as any;
         break;
       case CogValueType.ColorArray:
         result[name as keyof urlParams] = parseColorArray(
           tool.name,
-          paramValue
+          paramValue,
         ) as any;
         break;
       case CogValueType.NumberArray:
         result[name as keyof urlParams] = parseNumberArray(
           tool.name,
-          paramValue
+          paramValue,
         ) as any;
         break;
       case CogValueType.ValueColorArray:
         result[name as keyof urlParams] = parseValueColorArray(
           tool.name,
-          paramValue
+          paramValue,
         ) as any;
         break;
       case CogValueType.ColorScale:

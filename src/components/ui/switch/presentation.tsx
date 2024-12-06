@@ -1,5 +1,5 @@
 // Mantine-based components
-import { Switch as MantineSwitch, Input as MantineInput } from "@mantine/core";
+import { Switch as MantineSwitch, Input as MantineInput } from '@mantine/core';
 
 const Switch = () => {
   return (

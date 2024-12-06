@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { Slider as MantineSlider, Text } from '@mantine/core';
+import { useState } from 'react';
 // Mantine-based components
-import { Slider as MantineSlider, Text } from "@mantine/core";
 // Utils
 
-import { useUpdateParam } from "@/hooks/url/useUpdateParam";
-import { getTool } from "@/utils/url/getTool";
-import { CogSettingTool } from "@/config/cog/cog-tools-config";
+import { CogSettingTool } from '@/config/cog/cogToolsConfig';
+import { useUpdateParam } from '@/hooks/url/useUpdateParam';
+import { getTool } from '@/utils/url/getTool';
 
-const toolName: CogSettingTool["name"] = "alpha";
+const toolName: CogSettingTool['name'] = 'alpha';
 
 const Alpha = () => {
   // Hooks
@@ -39,8 +39,8 @@ const Alpha = () => {
         max={tool.valueRange?.max}
         onChange={onChange}
         marks={[
-          { value: 0, label: "0%" },
-          { value: 100, label: "100%" },
+          { value: 0, label: '0%' },
+          { value: 100, label: '100%' },
         ]}
       />
     </>

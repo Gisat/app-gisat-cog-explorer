@@ -1,4 +1,5 @@
-import { useSearchParams } from "next/navigation";
+/* eslint-disable */
+import { useSearchParams } from 'next/navigation';
 
 /**
  * Utility function to retrieve `lon`, `lat`, and `boxRange` from the URL query parameters.
@@ -14,9 +15,9 @@ export const getMapView = (): {
   const searchParams = useSearchParams();
 
   // Get the raw parameter values from the query string
-  const rawLon = searchParams.get("lon");
-  const rawLat = searchParams.get("lat");
-  const rawBoxRange = searchParams.get("boxRange");
+  const rawLon = searchParams.get('lon');
+  const rawLat = searchParams.get('lat');
+  const rawBoxRange = searchParams.get('boxRange');
 
   // Parse and validate the parameters
   const lon = parseCoordinate(rawLon);

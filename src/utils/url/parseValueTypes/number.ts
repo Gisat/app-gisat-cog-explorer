@@ -1,8 +1,8 @@
-import { cogSettings } from "@/config/cog/cog-tools-config";
+import { cogSettings } from '@/config/cog/cogToolsConfig';
 
 const parseNumber = (
   tool: string,
-  value: string | null | undefined
+  value: string | null | undefined,
 ): number | undefined => {
   if (value === null || value === undefined) return undefined;
   const parsed = parseFloat(value);
