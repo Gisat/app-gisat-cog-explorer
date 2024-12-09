@@ -1,7 +1,7 @@
 'use client';
 
 // Styles
-import classes from '@/styles/Dashboard.module.css';
+import classes from './Dashboard.module.css';
 
 import CogSection from './cog-section';
 import DashboardFooter from './footer';

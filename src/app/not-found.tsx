@@ -2,7 +2,7 @@ import { Container } from '@mantine/core';
 
 import { Link } from '@/components/ui/link';
 import { paths } from '@/config/paths';
-import classes from '@/styles/NotFound.module.css';
+import classes from './NotFound.module.css';
 
 const NotFoundPage = () => {
   return (
