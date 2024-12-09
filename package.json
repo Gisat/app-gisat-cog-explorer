@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lintFix": "eslint . --fix"
   },
   "dependencies": {
     "@gisatcz/ptr-maps": "^1.24.8-dev.17",
