@@ -1,6 +1,7 @@
 import { Container } from '@mantine/core';
 
 import { Logo } from '@/components/ui/logo';
+
 import styles from './Header.module.css';
 
 const Header = () => {

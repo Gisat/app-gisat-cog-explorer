@@ -2,11 +2,11 @@
 
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 
-// Styles
 import Dashboard from '@/components/layouts/dashboard';
 import Editor from '@/components/layouts/editor';
 import Header from '@/components/layouts/header';
 import Map from '@/components/layouts/map';
+
 import classes from './Home.module.css';
 
 /**

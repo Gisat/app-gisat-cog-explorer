@@ -1,9 +1,7 @@
 'use client';
 
-// Styles
-import classes from './Dashboard.module.css';
-
 import CogSection from './cog-section';
+import classes from './Dashboard.module.css';
 import DashboardFooter from './footer';
 
 const Dashboard = () => {
