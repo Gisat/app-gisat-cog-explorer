@@ -1,0 +1,70 @@
+name: docker/build-push
+
+on:
+  push:
+    tags:
+     - '**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: "Run tests"
+        run: |
+          echo "There are no tests."
+
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      DOCKER_REPO: ${{ steps.convert-repository-name.outputs.DOCKER_REPO }}
+    steps:
+      -
+        name: "Convert repository name to docker hub repository name"
+        id: convert-repository-name
+        run: |
+          echo "DOCKER_REPO=$(sed 's/^[[:upper:]]/\L&/;s/[[:upper:]]/\L_&/g' <<< '${{ github.event.repository.name }}')" >> "$GITHUB_OUTPUT"
+      -
+        name: "Check if docker repository exists"
+        run: |
+          token=$(curl --location --fail -s --request POST https://hub.docker.com/v2/users/login --data-urlencode username=${{ secrets.DOCKERHUB_USERNAME }} --data-urlencode password=${{ secrets.DOCKERHUB_TOKEN }} | jq -r '.token')
+          if [ ! -z "$token" ]; then echo "Token OK"; else exit 1; fi
+          echo "Checking if docker repository ${{ steps.convert-repository-name.outputs.DOCKER_REPO }} exists!"
+          curl --location --fail -s --header "Authorization: Bearer $token" https://hub.docker.com/v2/repositories/gisat/${{ steps.convert-repository-name.outputs.DOCKER_REPO }}
+  
+  build:
+    runs-on: ubuntu-latest
+    needs: [test, check]
+    steps:
+      - 
+        name: "Checkout"
+        uses: actions/checkout@v4.2.2
+      - 
+        name: "Get docker image metadata"
+        id: meta
+        uses: docker/metadata-action@v5.6.1
+        with:
+          images: gisat/${{ needs.check.outputs.DOCKER_REPO }}
+          tags: |
+            type=raw,value=latest,enable=${{ !contains(github.ref, '-dev.') && !contains(github.ref, '-rc.') }}
+            type=raw,value=latest-dev,enable=${{ contains(github.ref, '-dev.') }}
+            type=raw,value=latest-rc,enable=${{ contains(github.ref, '-rc.') }}
+            type=ref,event=tag
+          flavor: |
+            latest=false
+      - 
+        name: "Login to DockerHub"
+        uses: docker/login-action@v3.3.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - 
+        name: "Build and push"
+        uses: docker/build-push-action@v6.10.0
+        if: ${{ success() }}
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+  
