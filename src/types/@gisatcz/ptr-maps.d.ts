@@ -1,4 +1,5 @@
-declare module "@gisatcz/ptr-maps" {
+/* eslint-disable */
+declare module '@gisatcz/ptr-maps' {
   export class ReactLeafletMap extends React.Component<ReactLeafletMapProps> {}
 
   interface ReactLeafletMapProps {
@@ -42,6 +43,4 @@ declare module "@gisatcz/ptr-maps" {
   }
 
   export class MapSet extends React.Component<MapSetProps> {}
-
-  interface MapSetProps {}
 }

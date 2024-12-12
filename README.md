@@ -1,34 +1,81 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+# GISAT | COG Explorer
+
+![version](https://img.shields.io/badge/version-0.2.0-blue)
+
+COG Explorer is an internal web application developed by GISAT for exploring **Cloud Optimized GeoTIFFs (COGs)**. Designed for GIS professionals, COG Explorer enables efficient visualization, analysis, and management of geospatial data directly from the cloud.
+
+## Features
+
+- **Explore Cloud Optimized GeoTIFFs** (COGs) easily and efficiently.
+- **Interactive map interface** for seamless geospatial data viewing.
+- **Customizable settings and filters** to tailor data views.
+- **Responsive design** suitable for desktop and mobile use.
+- **Scalable architecture** for performance with large datasets.
 
 ## Getting Started
 
-First, run the development server:
+Follow these steps to set up and run COG Explorer in development mode.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Installation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/gisat-panther/app-gisat-cog-explorer
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Navigate into the project directory:
+   ```bash
+   cd app-gisat-cog-explorer
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## Learn More
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+5. Open your browser and go to `http://localhost:3000` to start exploring!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Requirements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Node.js**: v21.7.0
+- **NPM**: v10.5.0
 
-## Deploy on Vercel
+*Note: This application has been tested on the above versions. Compatibility with other versions may vary.*
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The core files and directories include:
+
+- `src/`: Contains the application’s main source code.
+- `components/`: Reusable UI components, such as sliders and checkboxes, used across the application.
+- `utils/`: Utility functions, such as query string manipulation, for app functionality.
+- `public/`: Static assets, including images and icons.
+- `README.md`: Project documentation.
+
+## Development Guide
+
+1. **Configuration**: Customize any necessary configuration files in the root directory.
+2. **Testing**: Currently, the app uses basic unit testing. Run tests with:
+   ```bash
+   npm test
+   ```
+3. **Deployment**: Refer to your server setup or containerize with Docker for production.
+
+## Contact
+
+COG Explorer was developed by [@ander481](https://github.com/ander481) as part of GISAT’s internal tools suite. 
+
+For questions or support, please contact:
+- **Andrii Khrystodulov** - [andrii.khrystodulov@gisat.cz](mailto:andrii.khrystodulov@gisat.cz)
+
+Visit [GISAT](https://gisat.cz) for more information on geospatial solutions.
+
+## License
+
+*(To be completed...)*
